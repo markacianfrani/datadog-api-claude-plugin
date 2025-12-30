@@ -1,11 +1,28 @@
 {
   "name": "datadog-api-claude-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": {
     "name": "DatadogHQ"
   },
-  "description": "A Claude plugin to use Datadog directly through its APIs",
+  "description": "A Claude plugin to use Datadog directly through its APIs with code generation support",
   "license": "MIT",
   "repository": "https://github.com/DataDog/datadog-api-claude-plugin",
-  "homepage": "http://www.datadoghq.com"
+  "homepage": "http://www.datadoghq.com",
+  "skills": [
+    "./skills/code-generation/SKILL.md"
+  ],
+  "agents": [
+    "./agents/metrics.md",
+    "./agents/monitors.md",
+    "./agents/dashboards.md",
+    "./agents/logs.md",
+    "./agents/traces.md",
+    "./agents/slos.md",
+    "./agents/incidents.md",
+    "./agents/synthetics.md",
+    "./agents/rum.md",
+    "./agents/security.md",
+    "./agents/infrastructure.md",
+    "./agents/admin.md"
+  ]
 }
