@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Case Management Support**: New cases agent for Datadog Case Management API
+  - Search and list cases with filtering (status, priority, project)
+  - Create new cases with title, type, priority, and description
+  - Update case status (OPEN, IN_PROGRESS, CLOSED) and priority (P1-P5)
+  - Assign/unassign cases to team members
+  - Archive and unarchive cases
+  - Add comments to cases
+  - Manage projects (create, list, get, delete)
+  - Full API wrapper implementation in `src/api/v2/cases.ts`
+  - CLI commands with comprehensive help text
+  - Agent documentation in `agents/cases.md`
+
+### Changed
+- Updated agent count from 12 to 13 agents
+- Updated plugin description and documentation to include case management
+
 ## [1.0.0] - 2024-12-30
 
 ### Added

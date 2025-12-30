@@ -37,7 +37,7 @@ node dist/index.js metrics query --query="avg:system.cpu.user{*}" --generate=pyt
 
 ### 🤖 Intelligent Agents
 
-12 specialized agents that understand natural language queries:
+13 specialized agents that understand natural language queries:
 
 - **Domain expertise**: Each agent specializes in one Datadog domain
 - **Context-aware**: Agents provide relevant suggestions and examples
@@ -367,6 +367,44 @@ node dist/index.js admin users
 node dist/index.js admin user "abc-123-def"
 ```
 
+### Case Management
+
+```bash
+# List all cases
+node dist/index.js cases list
+
+# Search cases by status and priority
+node dist/index.js cases list --status=OPEN --priority=P1
+
+# Get case details
+node dist/index.js cases get CASE-123
+
+# Create a new case
+node dist/index.js cases create \
+  --title="API Gateway Timeout" \
+  --type-id="550e8400-e29b-41d4-a716-446655440000" \
+  --priority=P2 \
+  --description="Users experiencing 504 errors"
+
+# Update case status
+node dist/index.js cases update CASE-123 --status=IN_PROGRESS
+
+# Assign case to user
+node dist/index.js cases assign CASE-123 user@example.com
+
+# Add comment
+node dist/index.js cases comment CASE-123 "Root cause identified"
+
+# Archive case
+node dist/index.js cases archive CASE-123
+
+# List projects
+node dist/index.js cases projects list
+
+# Create project
+node dist/index.js cases projects create "Q1 2025 Production Incidents"
+```
+
 ## Code Generation
 
 ### TypeScript
@@ -432,7 +470,7 @@ Generated code includes:
 
 ### Agent-Based Design
 
-The plugin uses 12 specialized agents, each focusing on a specific Datadog domain:
+The plugin uses 13 specialized agents, each focusing on a specific Datadog domain:
 
 ```
 User Query → Claude → Domain Agent → CLI Tool → Datadog API

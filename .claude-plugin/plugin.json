@@ -24,6 +24,7 @@
     "./agents/rum.md",
     "./agents/security.md",
     "./agents/infrastructure.md",
-    "./agents/admin.md"
+    "./agents/admin.md",
+    "./agents/cases.md"
   ]
 }

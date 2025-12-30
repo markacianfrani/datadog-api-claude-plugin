@@ -19,6 +19,7 @@ import { createRUMApi } from './api/v2/rum';
 import { createSecurityMonitoringApi } from './api/v2/security';
 import { createHostsApi } from './api/v1/hosts';
 import { createUsersApi } from './api/v2/users';
+import { createCasesApi } from './api/v2/cases';
 import { generateTypeScriptCode } from './codegen/typescript-templates';
 import { generatePythonCode } from './codegen/python-templates';
 
@@ -172,6 +173,9 @@ async function main() {
       case 'admin':
         await handleAdminCommand(subcommand, commandArgs);
         break;
+      case 'cases':
+        await handleCasesCommand(subcommand, commandArgs);
+        break;
       case 'test':
         await handleTestCommand();
         break;
@@ -216,6 +220,7 @@ Commands:
   security       Query security monitoring data
   infrastructure Manage hosts and integrations
   admin          Manage users, organizations, and API keys
+  cases          Manage case management and projects
   test           Test connection and credentials
   version        Show version information
   help           Show this help message
@@ -815,6 +820,205 @@ Examples:
     case 'user':
       console.log(await api.getUser(args[0]));
       break;
+    default:
+      console.error(ResponseFormatter.formatError('Unknown subcommand', { subcommand }));
+  }
+}
+
+/**
+ * Cases command handler
+ */
+async function handleCasesCommand(subcommand: string, args: string[]) {
+  if (subcommand === 'help') {
+    console.log(`
+Cases Commands:
+  list [options]                List/search cases
+  get <case-id>                 Get case details
+  create [options]              Create a new case
+  update <case-id> [options]    Update case status or priority
+  assign <case-id> <user>       Assign case to user
+  unassign <case-id>            Unassign case
+  archive <case-id>             Archive a case
+  unarchive <case-id>           Unarchive a case
+  comment <case-id> <text>      Add comment to case
+  projects [subcommand]         Manage projects
+
+List Options:
+  --status=<status>             Filter by status (OPEN, IN_PROGRESS, CLOSED)
+  --priority=<priority>         Filter by priority (P1-P5)
+  --project-id=<id>             Filter by project ID
+  --filter=<text>               Search text filter
+  --page=<number>               Page number
+  --size=<number>               Page size (max 100)
+  --sort=<field>                Sort field (created_at, priority, status)
+  --asc=<true|false>            Sort order (default: true)
+
+Create Options:
+  --title=<text>                Case title (required)
+  --type-id=<uuid>              Case type ID (required)
+  --priority=<P1-P5>            Priority level
+  --description=<text>          Case description
+  --project-id=<uuid>           Project ID
+
+Update Options:
+  --status=<status>             Update status
+  --priority=<priority>         Update priority
+
+Project Commands:
+  cases projects list           List all projects
+  cases projects get <id>       Get project details
+  cases projects create <name>  Create new project
+  cases projects delete <id>    Delete project
+
+Examples:
+  dd-plugin cases list
+  dd-plugin cases list --status=OPEN --priority=P1
+  dd-plugin cases get CASE-123
+  dd-plugin cases create --title="API Outage" --type-id="uuid" --priority=P1
+  dd-plugin cases update CASE-123 --status=CLOSED
+  dd-plugin cases assign CASE-123 user@example.com
+  dd-plugin cases comment CASE-123 "Root cause identified"
+  dd-plugin cases projects list
+    `);
+    return;
+  }
+
+  const api = createCasesApi();
+
+  // Handle projects subcommand
+  if (subcommand === 'projects') {
+    const projectSubcommand = args[0];
+    const projectArgs = args.slice(1);
+
+    switch (projectSubcommand) {
+      case 'list':
+        console.log(await api.listProjects());
+        break;
+      case 'get':
+        console.log(await api.getProject(projectArgs[0]));
+        break;
+      case 'create':
+        console.log(await api.createProject(projectArgs[0]));
+        break;
+      case 'delete':
+        console.log(await api.deleteProject(projectArgs[0]));
+        break;
+      default:
+        console.error(ResponseFormatter.formatError('Unknown project subcommand', { projectSubcommand }));
+    }
+    return;
+  }
+
+  // Parse command arguments into options
+  const parseOptions = (args: string[]): Record<string, any> => {
+    const options: Record<string, any> = {};
+    args.forEach((arg) => {
+      if (arg.startsWith('--')) {
+        const [key, value] = arg.substring(2).split('=');
+        if (key && value !== undefined) {
+          options[key] = value;
+        }
+      }
+    });
+    return options;
+  };
+
+  switch (subcommand) {
+    case 'list': {
+      const options = parseOptions(args);
+      console.log(
+        await api.searchCases({
+          filter: options.filter,
+          status: options.status,
+          priority: options.priority,
+          projectId: options['project-id'],
+          page: options.page ? parseInt(options.page) : undefined,
+          size: options.size ? parseInt(options.size) : undefined,
+          sortField: options.sort,
+          sortAsc: options.asc !== 'false',
+        })
+      );
+      break;
+    }
+
+    case 'get':
+      console.log(await api.getCase(args[0]));
+      break;
+
+    case 'create': {
+      const options = parseOptions(args);
+      if (!options.title || !options['type-id']) {
+        console.error(
+          ResponseFormatter.formatError('Missing required options', {
+            required: ['--title', '--type-id'],
+          })
+        );
+        return;
+      }
+      console.log(
+        await api.createCase({
+          title: options.title,
+          typeId: options['type-id'],
+          priority: options.priority,
+          description: options.description,
+          projectId: options['project-id'],
+        })
+      );
+      break;
+    }
+
+    case 'update': {
+      const caseId = args[0];
+      const options = parseOptions(args.slice(1));
+
+      if (options.status) {
+        console.log(await api.updateCaseStatus(caseId, options.status));
+      } else if (options.priority) {
+        console.log(await api.updateCasePriority(caseId, options.priority));
+      } else {
+        console.error(
+          ResponseFormatter.formatError('No update options provided', {
+            available: ['--status', '--priority'],
+          })
+        );
+      }
+      break;
+    }
+
+    case 'assign': {
+      const caseId = args[0];
+      const userId = args[1];
+      if (!userId) {
+        console.error(ResponseFormatter.formatError('User ID required for assignment'));
+        return;
+      }
+      console.log(await api.assignCase(caseId, userId));
+      break;
+    }
+
+    case 'unassign':
+      console.log(await api.unassignCase(args[0]));
+      break;
+
+    case 'archive':
+      console.log(await api.archiveCase(args[0]));
+      break;
+
+    case 'unarchive':
+      console.log(await api.unarchiveCase(args[0]));
+      break;
+
+    case 'comment': {
+      const caseId = args[0];
+      const comment = args.slice(1).join(' ');
+      if (!comment) {
+        console.error(ResponseFormatter.formatError('Comment text required'));
+        return;
+      }
+      console.log(await api.addCaseComment(caseId, comment));
+      break;
+    }
+
     default:
       console.error(ResponseFormatter.formatError('Unknown subcommand', { subcommand }));
   }
