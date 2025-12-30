@@ -1,0 +1,25 @@
+# CODEOWNERS file for datadog-api-claude-plugin
+#
+# This file defines code ownership for the repository.
+# GitHub will automatically request reviews from these users/teams when PRs are opened.
+#
+# Syntax: <file-pattern> @username @org/team-name
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo
+* @platinummonkey
+
+# Plugin configuration
+/.claude-plugin/ @platinummonkey
+
+# Agents
+/agents/ @platinummonkey
+
+# Skills
+/skills/ @platinummonkey
+
+# Documentation
+*.md @platinummonkey
+
+# Beads workflow files
+/.beads/ @platinummonkey
