@@ -1024,6 +1024,186 @@ Control which tags are forwarded:
 }
 ```
 
+### Logs Restriction Queries (RBAC)
+
+Control access to logs based on queries assigned to roles. This enables role-based access control (RBAC) for log data.
+
+#### List Restriction Queries
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries list
+```
+
+With pagination:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries list \
+  --page-size=50 \
+  --page-number=2
+```
+
+#### Create Restriction Query
+Create query to restrict logs by environment:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+  --query="env:production"
+```
+
+Restrict by service:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+  --query="service:api OR service:web"
+```
+
+Restrict by team tag:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+  --query="team:platform"
+```
+
+Complex restriction:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+  --query="env:production AND (team:platform OR team:sre)"
+```
+
+#### Get Restriction Query
+Get specific restriction query with relationships:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries get \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5"
+```
+
+#### Update Restriction Query
+Update existing restriction query:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries update \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
+  --query="env:production AND team:platform"
+```
+
+#### Replace Restriction Query
+Replace entire restriction query (PUT):
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries replace \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
+  --query="env:staging"
+```
+
+#### Delete Restriction Query
+Delete restriction query:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries delete \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5"
+```
+
+#### Grant Role to Restriction Query
+Add role to restriction query:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries grant-role \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
+  --role-id="00000000-0000-1111-0000-000000000000"
+```
+
+#### Revoke Role from Restriction Query
+Remove role from restriction query:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries revoke-role \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
+  --role-id="00000000-0000-1111-0000-000000000000"
+```
+
+#### List Roles for Restriction Query
+Get all roles assigned to a restriction query:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries list-roles \
+  --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5"
+```
+
+#### Get User's Restriction Queries
+Get all restriction queries for a specific user:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries get-by-user \
+  --user-id="00000000-0000-0000-0000-000000000000"
+```
+
+#### Get Role's Restriction Query
+Get restriction query for a specific role:
+```bash
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries get-by-role \
+  --role-id="00000000-0000-1111-0000-000000000000"
+```
+
+### Logs RBAC Query Language
+
+Restriction queries use Datadog's standard log query syntax:
+
+**Reserved Attributes**:
+- `env` - Environment
+- `service` - Service name
+- `source` - Log source
+- `status` - Log status
+
+**Tags**:
+- `team:platform`
+- `app:web-frontend`
+- `region:us-east-1`
+
+**Query Examples**:
+
+**By Environment**:
+```
+env:production
+```
+
+**By Service**:
+```
+service:api OR service:web
+```
+
+**By Team Tag**:
+```
+team:platform
+```
+
+**By Multiple Teams**:
+```
+team:platform OR team:sre OR team:data
+```
+
+**Environment and Team**:
+```
+env:production AND team:platform
+```
+
+**Exclude Specific Service**:
+```
+env:production AND -service:internal
+```
+
+**By Region**:
+```
+region:us-east-1 OR region:us-west-2
+```
+
+**Complex Multi-Criteria**:
+```
+(env:production OR env:staging) AND (team:platform OR team:sre)
+```
+
+### Logs RBAC Workflow
+
+1. **Create Restriction Query**: Define what logs users can see
+2. **Grant Role**: Assign role to restriction query
+3. **Assign Users**: Add users to the role
+4. **Grant Permission**: Role needs `logs_read_data` permission (granted automatically)
+5. **Verification**: Users can only see logs matching their restriction queries
+
+### Logs RBAC Behavior
+
+- Users with multiple restriction queries can see logs matching ANY query (OR logic)
+- Users without restriction queries can see all logs (if they have logs_read_data permission)
+- Restriction queries affect ALL log features: Explorer, Live Tail, rehydration, dashboards
+- Queries are evaluated in real-time for every log request
+
 ## Order and Priority
 
 ### Archive Order
