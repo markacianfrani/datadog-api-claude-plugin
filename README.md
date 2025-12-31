@@ -663,28 +663,11 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Changelog
 
-### v0.2.0 (Current)
-
-- ✨ Added code generation for TypeScript, Python, and Go
-- ✨ Implemented 12 domain agents with comprehensive documentation
-- ✨ Added support for all major Datadog APIs
-- 🔒 Implemented three-tier permission system
-- 📝 Created detailed agent documentation
-- ✅ 37 unit tests with 100% pass rate
-
-### v0.1.0
-
-- 🎉 Initial release
-- ⚡ Core API wrapper implementation
-- 🏗️ Project structure and build system
-- 🧪 Basic test coverage
+See [CHANGELOG.md](CHANGELOG.md) for more details.
 
 ## Roadmap
 
 - [ ] Interactive permission prompts for WRITE/DELETE operations
 - [ ] Enhanced response formatting with tables and pagination
-- [ ] Dashboard and monitor templates library
-- [ ] Batch operations for multiple resources
-- [ ] Integration with CI/CD pipelines
 - [ ] Support for additional Datadog APIs
 - [ ] Plugin marketplace publication
