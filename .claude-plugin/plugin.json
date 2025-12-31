@@ -14,6 +14,7 @@
   ],
   "agents": [
     "./agents/admin.md",
+    "./agents/application-security.md",
     "./agents/cases.md",
     "./agents/cicd.md",
     "./agents/cloud-cost.md",
