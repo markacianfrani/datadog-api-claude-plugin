@@ -13,7 +13,7 @@ Unlike traditional MCP-based approaches, this plugin leverages Datadog's officia
 - **TypeScript Client**: [datadog-api-client-typescript](https://github.com/DataDog/datadog-api-client-typescript)
 - **Python Client**: [datadog-api-client-python](https://github.com/DataDog/datadog-api-client-python)
 - **API Documentation**: [Datadog API Reference](https://docs.datadoghq.com/api/latest/?tab=typescript)
-- **OpenAPI Specifications**: Available in the private `datadog-api-spec` repository
+- **OpenAPI Specifications**: Available in the private `datadog-api-spec` repository (locally ../datadog-api-spec, or https://github.com/DataDog/datadog-api-spec on github)
 
 This direct integration approach offers several advantages:
 - Lower latency by eliminating the MCP server layer
