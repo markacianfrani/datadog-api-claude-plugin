@@ -25,6 +25,8 @@ import { createFleetAutomationApi } from './api/v2/fleet-automation';
 import { generateTypeScriptCode } from './codegen/typescript-templates';
 import { generatePythonCode } from './codegen/python-templates';
 import { generateJavaCode } from './codegen/java-templates';
+import { generateGoCode } from './codegen/go-templates';
+import { generateRustCode } from './codegen/rust-templates';
 
 /**
  * Helper function to parse time parameters
@@ -70,9 +72,9 @@ function parseTimeParam(timeStr: string): number {
 
 /**
  * Check if --generate flag is present and return language
- * Returns: 'typescript', 'python', 'java', or null if not generating
+ * Returns: 'typescript', 'python', 'java', 'go', 'rust', or null if not generating
  */
-function getGenerateLanguage(args: string[]): 'typescript' | 'python' | 'java' | null {
+function getGenerateLanguage(args: string[]): 'typescript' | 'python' | 'java' | 'go' | 'rust' | null {
   const generateFlag = args.find((arg) => arg === '--generate' || arg.startsWith('--generate='));
 
   if (!generateFlag) {
@@ -89,6 +91,10 @@ function getGenerateLanguage(args: string[]): 'typescript' | 'python' | 'java' |
       return 'python';
     } else if (language === 'java') {
       return 'java';
+    } else if (language === 'go' || language === 'golang') {
+      return 'go';
+    } else if (language === 'rust' || language === 'rs') {
+      return 'rust';
     }
   }
 
@@ -101,6 +107,10 @@ function getGenerateLanguage(args: string[]): 'typescript' | 'python' | 'java' |
       return 'python';
     } else if (language === 'java') {
       return 'java';
+    } else if (language === 'go' || language === 'golang') {
+      return 'go';
+    } else if (language === 'rust' || language === 'rs') {
+      return 'rust';
     }
   }
 
@@ -112,7 +122,7 @@ function getGenerateLanguage(args: string[]): 'typescript' | 'python' | 'java' |
  * Generate code for a command
  */
 function generateCode(
-  language: 'typescript' | 'python' | 'java',
+  language: 'typescript' | 'python' | 'java' | 'go' | 'rust',
   domain: string,
   operation: string,
   params: Record<string, any>
@@ -121,6 +131,10 @@ function generateCode(
     return generatePythonCode({ domain, operation, params });
   } else if (language === 'java') {
     return generateJavaCode({ domain, operation, params });
+  } else if (language === 'go') {
+    return generateGoCode({ domain, operation, params });
+  } else if (language === 'rust') {
+    return generateRustCode({ domain, operation, params });
   } else {
     return generateTypeScriptCode({ domain, operation, params });
   }
