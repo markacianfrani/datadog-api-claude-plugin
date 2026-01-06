@@ -68,7 +68,10 @@ This agent supports the complete incident response workflow:
 
 ### Incident Management
 
-- **List Incidents**: View all incidents in your organization
+- **List Incidents**: View all incidents in your organization with optional filtering
+  - Filter by state: active, stable, resolved, completed
+  - Filter by custom query (severity, customer impact, etc.)
+  - Pagination support for large result sets
 - **Get Incident Details**: Retrieve comprehensive information about specific incidents
 - **Track Status**: Monitor incident state and severity
 - **Review History**: Understand incident timelines and resolutions
@@ -334,7 +337,22 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Incidents
 ```bash
+# List all incidents
 node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list
+
+# Filter by state (active, stable, resolved, completed)
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --state=active
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --state=resolved
+
+# Filter by custom query
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --query="severity:SEV-1"
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --query="customer_impacted:true"
+
+# Combine filters
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --state=active --query="severity:SEV-1"
+
+# Pagination
+node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --page-size=50 --page-offset=0
 ```
 
 #### Get Incident Details
@@ -691,7 +709,7 @@ node dist/index.js on-call page create \
 
 ### "Show me all active incidents"
 ```bash
-node dist/index.js incidents list
+node dist/index.js incidents list --state=active
 ```
 
 ### "What's the status of incident XYZ?"

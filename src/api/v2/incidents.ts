@@ -20,22 +20,66 @@ export class IncidentsApi {
   }
 
   /**
-   * List all incidents
+   * List all incidents with optional filtering
+   * @param options Optional filtering options
    * @returns Formatted list of incidents
    */
-  async listIncidents(): Promise<string> {
+  async listIncidents(options?: {
+    state?: string;
+    query?: string;
+    pageSize?: number;
+    pageOffset?: number;
+  }): Promise<string> {
     try {
       // Check permissions
       await PermissionManager.requirePermission(
         PermissionManager.createReadCheck('incidents', 'list')
       );
 
-      // Make API call
-      const response = await this.api.listIncidents();
+      let response: any;
 
-      // Format response
-      if (response.data && Array.isArray(response.data)) {
-        const incidents = response.data.map((incident) => ({
+      // If filtering by state or custom query, use searchIncidents
+      if (options?.state || options?.query) {
+        // Build query string
+        let query = options.query || '';
+
+        // Add state filter if provided
+        if (options.state) {
+          const stateQuery = `state:${options.state}`;
+          query = query ? `${query} ${stateQuery}` : stateQuery;
+        }
+
+        // Use search API
+        response = await this.api.searchIncidents({
+          query: query,
+          pageSize: options.pageSize,
+          pageOffset: options.pageOffset,
+        });
+      } else {
+        // Use list API (no filtering)
+        response = await this.api.listIncidents({
+          pageSize: options?.pageSize,
+          pageOffset: options?.pageOffset,
+        });
+      }
+
+      // Format response - handle both list and search API response structures
+      let incidentsData: any[] = [];
+
+      // Check if this is a search response (has included field with incidents)
+      if (response.included && Array.isArray(response.included)) {
+        // Search API returns incidents wrapped in _data property
+        incidentsData = response.included
+          .filter((item: any) => item._data && item._data.type === 'incidents')
+          .map((item: any) => item._data);
+      }
+      // Otherwise check if it's a list response (direct data array)
+      else if (response.data && Array.isArray(response.data)) {
+        incidentsData = response.data;
+      }
+
+      if (incidentsData.length > 0) {
+        const incidents = incidentsData.map((incident: any) => ({
           id: incident.id,
           title: incident.attributes?.title || 'Untitled',
           state: incident.attributes?.state || 'N/A',
@@ -44,6 +88,11 @@ export class IncidentsApi {
         }));
 
         return ResponseFormatter.formatTable(incidents, ['id', 'title', 'state', 'severity']);
+      }
+
+      // No incidents found or unexpected format
+      if (incidentsData.length === 0 && response.included) {
+        return ResponseFormatter.formatSuccess('No incidents found matching the query', {});
       }
 
       return ResponseFormatter.formatJSON(response);

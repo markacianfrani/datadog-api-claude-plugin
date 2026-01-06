@@ -694,11 +694,17 @@ async function handleIncidentsCommand(subcommand: string, args: string[]) {
   if (subcommand === 'help') {
     console.log(`
 Incidents Commands:
-  list                  List all incidents
-  get <incident-id>     Get incident details
+  list [--state=<state>] [--query=<query>] [--page-size=<n>] [--page-offset=<n>]   List incidents
+  get <incident-id>                                                                  Get incident details
+
+State values: active, stable, resolved, completed
 
 Examples:
   dd-plugin incidents list
+  dd-plugin incidents list --state=active
+  dd-plugin incidents list --state=resolved
+  dd-plugin incidents list --query="severity:SEV-1"
+  dd-plugin incidents list --state=active --query="customer_impacted:true"
   dd-plugin incidents get abc-123
     `);
     return;
@@ -706,9 +712,20 @@ Examples:
 
   const api = createIncidentsApi();
   switch (subcommand) {
-    case 'list':
-      console.log(await api.listIncidents());
+    case 'list': {
+      const state = args.find((arg) => arg.startsWith('--state='))?.split('=')[1];
+      const query = args.find((arg) => arg.startsWith('--query='))?.split('=')[1];
+      const pageSize = args.find((arg) => arg.startsWith('--page-size='))?.split('=')[1];
+      const pageOffset = args.find((arg) => arg.startsWith('--page-offset='))?.split('=')[1];
+
+      console.log(await api.listIncidents({
+        state,
+        query,
+        pageSize: pageSize ? parseInt(pageSize) : undefined,
+        pageOffset: pageOffset ? parseInt(pageOffset) : undefined,
+      }));
       break;
+    }
     case 'get':
       console.log(await api.getIncident(args[0]));
       break;

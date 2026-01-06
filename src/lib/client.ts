@@ -40,6 +40,7 @@ export class DatadogClient {
       'v2.createIncident': true,
       'v2.updateIncident': true,
       'v2.deleteIncident': true,
+      'v2.searchIncidents': true,
     };
   }
 
