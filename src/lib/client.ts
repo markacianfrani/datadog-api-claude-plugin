@@ -32,6 +32,15 @@ export class DatadogClient {
     this.configuration.setServerVariables({
       site: config.site,
     });
+
+    // Enable unstable operations for incidents API
+    this.configuration.unstableOperations = {
+      'v2.listIncidents': true,
+      'v2.getIncident': true,
+      'v2.createIncident': true,
+      'v2.updateIncident': true,
+      'v2.deleteIncident': true,
+    };
   }
 
   /**
