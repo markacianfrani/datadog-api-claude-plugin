@@ -34,6 +34,7 @@ import { generatePythonCode } from './codegen/python-templates';
 import { generateJavaCode } from './codegen/java-templates';
 import { generateGoCode } from './codegen/go-templates';
 import { generateRustCode } from './codegen/rust-templates';
+import { handleAuthCommand } from './lib/auth';
 
 /**
  * Helper function to parse time parameters
@@ -223,6 +224,9 @@ async function main() {
       case 'fleet':
         await handleFleetCommand(subcommand, commandArgs);
         break;
+      case 'auth':
+        await handleAuthCommand(subcommand, commandArgs);
+        break;
       case 'test':
         await handleTestCommand();
         break;
@@ -255,6 +259,7 @@ Datadog API Claude Plugin - CLI Tool
 Usage: dd-plugin <command> <subcommand> [options]
 
 Commands:
+  auth           OAuth authentication (login, logout, status, refresh)
   metrics        Query and submit metrics
   monitors       Manage monitors
   dashboards     Manage dashboards
@@ -269,6 +274,7 @@ Commands:
   admin          Manage users, organizations, and API keys
   keys           Manage API keys and Application keys
   cases          Manage case management and projects
+  fleet          Fleet automation and deployments
   test           Test connection and credentials
   version        Show version information
   help           Show this help message
@@ -278,13 +284,26 @@ Global Options:
   --generate         Generate code instead of executing
   --language=<lang>  Code generation language (typescript, python, go, java, rust)
 
+Authentication:
+  You can authenticate using either API keys or OAuth:
+
+  API Keys (traditional):
+    export DD_API_KEY="your-api-key"
+    export DD_APP_KEY="your-app-key"
+
+  OAuth (browser-based):
+    dd-plugin auth login
+
 Environment Variables:
-  DD_API_KEY         Datadog API key (required)
-  DD_APP_KEY         Datadog Application key (required)
+  DD_API_KEY         Datadog API key (for API key auth)
+  DD_APP_KEY         Datadog Application key (for API key auth)
   DD_SITE            Datadog site (default: datadoghq.com)
+  DD_USE_OAUTH       Force OAuth authentication (true/false)
   DD_AUTO_APPROVE    Skip all confirmation prompts (true/false)
 
 Examples:
+  dd-plugin auth login
+  dd-plugin auth status
   dd-plugin metrics list
   dd-plugin monitors list
   dd-plugin dashboards get <dashboard-id>
