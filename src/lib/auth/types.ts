@@ -110,29 +110,79 @@ export interface OAuthEndpoints {
 
 /**
  * Default OAuth scopes to request
- * These match the capabilities of a full API key + Application key
+ * These map to current plugin tools that have available OAuth scopes.
+ *
+ * NOTE: Some tools do NOT have OAuth scopes available yet:
+ * - Logs (requires logs_read - not available)
+ * - Metrics submit (requires metrics_write - not available)
+ * - RUM events search (requires rum_read - not available)
+ * - RUM metrics (requires rum_metrics_read/write - not available)
+ * - Key Management (requires api_keys_*, app_keys_* - not available)
+ * - Fleet Automation (requires fleet_* - not available)
  */
 export const DEFAULT_OAUTH_SCOPES = [
+  // Dashboards
   'dashboards_read',
   'dashboards_write',
-  // 'events_read',
-  // 'hosts_read',
-  // 'incidents_read',
-  // 'incidents_write',
-  // 'logs_read',
-  // 'metrics_read',
-  // 'monitors_read',
-  // 'monitors_write',
-  // 'security_signals_read',
-  // 'service_catalog_read',
-  // 'service_catalog_write',
-  // 'slos_read',
-  // 'slos_write',
-  // 'synthetics_read',
-  // 'synthetics_write',
-  // 'timeseries_query',
-  // 'usage_read',
-  // 'user_access_read',
+
+  // Monitors
+  'monitors_read',
+  'monitors_write',
+  'monitors_downtime',
+
+  // APM/Traces
+  'apm_read',
+
+  // SLOs
+  'slos_read',
+  'slos_write',
+  'slos_corrections',
+
+  // Incidents
+  'incident_read',
+  'incident_write',
+
+  // Synthetics
+  'synthetics_read',
+  'synthetics_write',
+  'synthetics_global_variable_read',
+  'synthetics_global_variable_write',
+  'synthetics_private_location_read',
+  'synthetics_private_location_write',
+
+  // Security
+  'security_monitoring_signals_read',
+  'security_monitoring_rules_read',
+  'security_monitoring_findings_read',
+  'security_monitoring_suppressions_read',
+  'security_monitoring_filters_read',
+
+  // RUM (only scopes available - not rum_read or rum_metrics_*)
+  'rum_apps_read',
+  'rum_apps_write',
+  'rum_retention_filter_read',
+  'rum_retention_filter_write',
+
+  // Infrastructure
+  'hosts_read',
+
+  // Users
+  'user_access_read',
+  'user_self_profile_read',
+
+  // Cases
+  'cases_read',
+  'cases_write',
+
+  // Events
+  'events_read',
+
+  // Metrics (read only - metrics_write not available)
+  'metrics_read',
+  'timeseries_query',
+
+  // Usage
+  'usage_read',
 ] as const;
 
 /**
