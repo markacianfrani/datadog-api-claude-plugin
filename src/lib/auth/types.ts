@@ -35,6 +35,8 @@ export interface OAuthTokens {
   issuedAt: number;
   /** Granted scopes (space-separated string) */
   scope?: string;
+  /** The client ID used for this token (from DCR) */
+  clientId?: string;
 }
 
 /**
@@ -218,8 +220,8 @@ export const DEFAULT_OAUTH_SCOPES = [
   // RUM (only scopes available - not rum_read or rum_metrics_*)
   'rum_apps_read',
   'rum_apps_write',
-  'rum_retention_filter_read',
-  'rum_retention_filter_write',
+  'rum_retention_filters_read',
+  'rum_retention_filters_write',
 
   // Infrastructure
   'hosts_read',
@@ -242,12 +244,6 @@ export const DEFAULT_OAUTH_SCOPES = [
   // Usage
   'usage_read',
 ] as const;
-
-/**
- * OAuth client ID placeholder
- * Replace with actual Datadog CLI client ID when available
- */
-export const DATADOG_CLI_CLIENT_ID = '90f37300-eaf8-4e0a-abb9-db3d85a38593';
 
 /**
  * Default timeout for OAuth flow (5 minutes)

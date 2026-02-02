@@ -17,7 +17,6 @@ import {
   OAuthEndpoints,
   OAuthConfig,
   DEFAULT_OAUTH_SCOPES,
-  DATADOG_CLI_CLIENT_ID,
 } from './types';
 
 /**
@@ -105,12 +104,16 @@ export function buildAuthorizationUrl(
   state: string,
   redirectUri: string
 ): string {
+  if (!config.clientId) {
+    throw new Error('clientId is required in OAuthConfig');
+  }
+
   const endpoints = getOAuthEndpoints(config.site);
   const scopes = config.scopes.length > 0 ? config.scopes : [...DEFAULT_OAUTH_SCOPES];
 
   const params = new URLSearchParams({
     response_type: 'code',
-    client_id: config.clientId || DATADOG_CLI_CLIENT_ID,
+    client_id: config.clientId,
     redirect_uri: redirectUri,
     scope: scopes.join(' '),
     state: state,
@@ -135,7 +138,7 @@ export async function exchangeCodeForTokens(
   code: string,
   codeVerifier: string,
   redirectUri: string,
-  clientId: string = DATADOG_CLI_CLIENT_ID
+  clientId: string
 ): Promise<OAuthTokens> {
   const endpoints = getOAuthEndpoints(site);
 
@@ -161,7 +164,7 @@ export async function exchangeCodeForTokens(
 export async function refreshAccessToken(
   site: string,
   refreshToken: string,
-  clientId: string = DATADOG_CLI_CLIENT_ID
+  clientId: string
 ): Promise<OAuthTokens> {
   const endpoints = getOAuthEndpoints(site);
 
@@ -187,14 +190,17 @@ export async function revokeToken(
   site: string,
   token: string,
   tokenTypeHint?: 'access_token' | 'refresh_token',
-  clientId: string = DATADOG_CLI_CLIENT_ID
+  clientId?: string
 ): Promise<boolean> {
   const endpoints = getOAuthEndpoints(site);
 
   const bodyParams: Record<string, string> = {
-    client_id: clientId,
     token: token,
   };
+
+  if (clientId) {
+    bodyParams.client_id = clientId;
+  }
 
   if (tokenTypeHint) {
     bodyParams.token_type_hint = tokenTypeHint;

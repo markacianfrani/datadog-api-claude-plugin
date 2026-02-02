@@ -16,7 +16,7 @@ import {
   buildAuthorizationUrl,
   isTokenExpired,
 } from '../../../src/lib/auth/oauth-client';
-import { OAuthTokens, DATADOG_CLI_CLIENT_ID, DEFAULT_OAUTH_SCOPES } from '../../../src/lib/auth/types';
+import { OAuthTokens, DEFAULT_OAUTH_SCOPES } from '../../../src/lib/auth/types';
 
 describe('OAuth Client', () => {
   describe('generateCodeVerifier()', () => {
@@ -171,17 +171,16 @@ describe('OAuth Client', () => {
       expect(parsedUrl.searchParams.get('code_challenge_method')).toBe('S256');
     });
 
-    it('should use default client ID when not specified', () => {
+    it('should throw when clientId is not specified', () => {
       const config = {
         site: 'datadoghq.com',
         clientId: '',
         scopes: [],
       };
 
-      const url = buildAuthorizationUrl(config, pkce, state, redirectUri);
-      const parsedUrl = new URL(url);
-
-      expect(parsedUrl.searchParams.get('client_id')).toBe(DATADOG_CLI_CLIENT_ID);
+      expect(() => buildAuthorizationUrl(config, pkce, state, redirectUri)).toThrow(
+        'clientId is required in OAuthConfig'
+      );
     });
 
     it('should use default scopes when empty', () => {

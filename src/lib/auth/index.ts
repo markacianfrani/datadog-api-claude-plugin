@@ -41,10 +41,23 @@ export {
   OAuthEndpoints,
   ITokenStorage,
   DEFAULT_OAUTH_SCOPES,
-  DATADOG_CLI_CLIENT_ID,
   DEFAULT_OAUTH_TIMEOUT_MS,
   TOKEN_REFRESH_BUFFER_SECONDS,
 } from './types';
+
+// Export DCR types
+export {
+  GrantType,
+  TokenEndpointAuthMethod,
+  ClientRegistrationRequest,
+  ClientRegistrationResponse,
+  ClientRegistrationError,
+  StoredClientCredentials,
+  IClientCredentialsStorage,
+  DCR_CLIENT_NAME,
+  DCR_REDIRECT_URIS,
+  DCR_GRANT_TYPES,
+} from './dcr-types';
 
 // Export OAuth client functions
 export {
@@ -108,7 +121,31 @@ export {
   resetTokenRefreshers,
   RefreshTokenExpiredError,
   NoTokensError,
+  NoClientIdError,
 } from './token-refresher';
 
+// Export DCR client
+export {
+  getDCREndpoint,
+  registerClient,
+  getOrRegisterClient,
+  deleteClientCredentials,
+  getStoredClientCredentials,
+  hasClientCredentials,
+  DCRError,
+  DCRNotAvailableError,
+} from './dcr-client';
+
+// Export client credentials storage
+export {
+  KeychainClientStorage,
+  FileClientStorage,
+  ClientCredentialsError,
+  getClientCredentialsStorage,
+  resetClientCredentialsStorage,
+  isUsingSecureClientStorage,
+  getClientStorageDescription,
+} from './client-credentials-storage';
+
 // Export auth commands
-export { handleAuthCommand, performLogin, performLogout, showAuthStatus } from './commands';
+export { handleAuthCommand, performLogin, performLogout, showAuthStatus, forceRefreshToken } from './commands';

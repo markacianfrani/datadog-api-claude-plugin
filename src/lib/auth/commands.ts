@@ -12,7 +12,6 @@ import {
   OAuthConfig,
   LoginResult,
   DEFAULT_OAUTH_SCOPES,
-  DATADOG_CLI_CLIENT_ID,
   DEFAULT_OAUTH_TIMEOUT_MS,
 } from './types';
 import {
@@ -26,6 +25,14 @@ import { getTokenStorage, getStorageDescription, isUsingSecureStorage } from './
 import { CallbackServer } from './callback-server';
 import { getTokenRefresher, RefreshTokenExpiredError, NoTokensError } from './token-refresher';
 import { performMigrationIfNeeded } from './token-migration';
+import {
+  getOrRegisterClient,
+  getStoredClientCredentials,
+  deleteClientCredentials,
+  DCRError,
+  DCRNotAvailableError,
+} from './dcr-client';
+import { getClientStorageDescription, isUsingSecureClientStorage } from './client-credentials-storage';
 
 /**
  * Open a URL in the default browser
@@ -56,16 +63,14 @@ function openBrowser(url: string): Promise<boolean> {
 }
 
 /**
- * Perform the OAuth login flow
+ * Perform the OAuth login flow with Dynamic Client Registration
  * @param site The Datadog site to authenticate against
- * @param clientId The OAuth client ID
  * @param scopes The OAuth scopes to request
  * @param timeoutMs Timeout for the OAuth flow
  * @returns The login result
  */
 export async function performLogin(
   site: string,
-  clientId: string = DATADOG_CLI_CLIENT_ID,
   scopes: string[] = [...DEFAULT_OAUTH_SCOPES],
   timeoutMs: number = DEFAULT_OAUTH_TIMEOUT_MS
 ): Promise<LoginResult> {
@@ -80,6 +85,28 @@ export async function performLogin(
   const callbackServer = new CallbackServer('/oauth/callback', timeoutMs);
 
   try {
+    // Step 1: Get or register OAuth client via DCR
+    let clientCredentials;
+    try {
+      clientCredentials = await getOrRegisterClient(site);
+    } catch (error: any) {
+      if (error instanceof DCRNotAvailableError) {
+        return {
+          success: false,
+          error: error.message,
+        };
+      }
+      if (error instanceof DCRError) {
+        return {
+          success: false,
+          error: `Client registration failed: ${error.message}`,
+        };
+      }
+      throw error;
+    }
+
+    const clientId = clientCredentials.clientId;
+
     // Generate PKCE challenge and state
     const pkce = generatePKCEChallenge();
     const state = generateState();
@@ -139,6 +166,9 @@ export async function performLogin(
       clientId
     );
 
+    // Store the clientId with the tokens for future refresh operations
+    tokens.clientId = clientId;
+
     // Store the tokens
     storage.saveTokens(site, tokens);
 
@@ -159,20 +189,27 @@ export async function performLogin(
 /**
  * Perform logout by revoking tokens and deleting storage
  * @param site The Datadog site
- * @param clientId The OAuth client ID
+ * @param deleteClient Whether to also delete the DCR client credentials
  * @returns Whether logout was successful
  */
-export async function performLogout(
-  site: string,
-  clientId: string = DATADOG_CLI_CLIENT_ID
-): Promise<boolean> {
+export async function performLogout(site: string, deleteClient: boolean = false): Promise<boolean> {
   const storage = getTokenStorage();
   const tokens = storage.getTokens(site);
 
   if (!tokens) {
     console.log(`No tokens found for site "${site}".`);
+    // Still check if we should delete client credentials
+    if (deleteClient) {
+      const deleted = deleteClientCredentials(site);
+      if (deleted) {
+        console.log('Client credentials deleted.');
+      }
+    }
     return true;
   }
+
+  // Get the client ID from stored tokens or client credentials
+  const clientId = tokens.clientId || getStoredClientCredentials(site)?.clientId;
 
   // Try to revoke tokens (best effort)
   console.log('Revoking tokens...');
@@ -194,6 +231,14 @@ export async function performLogout(
   storage.deleteTokens(site);
   console.log('Local tokens deleted.');
 
+  // Optionally delete client credentials
+  if (deleteClient) {
+    const deleted = deleteClientCredentials(site);
+    if (deleted) {
+      console.log('Client credentials deleted.');
+    }
+  }
+
   return true;
 }
 
@@ -208,16 +253,34 @@ export async function showAuthStatus(site: string): Promise<void> {
   console.log(`\nAuthentication Status for ${site}`);
   console.log('─'.repeat(40));
 
+  // Show DCR client status
+  const clientCredentials = getStoredClientCredentials(site);
+  if (clientCredentials) {
+    console.log('OAuth Client: Registered (DCR)');
+    console.log(`  Client ID: ${clientCredentials.clientId.substring(0, 8)}...`);
+    console.log(`  Registered: ${new Date(clientCredentials.registeredAt * 1000).toLocaleDateString()}`);
+    console.log(`  Client storage: ${getClientStorageDescription()}`);
+    if (isUsingSecureClientStorage()) {
+      console.log('  Security: Client credentials encrypted via OS keychain');
+    }
+  } else {
+    console.log('OAuth Client: Not registered');
+  }
+
+  console.log('');
+
   if (!tokens) {
-    console.log('Status: Not authenticated');
+    console.log('Token Status: Not authenticated');
     console.log('\nRun "dd-plugin auth login" to authenticate with OAuth.');
     return;
   }
 
-  const refresher = getTokenRefresher(site);
+  // Get the clientId from tokens or credentials for the refresher
+  const clientId = tokens.clientId || clientCredentials?.clientId;
+  const refresher = getTokenRefresher(site, clientId);
   const status = refresher.getStatus();
 
-  console.log('Status: Authenticated (OAuth)');
+  console.log('Token Status: Authenticated (OAuth)');
   console.log(`Token storage: ${getStorageDescription()}`);
   if (isUsingSecureStorage()) {
     console.log('Security: Tokens encrypted via OS keychain');
@@ -255,18 +318,33 @@ export async function showAuthStatus(site: string): Promise<void> {
 /**
  * Force refresh the access token
  * @param site The Datadog site
- * @param clientId The OAuth client ID
  * @returns Whether refresh was successful
  */
-export async function forceRefreshToken(
-  site: string,
-  clientId: string = DATADOG_CLI_CLIENT_ID
-): Promise<boolean> {
+export async function forceRefreshToken(site: string): Promise<boolean> {
+  // Get clientId from stored tokens or client credentials
+  const storage = getTokenStorage();
+  const tokens = storage.getTokens(site);
+  const clientCredentials = getStoredClientCredentials(site);
+
+  const clientId = tokens?.clientId || clientCredentials?.clientId;
+
+  if (!clientId) {
+    console.error(
+      'No OAuth client found. Please run "dd-plugin auth login" to authenticate with DCR.'
+    );
+    return false;
+  }
+
   const refresher = getTokenRefresher(site, clientId);
 
   try {
     console.log('Refreshing access token...');
     const newTokens = await refresher.forceRefresh();
+
+    // Preserve the clientId in refreshed tokens
+    newTokens.clientId = clientId;
+    storage.saveTokens(site, newTokens);
+
     console.log('Token refreshed successfully.');
 
     // Show new expiration

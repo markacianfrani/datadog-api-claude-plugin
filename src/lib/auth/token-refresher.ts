@@ -7,7 +7,7 @@
  * Automatic token refresh management
  */
 
-import { OAuthTokens, ITokenStorage, TOKEN_REFRESH_BUFFER_SECONDS, DATADOG_CLI_CLIENT_ID } from './types';
+import { OAuthTokens, ITokenStorage, TOKEN_REFRESH_BUFFER_SECONDS } from './types';
 import { isTokenExpired, refreshAccessToken } from './oauth-client';
 import { getTokenStorage } from './token-storage-factory';
 
@@ -32,25 +32,38 @@ export class NoTokensError extends Error {
 }
 
 /**
+ * Error thrown when no clientId is available for refresh
+ */
+export class NoClientIdError extends Error {
+  constructor(site: string) {
+    super(
+      `No OAuth client ID found for site "${site}". ` +
+        'Please run "dd-plugin auth login" to authenticate with DCR.'
+    );
+    this.name = 'NoClientIdError';
+  }
+}
+
+/**
  * TokenRefresher manages automatic token refresh with deduplication
  */
 export class TokenRefresher {
   private storage: ITokenStorage;
   private site: string;
-  private clientId: string;
+  private clientId: string | undefined;
   private refreshPromise: Promise<OAuthTokens> | null = null;
   private bufferSeconds: number;
 
   /**
    * Create a new TokenRefresher
    * @param site The Datadog site
-   * @param clientId The OAuth client ID
+   * @param clientId The OAuth client ID (optional - will be read from stored tokens if not provided)
    * @param storage Optional custom token storage
    * @param bufferSeconds Seconds before expiration to refresh (default: 300)
    */
   constructor(
     site: string,
-    clientId: string = DATADOG_CLI_CLIENT_ID,
+    clientId?: string,
     storage?: ITokenStorage,
     bufferSeconds: number = TOKEN_REFRESH_BUFFER_SECONDS
   ) {
@@ -58,6 +71,24 @@ export class TokenRefresher {
     this.clientId = clientId;
     this.storage = storage || getTokenStorage();
     this.bufferSeconds = bufferSeconds;
+  }
+
+  /**
+   * Get the client ID, falling back to the one stored in tokens
+   * @throws {NoClientIdError} If no client ID is available
+   */
+  private getClientId(): string {
+    if (this.clientId) {
+      return this.clientId;
+    }
+
+    // Try to get clientId from stored tokens
+    const tokens = this.storage.getTokens(this.site);
+    if (tokens?.clientId) {
+      return tokens.clientId;
+    }
+
+    throw new NoClientIdError(this.site);
   }
 
   /**
@@ -137,7 +168,11 @@ export class TokenRefresher {
    */
   private async performRefresh(refreshToken: string): Promise<OAuthTokens> {
     try {
-      const newTokens = await refreshAccessToken(this.site, refreshToken, this.clientId);
+      const clientId = this.getClientId();
+      const newTokens = await refreshAccessToken(this.site, refreshToken, clientId);
+
+      // Preserve the clientId in the refreshed tokens
+      newTokens.clientId = clientId;
 
       // Save the new tokens
       this.storage.saveTokens(this.site, newTokens);
@@ -216,14 +251,12 @@ const globalRefreshers: Map<string, TokenRefresher> = new Map();
 /**
  * Get a TokenRefresher for a specific site
  * @param site The Datadog site
- * @param clientId The OAuth client ID
+ * @param clientId Optional OAuth client ID (will be read from stored tokens if not provided)
  * @returns The TokenRefresher instance
  */
-export function getTokenRefresher(
-  site: string,
-  clientId: string = DATADOG_CLI_CLIENT_ID
-): TokenRefresher {
-  const key = `${site}:${clientId}`;
+export function getTokenRefresher(site: string, clientId?: string): TokenRefresher {
+  // Use a key that includes clientId if provided, otherwise just site
+  const key = clientId ? `${site}:${clientId}` : site;
 
   if (!globalRefreshers.has(key)) {
     globalRefreshers.set(key, new TokenRefresher(site, clientId));
