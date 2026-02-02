@@ -255,6 +255,8 @@ export class CallbackServer {
   private expectedState: string = '';
   private callbackPath: string;
   private timeoutMs: number;
+  /** Buffered callback result to handle race condition between start() and waitForCallback() */
+  private bufferedResult: CallbackResult | null = null;
 
   /**
    * Create a new CallbackServer
@@ -274,6 +276,7 @@ export class CallbackServer {
   async start(expectedState: string): Promise<number> {
     this.expectedState = expectedState;
     this.port = await findAvailablePort();
+    this.bufferedResult = null;
 
     return new Promise((resolve, reject) => {
       this.server = http.createServer((req, res) => {
@@ -285,13 +288,24 @@ export class CallbackServer {
           return;
         }
 
-        // This handler just serves the HTML - actual processing happens in waitForCallback
+        // Capture callback data to buffer (handles race condition with waitForCallback)
         const query = parsedUrl.query;
-        const error = query.error as string | undefined;
+        const result: CallbackResult = {
+          code: query.code as string | undefined,
+          state: query.state as string | undefined,
+          error: query.error as string | undefined,
+          errorDescription: query.error_description as string | undefined,
+        };
 
-        if (error) {
+        // Buffer the result for waitForCallback() to consume
+        if (!this.bufferedResult) {
+          this.bufferedResult = result;
+        }
+
+        // Serve HTML response
+        if (result.error) {
           res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(ERROR_HTML(error, query.error_description as string | undefined));
+          res.end(ERROR_HTML(result.error, result.errorDescription));
         } else {
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.end(SUCCESS_HTML);
@@ -310,6 +324,7 @@ export class CallbackServer {
 
   /**
    * Wait for the OAuth callback
+   * Uses polling to check for buffered results, avoiding duplicate request handlers.
    * @returns The callback result
    */
   waitForCallback(): Promise<CallbackResult> {
@@ -320,6 +335,7 @@ export class CallbackServer {
       }
 
       let resolved = false;
+      const pollIntervalMs = 100;
 
       // Set up timeout
       const timeoutId = setTimeout(() => {
@@ -330,60 +346,38 @@ export class CallbackServer {
         }
       }, this.timeoutMs);
 
-      // Handle incoming requests
-      this.server.removeAllListeners('request');
+      // Poll for buffered result (set by the start() handler)
+      const checkForResult = () => {
+        if (resolved) return;
 
-      this.server.on('request', (req, res) => {
-        const parsedUrl = url.parse(req.url || '', true);
+        if (this.bufferedResult) {
+          const result = this.bufferedResult;
+          this.bufferedResult = null;
+          resolved = true;
+          clearTimeout(timeoutId);
 
-        // Only process callback path
-        if (parsedUrl.pathname !== this.callbackPath) {
-          res.writeHead(404, { 'Content-Type': 'text/plain' });
-          res.end('Not Found');
-          return;
-        }
-
-        const query = parsedUrl.query;
-        const result: CallbackResult = {
-          code: query.code as string | undefined,
-          state: query.state as string | undefined,
-          error: query.error as string | undefined,
-          errorDescription: query.error_description as string | undefined,
-        };
-
-        // Serve HTML response
-        if (result.error) {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(ERROR_HTML(result.error, result.errorDescription));
-        } else {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(SUCCESS_HTML);
-        }
-
-        // Validate state
-        if (result.state !== this.expectedState) {
-          if (!resolved) {
-            resolved = true;
-            clearTimeout(timeoutId);
-            // Give the browser time to receive the response
+          // Validate state
+          if (result.state !== this.expectedState) {
             setTimeout(() => {
               this.stop();
               reject(new Error('Invalid state parameter. This may be a CSRF attack attempt.'));
             }, 100);
+            return;
           }
-          return;
-        }
 
-        if (!resolved) {
-          resolved = true;
-          clearTimeout(timeoutId);
-          // Give the browser time to receive the response
           setTimeout(() => {
             this.stop();
             resolve(result);
           }, 100);
+          return;
         }
-      });
+
+        // Continue polling
+        setTimeout(checkForResult, pollIntervalMs);
+      };
+
+      // Start polling
+      checkForResult();
     });
   }
 

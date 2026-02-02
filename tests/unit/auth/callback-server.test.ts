@@ -219,7 +219,7 @@ function makeCallbackRequest(
 
     const req = http.get(url, (res) => {
       // Consume response
-      res.on('data', () => {});
+      res.on('data', () => {/* consume response */});
       res.on('end', () => resolve());
     });
 

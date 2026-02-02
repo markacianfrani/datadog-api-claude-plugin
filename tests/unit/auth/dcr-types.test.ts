@@ -24,7 +24,7 @@ describe('DCR Types', () => {
 
     it('should define the DCR redirect URIs', () => {
       expect(DCR_REDIRECT_URIS).toContain('http://127.0.0.1:8000/oauth/callback');
-      expect(DCR_REDIRECT_URIS).toContain('http://localhost:8080/oauth/callback');
+      expect(DCR_REDIRECT_URIS).toContain('http://127.0.0.1:8080/oauth/callback');
       expect(DCR_REDIRECT_URIS.length).toBeGreaterThanOrEqual(4);
     });
 
