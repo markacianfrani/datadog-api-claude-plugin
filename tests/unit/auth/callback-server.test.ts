@@ -9,29 +9,38 @@
 
 import * as http from 'http';
 import { CallbackServer, findAvailablePort } from '../../../src/lib/auth/callback-server';
+import { DCR_REDIRECT_URIS } from '../../../src/lib/auth/dcr-types';
+
+// Extract the DCR-registered ports for test assertions
+const DCR_REGISTERED_PORTS = DCR_REDIRECT_URIS.map((uri) => {
+  const match = uri.match(/:(\d+)\//);
+  return match ? parseInt(match[1], 10) : 0;
+}).filter((port) => port > 0);
 
 describe('Callback Server', () => {
   describe('findAvailablePort()', () => {
-    it('should find an available port within range', async () => {
-      const port = await findAvailablePort(8000, 9000);
-      expect(port).toBeGreaterThanOrEqual(8000);
-      expect(port).toBeLessThanOrEqual(9000);
+    it('should find an available port from DCR-registered ports', async () => {
+      const port = await findAvailablePort();
+      expect(DCR_REGISTERED_PORTS).toContain(port);
     });
 
-    it('should find different ports on subsequent calls', async () => {
+    it('should find different ports on subsequent calls when first is taken', async () => {
       // Start a server on the first port
       const server1 = new CallbackServer();
       await server1.start('state1');
       const port1 = server1.getPort();
 
       // Find another port
-      const port2 = await findAvailablePort(port1, port1 + 10);
+      const port2 = await findAvailablePort();
 
       // Clean up
       server1.stop();
 
       // The second port should be different (the first one was taken)
       expect(port2).not.toBe(port1);
+      // Both should be DCR-registered ports
+      expect(DCR_REGISTERED_PORTS).toContain(port1);
+      expect(DCR_REGISTERED_PORTS).toContain(port2);
     });
   });
 

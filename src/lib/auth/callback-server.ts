@@ -11,6 +11,7 @@ import * as http from 'http';
 import * as net from 'net';
 import * as url from 'url';
 import { DEFAULT_OAUTH_TIMEOUT_MS } from './types';
+import { DCR_REDIRECT_URIS } from './dcr-types';
 
 /**
  * Result of the OAuth callback
@@ -185,44 +186,36 @@ function escapeHtml(text: string): string {
 }
 
 /**
- * Preferred ports that are registered with DCR
- * These should be tried first before falling back to the full range
+ * Extract ports from DCR_REDIRECT_URIS
+ * These are the only ports that can be used for OAuth callbacks
  */
-const PREFERRED_PORTS = [8000, 8080, 8888, 9000];
+function getDcrRegisteredPorts(): number[] {
+  return DCR_REDIRECT_URIS.map((uri) => {
+    const match = uri.match(/:(\d+)\//);
+    return match ? parseInt(match[1], 10) : 0;
+  }).filter((port) => port > 0);
+}
 
 /**
  * Find an available port on localhost
- * Tries DCR-registered ports first (8000, 8080, 8888, 9000), then falls back to range
- * @param startPort Starting port number to try (default: 8000)
- * @param endPort Ending port number to try (default: 9000)
- * @returns An available port number
+ * Only tries ports that are registered with DCR to avoid invalid_redirect_uri errors
+ * @returns An available port number from the DCR-registered ports
+ * @throws Error if no registered ports are available
  */
-export async function findAvailablePort(
-  startPort: number = 8000,
-  endPort: number = 9000
-): Promise<number> {
-  // First try the preferred ports that are registered with DCR
-  for (const port of PREFERRED_PORTS) {
-    if (port >= startPort && port <= endPort) {
-      const isAvailable = await checkPortAvailable(port);
-      if (isAvailable) {
-        return port;
-      }
-    }
-  }
+export async function findAvailablePort(): Promise<number> {
+  const registeredPorts = getDcrRegisteredPorts();
 
-  // Fall back to scanning the full range
-  for (let port = startPort; port <= endPort; port++) {
-    // Skip ports we already tried
-    if (PREFERRED_PORTS.includes(port)) {
-      continue;
-    }
+  for (const port of registeredPorts) {
     const isAvailable = await checkPortAvailable(port);
     if (isAvailable) {
       return port;
     }
   }
-  throw new Error(`No available ports found between ${startPort} and ${endPort}`);
+
+  throw new Error(
+    `No available ports for OAuth callback. All DCR-registered ports (${registeredPorts.join(', ')}) are in use. ` +
+      'Please free one of these ports and try again.'
+  );
 }
 
 /**
