@@ -8,7 +8,8 @@
  */
 
 import { client, v1, v2 } from '@datadog/datadog-api-client';
-import { ConfigValidator } from './config';
+import { ConfigValidator, DatadogConfig, AuthMethod } from './config';
+import { getTokenRefresher, TokenRefresher } from './auth';
 
 // Re-export v1 and v2 for use by API implementations
 export { v1, v2 };
@@ -51,16 +52,69 @@ class AgentIdentifyingHttpLibrary implements client.HttpLibrary {
 }
 
 /**
+ * Custom HttpLibrary implementation that adds OAuth Bearer token authentication
+ * and handles automatic token refresh
+ */
+class OAuthHttpLibrary implements client.HttpLibrary {
+  private wrapped: client.HttpLibrary;
+  private tokenRefresher: TokenRefresher;
+  private additionalHeaders: Record<string, string>;
+
+  constructor(
+    wrapped: client.HttpLibrary,
+    tokenRefresher: TokenRefresher,
+    additionalHeaders: Record<string, string> = {}
+  ) {
+    this.wrapped = wrapped;
+    this.tokenRefresher = tokenRefresher;
+    this.additionalHeaders = additionalHeaders;
+  }
+
+  async send(request: client.RequestContext): Promise<client.ResponseContext> {
+    // Get a valid access token (refreshes automatically if needed)
+    const accessToken = await this.tokenRefresher.getValidAccessToken();
+
+    // Add OAuth Bearer authorization header
+    request.setHeaderParam('Authorization', `Bearer ${accessToken}`);
+
+    // Add additional headers (agent identification, etc.)
+    for (const [key, value] of Object.entries(this.additionalHeaders)) {
+      request.setHeaderParam(key, value);
+    }
+
+    return this.wrapped.send(request);
+  }
+
+  // Forward other properties to the wrapped library
+  get enableRetry() { return this.wrapped.enableRetry; }
+  set enableRetry(value) { this.wrapped.enableRetry = value; }
+  get maxRetries() { return this.wrapped.maxRetries; }
+  set maxRetries(value) { this.wrapped.maxRetries = value; }
+  get backoffBase() { return this.wrapped.backoffBase; }
+  set backoffBase(value) { this.wrapped.backoffBase = value; }
+  get backoffMultiplier() { return this.wrapped.backoffMultiplier; }
+  set backoffMultiplier(value) { this.wrapped.backoffMultiplier = value; }
+  get debug() { return this.wrapped.debug; }
+  set debug(value) { this.wrapped.debug = value; }
+  get fetch() { return this.wrapped.fetch; }
+  set fetch(value) { this.wrapped.fetch = value; }
+  get zstdCompressorCallback() { return this.wrapped.zstdCompressorCallback; }
+  set zstdCompressorCallback(value) { this.wrapped.zstdCompressorCallback = value; }
+}
+
+/**
  * Singleton wrapper for Datadog API client
  * Provides access to both v1 and v2 APIs
  */
 export class DatadogClient {
   private static instance: DatadogClient | null = null;
   private configuration: client.Configuration;
+  private authMethod: AuthMethod;
 
   private constructor() {
     // Validate configuration and get credentials
     const config = ConfigValidator.validate();
+    this.authMethod = config.authMethod;
 
     // Build agent identification headers
     const agentHeaders: Record<string, string> = {
@@ -86,28 +140,12 @@ export class DatadogClient {
     }
     agentHeaders['User-Agent'] = userAgentParts.join(' ');
 
-    // Create base configuration
-    const baseConfig = client.createConfiguration({
-      authMethods: {
-        apiKeyAuth: config.apiKey,
-        appKeyAuth: config.appKey,
-      },
-    });
-
-    // Wrap the HTTP library to add agent headers
-    const wrappedHttpApi = new AgentIdentifyingHttpLibrary(
-      baseConfig.httpApi,
-      agentHeaders
-    );
-
-    // Create final configuration with wrapped HTTP library
-    this.configuration = client.createConfiguration({
-      authMethods: {
-        apiKeyAuth: config.apiKey,
-        appKeyAuth: config.appKey,
-      },
-      httpApi: wrappedHttpApi,
-    });
+    // Create configuration based on auth method
+    if (config.authMethod === 'oauth') {
+      this.configuration = this.createOAuthConfiguration(config, agentHeaders);
+    } else {
+      this.configuration = this.createApiKeyConfiguration(config, agentHeaders);
+    }
 
     // Set the Datadog site
     this.configuration.setServerVariables({
@@ -123,6 +161,63 @@ export class DatadogClient {
       'v2.deleteIncident': true,
       'v2.searchIncidents': true,
     };
+  }
+
+  /**
+   * Create configuration for API key authentication
+   */
+  private createApiKeyConfiguration(
+    config: DatadogConfig,
+    agentHeaders: Record<string, string>
+  ): client.Configuration {
+    // Create base configuration
+    const baseConfig = client.createConfiguration({
+      authMethods: {
+        apiKeyAuth: config.apiKey,
+        appKeyAuth: config.appKey,
+      },
+    });
+
+    // Wrap the HTTP library to add agent headers
+    const wrappedHttpApi = new AgentIdentifyingHttpLibrary(
+      baseConfig.httpApi,
+      agentHeaders
+    );
+
+    // Create final configuration with wrapped HTTP library
+    return client.createConfiguration({
+      authMethods: {
+        apiKeyAuth: config.apiKey,
+        appKeyAuth: config.appKey,
+      },
+      httpApi: wrappedHttpApi,
+    });
+  }
+
+  /**
+   * Create configuration for OAuth authentication
+   */
+  private createOAuthConfiguration(
+    config: DatadogConfig,
+    agentHeaders: Record<string, string>
+  ): client.Configuration {
+    // Get the token refresher for this site
+    const tokenRefresher = getTokenRefresher(config.site);
+
+    // Create base configuration (no auth methods, we'll handle auth via HTTP library)
+    const baseConfig = client.createConfiguration();
+
+    // Wrap the HTTP library to add OAuth Bearer token
+    const oauthHttpApi = new OAuthHttpLibrary(
+      baseConfig.httpApi,
+      tokenRefresher,
+      agentHeaders
+    );
+
+    // Create final configuration with OAuth HTTP library
+    return client.createConfiguration({
+      httpApi: oauthHttpApi,
+    });
   }
 
   /**
@@ -177,6 +272,22 @@ export class DatadogClient {
    */
   getConfiguration(): client.Configuration {
     return this.configuration;
+  }
+
+  /**
+   * Gets the authentication method being used
+   * @returns The auth method ('api_key' or 'oauth')
+   */
+  getAuthMethod(): AuthMethod {
+    return this.authMethod;
+  }
+
+  /**
+   * Check if using OAuth authentication
+   * @returns True if using OAuth
+   */
+  isOAuth(): boolean {
+    return this.authMethod === 'oauth';
   }
 }
 

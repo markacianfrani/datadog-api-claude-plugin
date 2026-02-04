@@ -91,6 +91,50 @@ export class NotFoundError extends DatadogApiError {
 }
 
 /**
+ * Error for OAuth authentication issues
+ */
+export class OAuthError extends DatadogApiError {
+  constructor(message: string, public suggestion?: string) {
+    super(message, 401);
+    this.name = 'OAuthError';
+  }
+
+  toJSON(): object {
+    return {
+      ...super.toJSON(),
+      suggestion: this.suggestion ||
+        'Run "dd-plugin auth login" to authenticate with OAuth.',
+    };
+  }
+}
+
+/**
+ * Error for expired OAuth tokens
+ */
+export class TokenExpiredError extends OAuthError {
+  constructor() {
+    super(
+      'OAuth access token has expired.',
+      'Token will auto-refresh on next request, or run "dd-plugin auth refresh" to refresh now.'
+    );
+    this.name = 'TokenExpiredError';
+  }
+}
+
+/**
+ * Error for expired refresh tokens (requires re-authentication)
+ */
+export class RefreshTokenExpiredError extends OAuthError {
+  constructor() {
+    super(
+      'OAuth refresh token has expired.',
+      'Run "dd-plugin auth login" to re-authenticate.'
+    );
+    this.name = 'RefreshTokenExpiredError';
+  }
+}
+
+/**
  * Error handler for Datadog API calls
  */
 export class ErrorHandler {

@@ -33,6 +33,7 @@ const createMockConfig = (overrides: Partial<ConfigModule.DatadogConfig> = {}): 
       plugin_version: '1.0.0',
     },
   },
+  authMethod: 'api_key',
   ...overrides,
 });
 
