@@ -1,7 +1,0 @@
-schema-version: v1
-rulesets:
-  - typescript-best-practices:
-      rules:
-        no-console:
-          ignore:
-            - "**/*"  # This is a CLI tool - console output is intentional
