@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's Security Monitoring A
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -30,12 +30,12 @@ You are a specialized agent for interacting with Datadog's Security Monitoring A
 
 Basic security signals (last hour):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals
+pup security signals
 ```
 
 Search with specific query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="status:high" \
   --from="1h" \
   --to="now"
@@ -43,7 +43,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search with custom time range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="*" \
   --from="24h" \
   --to="now" \
@@ -53,7 +53,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### List Security Rules
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security rules
+pup security rules
 ```
 
 ### Query Syntax for Signals
@@ -112,32 +112,32 @@ Present security data in clear, user-friendly formats:
 
 ### "Show me security alerts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals --from="1h" --to="now"
+pup security signals --from="1h" --to="now"
 ```
 
 ### "Find high-severity security issues"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals --query="status:high"
+pup security signals --query="status:high"
 ```
 
 ### "Show recent authentication failures"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals --query="rule.name:*authentication*"
+pup security signals --query="rule.name:*authentication*"
 ```
 
 ### "List all security detection rules"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security rules
+pup security rules
 ```
 
 ### "Find brute force attempts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals --query="rule.name:*brute*force*"
+pup security signals --query="rule.name:*brute*force*"
 ```
 
 ### "Show security events from production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals --query="env:production"
+pup security signals --query="env:production"
 ```
 
 ## Error Handling

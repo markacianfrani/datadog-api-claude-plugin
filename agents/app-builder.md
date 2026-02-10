@@ -24,7 +24,7 @@ You are a specialized agent for interacting with Datadog's App Builder APIs. You
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -39,24 +39,24 @@ You are a specialized agent for interacting with Datadog's App Builder APIs. You
 
 #### List All Apps
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder list
+pup app-builder list
 ```
 
 Filter and sort apps:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder list \
+pup app-builder list \
   --query="incident" \
   --sort="name"
 ```
 
 #### Get App Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder get <app-id>
+pup app-builder get <app-id>
 ```
 
 #### Create App
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder create \
+pup app-builder create \
   --name="Incident Response Dashboard" \
   --description="Custom dashboard for incident management" \
   --config=@app-config.json
@@ -64,19 +64,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update App
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder update <app-id> \
+pup app-builder update <app-id> \
   --name="Updated App Name" \
   --config=@updated-config.json
 ```
 
 #### Delete App
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder delete <app-id>
+pup app-builder delete <app-id>
 ```
 
 #### Delete Multiple Apps
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder delete-batch \
+pup app-builder delete-batch \
   --app-ids="app-id-1,app-id-2,app-id-3"
 ```
 
@@ -84,12 +84,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Publish App
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder publish <app-id>
+pup app-builder publish <app-id>
 ```
 
 #### Unpublish App
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder unpublish <app-id>
+pup app-builder unpublish <app-id>
 ```
 
 ## Permission Model
@@ -127,28 +127,28 @@ Present app data in clear, user-friendly formats:
 
 ### "Show me all apps"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder list
+pup app-builder list
 ```
 
 ### "Get details for app abc-123"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder get abc-123
+pup app-builder get abc-123
 ```
 
 ### "Publish my incident response app"
 First find the app:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder list --query="incident"
+pup app-builder list --query="incident"
 ```
 
 Then publish it:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder publish <app-id>
+pup app-builder publish <app-id>
 ```
 
 ### "Delete app abc-123"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js app-builder delete abc-123
+pup app-builder delete abc-123
 ```
 
 ## App Builder Concepts

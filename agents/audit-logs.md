@@ -20,7 +20,7 @@ You are a specialized agent for interacting with Datadog's Audit Trail API. Your
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key

@@ -28,7 +28,7 @@ Use the Infrastructure agent when you need to:
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -40,30 +40,30 @@ Use the Infrastructure agent when you need to:
 ### List All Hosts
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts
+pup infrastructure hosts
 ```
 
 ### List Hosts with Filter
 
 Filter by environment:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="env:production"
+pup infrastructure hosts --filter="env:production"
 ```
 
 Filter by service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="service:web-app"
+pup infrastructure hosts --filter="service:web-app"
 ```
 
 Filter by cloud provider:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="cloud_provider:aws"
+pup infrastructure hosts --filter="cloud_provider:aws"
 ```
 
 ### Get Host Totals
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure totals
+pup infrastructure totals
 ```
 
 ### Filter Syntax
@@ -105,32 +105,32 @@ Present infrastructure data in clear, user-friendly formats:
 
 ### "Show me all infrastructure hosts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts
+pup infrastructure hosts
 ```
 
 ### "List production hosts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="env:production"
+pup infrastructure hosts --filter="env:production"
 ```
 
 ### "How many hosts are we monitoring?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure totals
+pup infrastructure totals
 ```
 
 ### "Show AWS hosts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="cloud_provider:aws"
+pup infrastructure hosts --filter="cloud_provider:aws"
 ```
 
 ### "List database servers"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="service:database"
+pup infrastructure hosts --filter="service:database"
 ```
 
 ### "Show hosts in specific availability zone"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="availability_zone:us-east-1a"
+pup infrastructure hosts --filter="availability_zone:us-east-1a"
 ```
 
 ## Error Handling

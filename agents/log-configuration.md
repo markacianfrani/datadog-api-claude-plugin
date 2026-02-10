@@ -44,7 +44,7 @@ You are a specialized agent for managing Datadog log configuration. Your role is
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -63,18 +63,18 @@ You are a specialized agent for managing Datadog log configuration. Your role is
 
 #### List All Archives
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives list
+pup logs archives list
 ```
 
 #### Get Specific Archive
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives get \
+pup logs archives get \
   --archive-id="a2zcMylnM4OCHpYusxIi3g"
 ```
 
 #### Create S3 Archive
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives create \
+pup logs archives create \
   --name="Production Logs Archive" \
   --query="env:production" \
   --destination-type="s3" \
@@ -86,7 +86,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With tags and rehydration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives create \
+pup logs archives create \
   --name="Production Logs Archive" \
   --query="env:production" \
   --destination-type="s3" \
@@ -101,7 +101,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With S3 storage class:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives create \
+pup logs archives create \
   --name="Cold Storage Archive" \
   --query="service:legacy" \
   --destination-type="s3" \
@@ -113,7 +113,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create GCS Archive
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives create \
+pup logs archives create \
   --name="GCP Logs Archive" \
   --query="source:gcp" \
   --destination-type="gcs" \
@@ -125,7 +125,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Azure Archive
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives create \
+pup logs archives create \
   --name="Azure Logs Archive" \
   --query="source:azure" \
   --destination-type="azure" \
@@ -138,7 +138,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Archive
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives update \
+pup logs archives update \
   --archive-id="a2zcMylnM4OCHpYusxIi3g" \
   --name="Updated Archive Name" \
   --query="env:production AND service:api"
@@ -146,7 +146,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update rehydration configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives update \
+pup logs archives update \
   --archive-id="a2zcMylnM4OCHpYusxIi3g" \
   --rehydration-max-scan-size-gb=200 \
   --rehydration-tags='["team:sre"]'
@@ -154,18 +154,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Archive
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives delete \
+pup logs archives delete \
   --archive-id="a2zcMylnM4OCHpYusxIi3g"
 ```
 
 #### Get Archive Order
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives get-order
+pup logs archives get-order
 ```
 
 #### Update Archive Order
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives update-order \
+pup logs archives update-order \
   --archive-ids='["archive-id-1", "archive-id-2", "archive-id-3"]'
 ```
 
@@ -173,18 +173,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Pipelines
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines list
+pup logs pipelines list
 ```
 
 #### Get Specific Pipeline
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines get \
+pup logs pipelines get \
   --pipeline-id="pipeline-123"
 ```
 
 #### Create Pipeline with Grok Parser
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines create \
+pup logs pipelines create \
   --name="Nginx Pipeline" \
   --filter-query="source:nginx" \
   --processors='[
@@ -202,7 +202,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Pipeline with Multiple Processors
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines create \
+pup logs pipelines create \
   --name="API Pipeline" \
   --filter-query="service:api" \
   --processors='[
@@ -238,7 +238,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Pipeline
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines update \
+pup logs pipelines update \
   --pipeline-id="pipeline-123" \
   --name="Updated Pipeline Name" \
   --filter-query="source:nginx AND env:production"
@@ -246,18 +246,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Pipeline
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines delete \
+pup logs pipelines delete \
   --pipeline-id="pipeline-123"
 ```
 
 #### Get Pipeline Order
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines get-order
+pup logs pipelines get-order
 ```
 
 #### Update Pipeline Order
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines update-order \
+pup logs pipelines update-order \
   --pipeline-ids='["pipeline-1", "pipeline-2", "pipeline-3"]'
 ```
 
@@ -265,18 +265,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Indexes
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes list
+pup logs indexes list
 ```
 
 #### Get Specific Index
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes get \
+pup logs indexes get \
   --name="main"
 ```
 
 #### Create Index
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes create \
+pup logs indexes create \
   --name="production-logs" \
   --filter-query="env:production" \
   --num-retention-days=30
@@ -284,7 +284,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With exclusion filters:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes create \
+pup logs indexes create \
   --name="production-logs" \
   --filter-query="env:production" \
   --num-retention-days=30 \
@@ -310,7 +310,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With daily limit:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes create \
+pup logs indexes create \
   --name="high-volume-logs" \
   --filter-query="source:application" \
   --num-retention-days=7 \
@@ -319,7 +319,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Index
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes update \
+pup logs indexes update \
   --name="production-logs" \
   --filter-query="env:production AND service:api" \
   --num-retention-days=60
@@ -327,18 +327,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Index
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes delete \
+pup logs indexes delete \
   --name="old-index"
 ```
 
 #### Get Index Order
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes get-order
+pup logs indexes get-order
 ```
 
 #### Update Index Order
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes update-order \
+pup logs indexes update-order \
   --index-names='["high-priority-index", "main", "retention-7-days"]'
 ```
 
@@ -346,18 +346,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Custom Destinations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations list
+pup logs custom-destinations list
 ```
 
 #### Get Specific Custom Destination
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations get \
+pup logs custom-destinations get \
   --destination-id="destination-abc123"
 ```
 
 #### Create HTTP Destination (Basic Auth)
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="External Log System" \
   --query="service:external" \
   --destination-type="http" \
@@ -369,7 +369,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create HTTP Destination (Custom Header)
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="API Gateway" \
   --query="env:production" \
   --destination-type="http" \
@@ -381,7 +381,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Splunk HEC Destination
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="Splunk HEC" \
   --query="source:application" \
   --destination-type="splunk_hec" \
@@ -391,7 +391,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Elasticsearch Destination
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="Elasticsearch Cluster" \
   --query="service:search" \
   --destination-type="elasticsearch" \
@@ -403,7 +403,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With index rotation:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="Elasticsearch with Rotation" \
   --query="service:logs" \
   --destination-type="elasticsearch" \
@@ -416,7 +416,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Microsoft Sentinel Destination
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="Microsoft Sentinel" \
   --query="source:security" \
   --destination-type="azure_sentinel" \
@@ -427,7 +427,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With tag restrictions:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="External System with Tag Filtering" \
   --query="env:production" \
   --destination-type="http" \
@@ -441,7 +441,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Custom Destination
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations update \
+pup logs custom-destinations update \
   --destination-id="destination-abc123" \
   --name="Updated Destination Name" \
   --query="service:api AND env:production"
@@ -449,7 +449,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Custom Destination
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations delete \
+pup logs custom-destinations delete \
   --destination-id="destination-abc123"
 ```
 
@@ -1030,12 +1030,12 @@ Control access to logs based on queries assigned to roles. This enables role-bas
 
 #### List Restriction Queries
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries list
+pup logs-restriction-queries list
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries list \
+pup logs-restriction-queries list \
   --page-size=50 \
   --page-number=2
 ```
@@ -1043,39 +1043,39 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Create Restriction Query
 Create query to restrict logs by environment:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+pup logs-restriction-queries create \
   --query="env:production"
 ```
 
 Restrict by service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+pup logs-restriction-queries create \
   --query="service:api OR service:web"
 ```
 
 Restrict by team tag:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+pup logs-restriction-queries create \
   --query="team:platform"
 ```
 
 Complex restriction:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries create \
+pup logs-restriction-queries create \
   --query="env:production AND (team:platform OR team:sre)"
 ```
 
 #### Get Restriction Query
 Get specific restriction query with relationships:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries get \
+pup logs-restriction-queries get \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5"
 ```
 
 #### Update Restriction Query
 Update existing restriction query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries update \
+pup logs-restriction-queries update \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
   --query="env:production AND team:platform"
 ```
@@ -1083,7 +1083,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Replace Restriction Query
 Replace entire restriction query (PUT):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries replace \
+pup logs-restriction-queries replace \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
   --query="env:staging"
 ```
@@ -1091,14 +1091,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Delete Restriction Query
 Delete restriction query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries delete \
+pup logs-restriction-queries delete \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5"
 ```
 
 #### Grant Role to Restriction Query
 Add role to restriction query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries grant-role \
+pup logs-restriction-queries grant-role \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
   --role-id="00000000-0000-1111-0000-000000000000"
 ```
@@ -1106,7 +1106,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Revoke Role from Restriction Query
 Remove role from restriction query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries revoke-role \
+pup logs-restriction-queries revoke-role \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5" \
   --role-id="00000000-0000-1111-0000-000000000000"
 ```
@@ -1114,21 +1114,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List Roles for Restriction Query
 Get all roles assigned to a restriction query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries list-roles \
+pup logs-restriction-queries list-roles \
   --query-id="79a0e60a-644a-11ea-ad29-43329f7f58b5"
 ```
 
 #### Get User's Restriction Queries
 Get all restriction queries for a specific user:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries get-by-user \
+pup logs-restriction-queries get-by-user \
   --user-id="00000000-0000-0000-0000-000000000000"
 ```
 
 #### Get Role's Restriction Query
 Get restriction query for a specific role:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs-restriction-queries get-by-role \
+pup logs-restriction-queries get-by-role \
   --role-id="00000000-0000-1111-0000-000000000000"
 ```
 
@@ -1259,12 +1259,12 @@ Present log configuration data in clear, user-friendly formats:
 
 ### "Show me all log archives"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives list
+pup logs archives list
 ```
 
 ### "Create an S3 archive for production logs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs archives create \
+pup logs archives create \
   --name="Production Archive" \
   --query="env:production" \
   --destination-type="s3" \
@@ -1275,7 +1275,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Create a pipeline to parse Nginx logs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs pipelines create \
+pup logs pipelines create \
   --name="Nginx Pipeline" \
   --filter-query="source:nginx" \
   --processors='[
@@ -1293,7 +1293,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Create an index for production logs with 30-day retention"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes create \
+pup logs indexes create \
   --name="production" \
   --filter-query="env:production" \
   --num-retention-days=30
@@ -1301,7 +1301,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Forward logs to Splunk"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs custom-destinations create \
+pup logs custom-destinations create \
   --name="Splunk HEC" \
   --query="source:application" \
   --destination-type="splunk_hec" \
@@ -1311,7 +1311,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Update index order to prioritize critical logs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs indexes update-order \
+pup logs indexes update-order \
   --index-names='["critical-logs", "production", "staging", "development"]'
 ```
 

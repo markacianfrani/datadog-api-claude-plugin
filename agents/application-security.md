@@ -19,7 +19,7 @@ You are a specialized agent for interacting with Datadog's Application Security 
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -43,7 +43,7 @@ You are a specialized agent for interacting with Datadog's Application Security 
 
 Search for application security threats:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm" \
   --from="1h" \
   --to="now"
@@ -52,24 +52,24 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 Search for specific attack types:
 ```bash
 # SQL injection attempts
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND rule.name:*sql*injection*" \
   --from="24h"
 
 # XSS attacks
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND rule.name:*xss*" \
   --from="24h"
 
 # SSRF attempts
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND rule.name:*ssrf*" \
   --from="24h"
 ```
 
 Search by severity:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND status:high" \
   --from="1h"
 ```
@@ -272,7 +272,7 @@ Present ASM data in clear, user-friendly formats:
 
 ### "Show me application security threats"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm" \
   --from="24h" \
   --to="now"
@@ -280,49 +280,49 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Are there any SQL injection attempts?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND rule.name:*sql*injection*" \
   --from="24h"
 ```
 
 ### "Show XSS attacks"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND @attack.technique:cross-site-scripting" \
   --from="24h"
 ```
 
 ### "Find high-severity application threats"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND status:high" \
   --from="1h"
 ```
 
 ### "Show blocked attacks"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND @appsec.blocked:true" \
   --from="24h"
 ```
 
 ### "Search for SSRF attempts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND @attack.technique:ssrf" \
   --from="24h"
 ```
 
 ### "Find attacks targeting specific service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND service:api-gateway" \
   --from="24h"
 ```
 
 ### "Show credential stuffing attempts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:asm AND @attack.technique:credential-stuffing" \
   --from="24h"
 ```

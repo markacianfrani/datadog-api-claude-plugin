@@ -45,7 +45,7 @@ You are a specialized agent for interacting with Datadog's Organization Manageme
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -58,12 +58,12 @@ You are a specialized agent for interacting with Datadog's Organization Manageme
 
 #### List Organization Configs
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs list
+pup org configs list
 ```
 
 #### Get Organization Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs get <config-name>
+pup org configs get <config-name>
 ```
 
 Example config names:
@@ -75,19 +75,19 @@ Example config names:
 
 #### Update Organization Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs update <config-name> \
+pup org configs update <config-name> \
   --value="true"
 ```
 
 Update SAML settings:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs update saml_strict_mode \
+pup org configs update saml_strict_mode \
   --value="true"
 ```
 
 Configure domain allowlist:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs update saml_autocreate_users_domains \
+pup org configs update saml_autocreate_users_domains \
   --value='{"restricted_domains": ["example.com", "company.com"]}'
 ```
 
@@ -95,19 +95,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Organization Connections
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections list
+pup org connections list
 ```
 
 Filter by type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections list \
+pup org connections list \
   --filter-type="idp"
 ```
 
 #### Create Organization Connection
 ```bash
 # Create identity provider connection
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections create \
+pup org connections create \
   --name="Corporate SAML" \
   --type="idp" \
   --config=@saml-config.json
@@ -115,7 +115,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create GitHub connection:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections create \
+pup org connections create \
   --name="GitHub Organization" \
   --type="github" \
   --config='{"organization": "my-company", "client_id": "...", "client_secret": "..."}'
@@ -123,7 +123,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create Slack connection:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections create \
+pup org connections create \
   --name="Company Slack" \
   --type="slack" \
   --config='{"workspace_id": "...", "access_token": "..."}'
@@ -131,51 +131,51 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Organization Connection
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections update <connection-id> \
+pup org connections update <connection-id> \
   --name="Updated Connection Name" \
   --config=@updated-config.json
 ```
 
 #### Delete Organization Connection
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections delete <connection-id>
+pup org connections delete <connection-id>
 ```
 
 ### Role Management
 
 #### List All Roles
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles list
+pup roles list
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles list \
+pup roles list \
   --page-size=50 \
   --page-number=1
 ```
 
 Filter by name:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles list \
+pup roles list \
   --filter="engineer"
 ```
 
 #### Get Role Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles get <role-id>
+pup roles get <role-id>
 ```
 
 #### Create Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles create \
+pup roles create \
   --name="Database Administrator" \
   --description="Full access to database monitoring features"
 ```
 
 Create with specific permissions:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles create \
+pup roles create \
   --name="Dashboard Viewer" \
   --description="Read-only access to dashboards" \
   --permissions="dashboards_read,monitors_read"
@@ -183,56 +183,56 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles update <role-id> \
+pup roles update <role-id> \
   --name="Updated Role Name" \
   --description="Updated description"
 ```
 
 #### Delete Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles delete <role-id>
+pup roles delete <role-id>
 ```
 
 #### Clone Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles clone <role-id> \
+pup roles clone <role-id> \
   --name="Cloned Role Name"
 ```
 
 Clone and modify:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles clone <role-id> \
+pup roles clone <role-id> \
   --name="Custom Admin Role" \
   --description="Admin role with limited permissions"
 ```
 
 #### List Role Templates
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles templates
+pup roles templates
 ```
 
 ### Role Permissions
 
 #### List Role Permissions
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles permissions list <role-id>
+pup roles permissions list <role-id>
 ```
 
 #### Add Permission to Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles permissions add <role-id> \
+pup roles permissions add <role-id> \
   --permission-id="logs_read_data"
 ```
 
 Add multiple permissions:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles permissions add <role-id> \
+pup roles permissions add <role-id> \
   --permission-ids="logs_read_data,logs_read_index_data,logs_live_tail"
 ```
 
 #### Remove Permission from Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles permissions remove <role-id> \
+pup roles permissions remove <role-id> \
   --permission-id="logs_write_archives"
 ```
 
@@ -240,31 +240,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Users in Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users list <role-id>
+pup roles users list <role-id>
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users list <role-id> \
+pup roles users list <role-id> \
   --page-size=50 \
   --page-number=1
 ```
 
 #### Add User to Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users add <role-id> \
+pup roles users add <role-id> \
   --user-id="abc-123-def-456"
 ```
 
 Add multiple users:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users add <role-id> \
+pup roles users add <role-id> \
   --user-ids="user-1,user-2,user-3"
 ```
 
 #### Remove User from Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users remove <role-id> \
+pup roles users remove <role-id> \
   --user-id="abc-123-def-456"
 ```
 
@@ -272,7 +272,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Available Permissions
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js permissions list
+pup permissions list
 ```
 
 ## Permission Model
@@ -408,59 +408,59 @@ Present organization management data in clear, user-friendly formats:
 
 ### "Show organization configurations"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs list
+pup org configs list
 ```
 
 ### "Enable SAML strict mode"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org configs update saml_strict_mode \
+pup org configs update saml_strict_mode \
   --value="true"
 ```
 
 ### "List all roles"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles list
+pup roles list
 ```
 
 ### "Create a custom role for database admins"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles create \
+pup roles create \
   --name="Database Administrator" \
   --description="Full access to database monitoring"
 
 # Then add relevant permissions
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles permissions add <role-id> \
+pup roles permissions add <role-id> \
   --permission-ids="dashboards_read,dashboards_write,monitors_read,monitors_write"
 ```
 
 ### "Clone the Datadog Standard role"
 ```bash
 # First list roles to find the ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles list
+pup roles list
 
 # Clone the role
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles clone <standard-role-id> \
+pup roles clone <standard-role-id> \
   --name="Custom Standard Role"
 ```
 
 ### "Add user to a role"
 ```bash
 # First find the role ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles list
+pup roles list
 
 # Add user
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users add <role-id> \
+pup roles users add <role-id> \
   --user-id="user-abc-123"
 ```
 
 ### "List all available permissions"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js permissions list
+pup permissions list
 ```
 
 ### "Set up GitHub connection"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js org connections create \
+pup org connections create \
   --name="Company GitHub" \
   --type="github" \
   --config='{"organization": "my-company", "client_id": "...", "client_secret": "..."}'
@@ -468,7 +468,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "View users in a specific role"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js roles users list <role-id>
+pup roles users list <role-id>
 ```
 
 ## Error Handling

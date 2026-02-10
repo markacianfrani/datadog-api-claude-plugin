@@ -20,7 +20,7 @@ You are a specialized agent for interacting with Datadog's Cloud Security Postur
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -41,80 +41,80 @@ You are a specialized agent for interacting with Datadog's Cloud Security Postur
 
 List all vulnerabilities (with pagination):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list
+pup vulnerabilities list
 ```
 
 Filter by severity:
 ```bash
 # Critical vulnerabilities only
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="cvss.datadog.severity=Critical"
 
 # High or Critical
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="cvss.datadog.severity=High,Critical"
 ```
 
 Filter by vulnerability type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="type=SqlInjection,Xss,CommandInjection"
 ```
 
 Filter by detection tool:
 ```bash
 # IAST (Interactive Application Security Testing)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="tool=IAST"
 
 # SCA (Software Composition Analysis)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="tool=SCA"
 
 # Infrastructure vulnerabilities
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="tool=Infra"
 
 # SAST (Static Application Security Testing)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="tool=SAST"
 ```
 
 Filter by status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="status=Open"
 ```
 
 Filter by exploitability:
 ```bash
 # Has public exploit available
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="risks.exploit_available=true"
 
 # POC exploit available
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="risks.poc_exploit_available=true"
 ```
 
 Filter by asset characteristics:
 ```bash
 # Production assets only
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="asset.risks.in_production=true"
 
 # Assets under attack
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="asset.risks.under_attack=true"
 
 # Publicly accessible assets
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="asset.risks.is_publicly_accessible=true"
 ```
 
 Filter by CVE:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="advisory.id=CVE-2023-0615"
 ```
 
@@ -122,24 +122,24 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 List all vulnerable assets:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities assets
+pup vulnerabilities assets
 ```
 
 Filter by asset type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities assets \
+pup vulnerabilities assets \
   --filter="type=Host"
 ```
 
 Filter by environment:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities assets \
+pup vulnerabilities assets \
   --filter="environments=production"
 ```
 
 Filter by team:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities assets \
+pup vulnerabilities assets \
   --filter="teams=compute,security"
 ```
 
@@ -149,7 +149,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get SBOM for a repository:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom get \
+pup sbom get \
   --asset-type=Repository \
   --asset-name="github.com/datadog/datadog-agent" \
   --format=CycloneDX
@@ -157,7 +157,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get SBOM for a container image:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom get \
+pup sbom get \
   --asset-type=Image \
   --asset-name="nginx:latest" \
   --repo-digest="sha256:0ae7da091191787229d321e3638e39c319a97d6e20f927d465b519d699215bf7"
@@ -165,7 +165,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get SBOM for a service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom get \
+pup sbom get \
   --asset-type=Service \
   --asset-name="api-gateway"
 ```
@@ -174,29 +174,29 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 List all SBOMs:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom list
+pup sbom list
 ```
 
 Filter by asset type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom list \
+pup sbom list \
   --filter="asset_type=Repository"
 ```
 
 Filter by package:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom list \
+pup sbom list \
   --filter="package_name=opentelemetry-api" \
   --filter="package_version=1.33.1"
 ```
 
 Filter by license:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom list \
+pup sbom list \
   --filter="license_name=Apache-2.0"
 
 # By license type
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom list \
+pup sbom list \
   --filter="license_type=strong_copyleft"
 ```
 
@@ -206,59 +206,59 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 List all findings (misconfigurations and identity risks):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list
+pup findings list
 ```
 
 List only identity risks:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="tags=dd_rule_type:ciem"
 ```
 
 Filter by status/severity:
 ```bash
 # Critical findings only
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="status=critical"
 
 # High and critical
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="status=critical,high"
 ```
 
 Filter by evaluation:
 ```bash
 # Failed findings only
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="evaluation=fail"
 ```
 
 Filter by vulnerability type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="vulnerability_type=misconfiguration,attack_path"
 ```
 
 Filter by mute status:
 ```bash
 # Show only muted findings
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="muted=true"
 
 # Show only unmuted findings
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="muted=false"
 ```
 
 Filter by resource type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="resource_type=aws_s3_bucket"
 ```
 
 Filter by cloud provider tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="tags=cloud_provider:aws" \
   --filter="tags=aws_account:999999999999"
 ```
@@ -266,13 +266,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 Filter by evaluation change date:
 ```bash
 # Findings that changed in the last 7 days
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="evaluation_changed_at=>=$(date -v-7d +%s)000"
 ```
 
 Get detailed findings with additional fields:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --detailed=true
 ```
 
@@ -280,7 +280,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get detailed information about a finding:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings get \
+pup findings get \
   --finding-id="ZGVmLTAwcC1pZXJ-aS0wZjhjNjMyZDNmMzRlZTgzNw=="
 ```
 
@@ -290,39 +290,39 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Analyze CSM coverage for cloud accounts (AWS, Azure, GCP):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js csm coverage cloud-accounts
+pup csm coverage cloud-accounts
 ```
 
 #### Hosts and Containers Coverage
 
 Analyze CSM coverage for hosts and containers:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js csm coverage hosts-containers
+pup csm coverage hosts-containers
 ```
 
 #### Serverless Coverage
 
 Analyze CSM coverage for serverless resources:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js csm coverage serverless
+pup csm coverage serverless
 ```
 
 ### Scanned Assets Metadata
 
 List scanned assets metadata:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities scanned-metadata
+pup vulnerabilities scanned-metadata
 ```
 
 Filter by asset type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities scanned-metadata \
+pup vulnerabilities scanned-metadata \
   --filter="asset.type=Host"
 ```
 
 Filter by scan origin:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities scanned-metadata \
+pup vulnerabilities scanned-metadata \
   --filter="last_success.origin=agent"
 ```
 
@@ -505,67 +505,67 @@ Present security posture data in clear, user-friendly formats:
 
 ### "Show me all critical vulnerabilities in production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="cvss.datadog.severity=Critical" \
   --filter="asset.risks.in_production=true"
 ```
 
 ### "What vulnerabilities have public exploits available?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="risks.exploit_available=true" \
   --filter="status=Open"
 ```
 
 ### "List all SQL injection vulnerabilities found by IAST"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="type=SqlInjection" \
   --filter="tool=IAST"
 ```
 
 ### "Show dependency vulnerabilities in my repositories"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js vulnerabilities list \
+pup vulnerabilities list \
   --filter="tool=SCA" \
   --filter="asset.type=Repository"
 ```
 
 ### "What are my critical security findings?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="status=critical" \
   --filter="evaluation=fail"
 ```
 
 ### "Show me identity risks"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="tags=dd_rule_type:ciem" \
   --filter="evaluation=fail"
 ```
 
 ### "What's my CSM coverage across cloud accounts?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js csm coverage cloud-accounts
+pup csm coverage cloud-accounts
 ```
 
 ### "Generate SBOM for my API service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom get \
+pup sbom get \
   --asset-type=Service \
   --asset-name="api-gateway"
 ```
 
 ### "Find all services with GPL-licensed dependencies"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js sbom list \
+pup sbom list \
   --filter="license_type=strong_copyleft"
 ```
 
 ### "Show unmuted AWS misconfigurations"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js findings list \
+pup findings list \
   --filter="tags=cloud_provider:aws" \
   --filter="vulnerability_type=misconfiguration" \
   --filter="muted=false" \

@@ -18,7 +18,7 @@ You are a specialized agent for configuring SAML Single Sign-On (SSO) in Datadog
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -32,13 +32,13 @@ You are a specialized agent for configuring SAML Single Sign-On (SSO) in Datadog
 Upload Identity Provider metadata XML file to configure SAML SSO:
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/idp-metadata.xml"
 ```
 
 Update existing SAML configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/updated-idp-metadata.xml"
 ```
 
@@ -84,7 +84,7 @@ First, download the IdP metadata XML file from your identity provider:
 #### Step 2: Upload IdP Metadata to Datadog
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/idp-metadata.xml"
 ```
 
@@ -111,13 +111,13 @@ After uploading IdP metadata, configure which IdP groups map to which Datadog ro
 
 ```bash
 # Map IdP group to Datadog role
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.xmlsoap.org/claims/Group" \
   --attribute-value="Datadog-Admins" \
   --role="Datadog Admin"
 
 # Map users to standard role
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.xmlsoap.org/claims/Group" \
   --attribute-value="Datadog-Users" \
   --role="Datadog Standard"
@@ -142,11 +142,11 @@ See the **User Access Management Agent** documentation for complete authenticati
 ```bash
 # 1. Download IdP metadata from Okta (manual step)
 # 2. Upload to Datadog
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/okta-metadata.xml"
 
 # 3. Create authentication mappings
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.xmlsoap.org/claims/Group" \
   --attribute-value="DatadogAdmins" \
   --role="Datadog Admin"
@@ -156,7 +156,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ```bash
 # Download new metadata from your IdP, then upload
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/updated-idp-metadata.xml"
 ```
 
@@ -165,11 +165,11 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ```bash
 # 1. Download Federation Metadata XML from Azure AD (manual step)
 # 2. Upload to Datadog
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/azure-metadata.xml"
 
 # 3. Create role mappings based on Azure AD groups
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.microsoft.com/ws/2008/06/identity/claims/groups" \
   --attribute-value="<azure-group-id>" \
   --role="Datadog Standard"
@@ -180,11 +180,11 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ```bash
 # 1. Download SAML metadata from Google Admin Console (manual step)
 # 2. Upload to Datadog
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js saml upload-metadata \
+pup saml upload-metadata \
   --file="/path/to/google-metadata.xml"
 
 # 3. Create role mappings based on Google groups
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.xmlsoap.org/claims/Group" \
   --attribute-value="datadog-users@company.com" \
   --role="Datadog Standard"

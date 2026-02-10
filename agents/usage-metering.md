@@ -39,7 +39,7 @@ You are a specialized agent for interacting with Datadog's Usage Metering API. Y
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -61,7 +61,7 @@ You are a specialized agent for interacting with Datadog's Usage Metering API. Y
 #### Hosts and Containers
 Get hourly host and container counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hosts \
+pup usage hosts \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -80,7 +80,7 @@ This returns:
 #### Logs Ingestion and Indexing
 Get logs usage by hour:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage logs \
+pup usage logs \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -96,7 +96,7 @@ Returns:
 #### Logs by Index
 Get usage per log index:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage logs-by-index \
+pup usage logs-by-index \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -104,7 +104,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Logs by Retention
 Get usage by retention period:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage logs-by-retention \
+pup usage logs-by-retention \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -112,7 +112,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Analyzed Logs
 Get analyzed logs (Log Management) usage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage analyzed-logs \
+pup usage analyzed-logs \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -122,7 +122,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Timeseries Counts
 Get custom metrics timeseries counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage timeseries \
+pup usage timeseries \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -135,13 +135,13 @@ Returns:
 #### Top Average Metrics
 Identify metrics with highest timeseries counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage top-avg-metrics \
+pup usage top-avg-metrics \
   --month="2024-01"
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage top-avg-metrics \
+pup usage top-avg-metrics \
   --month="2024-01" \
   --limit=100 \
   --next-record-id="abc123"
@@ -149,13 +149,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 By specific day:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage top-avg-metrics \
+pup usage top-avg-metrics \
   --day="2024-01-15"
 ```
 
 Filter by metric names:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage top-avg-metrics \
+pup usage top-avg-metrics \
   --month="2024-01" \
   --names="my.custom.metric,app.response.time"
 ```
@@ -165,7 +165,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### APM Indexed Spans
 Get indexed spans (Trace Search & Analytics) usage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage indexed-spans \
+pup usage indexed-spans \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -173,7 +173,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### APM Ingested Spans
 Get ingested spans usage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage ingested-spans \
+pup usage ingested-spans \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -183,7 +183,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Synthetics Tests
 Get total synthetics usage (API + Browser):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage synthetics \
+pup usage synthetics \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -191,7 +191,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Synthetics API Tests
 Get API test usage only:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage synthetics-api \
+pup usage synthetics-api \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -199,7 +199,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Synthetics Browser Tests
 Get browser test usage only:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage synthetics-browser \
+pup usage synthetics-browser \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -209,7 +209,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### AWS Fargate
 Get Fargate task counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage fargate \
+pup usage fargate \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -217,7 +217,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### AWS Lambda
 Get Lambda invocation counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage lambda \
+pup usage lambda \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -225,7 +225,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Lambda Traced Invocations (V2)
 Get traced Lambda invocations:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage lambda-traced-invocations \
+pup usage lambda-traced-invocations \
   --start-date="2024-01-01T00:00:00Z" \
   --end-date="2024-01-31T23:59:59Z"
 ```
@@ -234,14 +234,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get Real User Monitoring session counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage rum-sessions \
+pup usage rum-sessions \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
 
 With session type filter:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage rum-sessions \
+pup usage rum-sessions \
   --start-date="2024-01-01" \
   --end-date="2024-01-31" \
   --type="browser"
@@ -252,7 +252,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Network Hosts
 Get Network Performance Monitoring host counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage network-hosts \
+pup usage network-hosts \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -260,7 +260,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Network Flows
 Get network flow counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage network-flows \
+pup usage network-flows \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -270,7 +270,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Profiling
 Get Continuous Profiler host counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage profiling \
+pup usage profiling \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -278,7 +278,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Database Monitoring
 Get DBM host counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage dbm \
+pup usage dbm \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -286,7 +286,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### SNMP Monitoring
 Get SNMP device counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage snmp \
+pup usage snmp \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -294,7 +294,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### IoT
 Get IoT device counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage iot \
+pup usage iot \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -302,7 +302,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### CI Visibility
 Get CI/CD usage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage ci-visibility \
+pup usage ci-visibility \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -310,7 +310,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Online Archive
 Get Online Archive event counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage online-archive \
+pup usage online-archive \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -320,7 +320,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### CSPM (Cloud Security Posture Management)
 Get CSPM host and container counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cspm \
+pup usage cspm \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -328,7 +328,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### CWS (Cloud Workload Security)
 Get CWS host counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cws \
+pup usage cws \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -336,7 +336,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Application Security (V2)
 Get ASM host counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage app-security \
+pup usage app-security \
   --start-date="2024-01-01T00:00:00Z" \
   --end-date="2024-01-31T23:59:59Z"
 ```
@@ -344,7 +344,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Sensitive Data Scanner
 Get SDS scanned bytes:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage sds \
+pup usage sds \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -352,7 +352,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Audit Logs
 Get audit log event counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage audit-logs \
+pup usage audit-logs \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -361,7 +361,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get incident management active user counts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage incident-management \
+pup usage incident-management \
   --start-date="2024-01-01" \
   --end-date="2024-01-31"
 ```
@@ -370,7 +370,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get Observability Pipelines bytes processed:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage observability-pipelines \
+pup usage observability-pipelines \
   --start-date="2024-01-01T00:00:00Z" \
   --end-date="2024-01-31T23:59:59Z"
 ```
@@ -380,20 +380,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Billable Summary
 Get billable usage summary for a month:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage billable-summary \
+pup usage billable-summary \
   --month="2024-01"
 ```
 
 With product filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage billable-summary \
+pup usage billable-summary \
   --month="2024-01" \
   --include-products="infra_hosts,logs,apm_hosts"
 ```
 
 With sorting:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage billable-summary \
+pup usage billable-summary \
   --month="2024-01" \
   --sort="end_date" \
   --sort-direction="desc"
@@ -402,14 +402,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Usage Summary
 Get aggregated usage summary:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage summary \
+pup usage summary \
   --start-month="2024-01" \
   --end-month="2024-03"
 ```
 
 With child org inclusion:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage summary \
+pup usage summary \
   --start-month="2024-01" \
   --end-month="2024-03" \
   --include-org-details=true
@@ -420,7 +420,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Cost by Organization
 Get monthly cost breakdown by org and product:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-by-org \
+pup usage cost-by-org \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-03-31T23:59:59Z"
 ```
@@ -428,13 +428,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Estimated Cost
 Get real-time estimated costs:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage estimated-cost \
+pup usage estimated-cost \
   --view="sub-org"
 ```
 
 With date range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage estimated-cost \
+pup usage estimated-cost \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-03-31T23:59:59Z"
 ```
@@ -442,7 +442,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Historical Cost
 Get historical cost data:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage historical-cost \
+pup usage historical-cost \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-03-31T23:59:59Z"
 ```
@@ -450,7 +450,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Projected Cost
 Get end-of-month cost projections:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage projected-cost \
+pup usage projected-cost \
   --view="sub-org"
 ```
 
@@ -459,7 +459,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Monthly Cost Attribution
 Get cost attribution by tags for a month:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-attribution \
+pup usage cost-attribution \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-01-31T23:59:59Z" \
   --fields="infra_host_total_cost,apm_host_total_cost"
@@ -467,7 +467,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Filter by specific tag values:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-attribution \
+pup usage cost-attribution \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-01-31T23:59:59Z" \
   --fields="infra_host_total_cost" \
@@ -476,7 +476,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-attribution \
+pup usage cost-attribution \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-01-31T23:59:59Z" \
   --fields="infra_host_total_cost" \
@@ -486,7 +486,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Include descendants:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-attribution \
+pup usage cost-attribution \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-01-31T23:59:59Z" \
   --fields="infra_host_total_cost" \
@@ -495,7 +495,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Sort results:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-attribution \
+pup usage cost-attribution \
   --start-month="2024-01-01T00:00:00Z" \
   --end-month="2024-01-31T23:59:59Z" \
   --fields="infra_host_total_cost" \
@@ -507,7 +507,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get hourly usage attribution by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly-attribution \
+pup usage hourly-attribution \
   --start-date="2024-01-01" \
   --usage-type="infra_host_usage" \
   --tag-breakdown-keys="env,team"
@@ -515,7 +515,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With filters:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly-attribution \
+pup usage hourly-attribution \
   --start-date="2024-01-01" \
   --end-date="2024-01-31" \
   --usage-type="apm_host_usage" \
@@ -525,7 +525,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly-attribution \
+pup usage hourly-attribution \
   --start-date="2024-01-01" \
   --usage-type="infra_host_usage" \
   --tag-breakdown-keys="env" \
@@ -536,7 +536,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get monthly usage attribution by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage monthly-attribution \
+pup usage monthly-attribution \
   --start-month="2024-01" \
   --usage-type="infra_host_usage" \
   --tag-breakdown-keys="env,team"
@@ -547,14 +547,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Active Billing Dimensions
 Get active billing dimensions for a month:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage active-billing-dimensions \
+pup usage active-billing-dimensions \
   --month="2024-01-01T00:00:00Z"
 ```
 
 #### Billing Dimension Mapping
 Get mapping of billing dimensions to endpoints:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage billing-dimension-mapping \
+pup usage billing-dimension-mapping \
   --timestamp="2024-01-01T00:00:00Z"
 ```
 
@@ -562,21 +562,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Get hourly usage for specific product families:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly \
+pup usage hourly \
   --start-date="2024-01-01T00:00:00Z" \
   --filter-product-families="infra_hosts,logs"
 ```
 
 Filter by specific usage types:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly \
+pup usage hourly \
   --start-date="2024-01-01T00:00:00Z" \
   --filter-usage-types="apm_host_count,infra_host_count"
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly \
+pup usage hourly \
   --start-date="2024-01-01T00:00:00Z" \
   --limit=500 \
   --next-record-id="abc123"
@@ -731,28 +731,28 @@ Present usage data in clear, user-friendly formats:
 
 ### "Show me my infrastructure usage for last month"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hosts \
+pup usage hosts \
   --start-date="2024-12-01" \
   --end-date="2024-12-31"
 ```
 
 ### "What are my highest-volume custom metrics?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage top-avg-metrics \
+pup usage top-avg-metrics \
   --month="2024-12" \
   --limit=50
 ```
 
 ### "How much did I spend on APM last month?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-by-org \
+pup usage cost-by-org \
   --start-month="2024-12-01T00:00:00Z" \
   --end-month="2024-12-31T23:59:59Z"
 ```
 
 ### "Break down my costs by team tag"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage cost-attribution \
+pup usage cost-attribution \
   --start-month="2024-12-01T00:00:00Z" \
   --end-month="2024-12-31T23:59:59Z" \
   --fields="infra_host_total_cost,apm_host_total_cost,logs_indexed_30day_total_cost" \
@@ -761,25 +761,25 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "What will my estimated cost be this month?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage projected-cost
+pup usage projected-cost
 ```
 
 ### "Show me logs usage by index"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage logs-by-index \
+pup usage logs-by-index \
   --start-date="2024-12-01" \
   --end-date="2024-12-31"
 ```
 
 ### "Get billable usage summary"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage billable-summary \
+pup usage billable-summary \
   --month="2024-12"
 ```
 
 ### "Show hourly infrastructure usage for today"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js usage hourly \
+pup usage hourly \
   --start-date="2025-01-15T00:00:00Z" \
   --filter-product-families="infra_hosts"
 ```

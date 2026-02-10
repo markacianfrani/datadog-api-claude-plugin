@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's Real User Monitoring 
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -30,12 +30,12 @@ You are a specialized agent for interacting with Datadog's Real User Monitoring 
 
 Basic RUM search (last hour):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="*"
+pup rum search --query="*"
 ```
 
 Search with specific query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search \
+pup rum search \
   --query="@view.url_path:/checkout" \
   --from="1h" \
   --to="now"
@@ -43,7 +43,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search for errors:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search \
+pup rum search \
   --query="@type:error" \
   --from="2h" \
   --to="now"
@@ -51,7 +51,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search with custom time range and limit:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search \
+pup rum search \
   --query="@application.id:abc123 @view.loading_time:>3000" \
   --from="4h" \
   --to="now" \
@@ -111,32 +111,32 @@ Present RUM data in clear, user-friendly formats:
 
 ### "Show me recent user activity"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="@type:view" --from="1h" --to="now"
+pup rum search --query="@type:view" --from="1h" --to="now"
 ```
 
 ### "Find frontend errors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="@type:error" --from="1h" --to="now"
+pup rum search --query="@type:error" --from="1h" --to="now"
 ```
 
 ### "Show slow page loads"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="@type:view @view.loading_time:>3000"
+pup rum search --query="@type:view @view.loading_time:>3000"
 ```
 
 ### "Track specific user session"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="@session.id:abc-def-123"
+pup rum search --query="@session.id:abc-def-123"
 ```
 
 ### "Find mobile app crashes"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="@type:error @device.type:mobile"
+pup rum search --query="@type:error @device.type:mobile"
 ```
 
 ### "Analyze checkout page performance"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum search --query="@view.url_path:/checkout"
+pup rum search --query="@view.url_path:/checkout"
 ```
 
 ## Error Handling

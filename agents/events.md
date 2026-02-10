@@ -33,7 +33,7 @@ You are a specialized agent for interacting with Datadog's Events API. Your role
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -46,7 +46,7 @@ You are a specialized agent for interacting with Datadog's Events API. Your role
 
 #### Submit Custom Event
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Deployment: v2.1.0" \
   --text="Deployed version 2.1.0 to production" \
   --alert-type="info" \
@@ -55,7 +55,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Submit deployment event:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Production Deployment" \
   --text="Deployed API Gateway v2.1.0 with bug fixes" \
   --alert-type="info" \
@@ -65,7 +65,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Submit error event:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Service Degradation" \
   --text="Payment service experiencing high latency" \
   --alert-type="error" \
@@ -74,7 +74,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Submit warning event:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Disk Space Warning" \
   --text="Disk usage at 80% on database server" \
   --alert-type="warning" \
@@ -83,7 +83,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Submit success event:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Incident Resolved" \
   --text="Payment service latency back to normal" \
   --alert-type="success" \
@@ -93,7 +93,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Event with Aggregation Key
 ```bash
 # Group related events together
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Build Status" \
   --text="Build #123 completed successfully" \
   --alert-type="info" \
@@ -103,7 +103,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Event with Source Type
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Custom Integration Event" \
   --text="Event from custom monitoring system" \
   --alert-type="info" \
@@ -113,7 +113,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Event with Device Name
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Host Restart" \
   --text="Server was restarted" \
   --alert-type="warning" \
@@ -126,14 +126,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List Recent Events
 ```bash
 # Get events from the last hour
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="1h" \
   --to="now"
 ```
 
 List events from last 24 hours:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --to="now"
 ```
@@ -141,7 +141,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Search Events
 ```bash
 # Search events with query
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events search \
+pup events search \
   --query="service:api-gateway" \
   --from="24h" \
   --to="now"
@@ -149,21 +149,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events search \
+pup events search \
   --query="tags:env:production AND tags:service:payment" \
   --from="7d"
 ```
 
 Search by status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events search \
+pup events search \
   --query="status:error" \
   --from="24h"
 ```
 
 Search by source:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events search \
+pup events search \
   --query="source:monitor" \
   --from="1h"
 ```
@@ -171,14 +171,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Filter by Alert Type
 ```bash
 # Error events only
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --filter-alert-type="error"
 ```
 
 Info events only:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --filter-alert-type="info"
 ```
@@ -186,7 +186,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Filter by Priority
 ```bash
 # High priority events (normal priority in Datadog)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --filter-priority="normal"
 ```
@@ -194,14 +194,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Filter by Source
 ```bash
 # Events from monitors
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --filter-source="monitor"
 ```
 
 Events from API:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --filter-source="api"
 ```
@@ -209,14 +209,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Pagination
 ```bash
 # Get first page
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="7d" \
   --limit=100
 ```
 
 Get next page using cursor:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="7d" \
   --limit=100 \
   --cursor="next_page_token"
@@ -226,7 +226,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Specific Event
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events get <event-id>
+pup events get <event-id>
 ```
 
 ## Event Properties
@@ -330,14 +330,14 @@ Present events data in clear, user-friendly formats:
 
 ### "Show me recent events"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="1h" \
   --to="now"
 ```
 
 ### "Record a deployment"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Deployment: API Gateway v2.1.0" \
   --text="Deployed to production with bug fixes and performance improvements" \
   --alert-type="info" \
@@ -346,21 +346,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show production errors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events search \
+pup events search \
   --query="tags:env:production AND status:error" \
   --from="24h"
 ```
 
 ### "Find deployment events"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events search \
+pup events search \
   --query="tags:deployment:true" \
   --from="7d"
 ```
 
 ### "Show monitor alerts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events list \
+pup events list \
   --from="24h" \
   --filter-source="monitor" \
   --filter-alert-type="error"
@@ -368,7 +368,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Create incident event"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js events submit \
+pup events submit \
   --title="Incident: Payment Service Down" \
   --text="Payment service is experiencing complete outage. Investigating root cause." \
   --alert-type="error" \

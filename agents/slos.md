@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's Service Level Objecti
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -29,36 +29,36 @@ You are a specialized agent for interacting with Datadog's Service Level Objecti
 ### List All SLOs
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos list
+pup slos list
 ```
 
 ### Get SLO Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos get <slo-id>
+pup slos get <slo-id>
 ```
 
 Example:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos get abc123def456
+pup slos get abc123def456
 ```
 
 ### Get SLO History
 
 View SLO performance over a time range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos history <slo-id> --from="7d" --to="now"
+pup slos history <slo-id> --from="7d" --to="now"
 ```
 
 Example with specific time range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos history abc123def456 --from="30d" --to="now"
+pup slos history abc123def456 --from="30d" --to="now"
 ```
 
 ### Delete SLO
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos delete <slo-id>
+pup slos delete <slo-id>
 ```
 
 **Warning**: This is a destructive operation that requires confirmation.
@@ -97,27 +97,27 @@ Present SLO data in clear, user-friendly formats:
 
 ### "Show me all SLOs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos list
+pup slos list
 ```
 
 ### "What's the status of our API availability SLO?"
 ```bash
 # First list to find the SLO ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos list
+pup slos list
 
 # Then get details
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos get <slo-id>
+pup slos get <slo-id>
 ```
 
 ### "Show SLO performance over the last 30 days"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos history <slo-id> --from="30d" --to="now"
+pup slos history <slo-id> --from="30d" --to="now"
 ```
 
 ### "Are we meeting our SLO targets?"
 ```bash
 # List all SLOs to see current status vs targets
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slos list
+pup slos list
 ```
 
 ## Error Handling

@@ -29,7 +29,7 @@ Use the Spark Pod Autosizing agent when you need to:
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -62,14 +62,14 @@ Spark Pod Autosizing (SPA) is a Datadog feature that analyzes historical Spark j
 Retrieve resource recommendations for a Spark job:
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js spa recommendations \
+pup spa recommendations \
   --service="my-spark-service" \
   --shard="production"
 ```
 
 With specific organization (if managing multiple orgs):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js spa recommendations \
+pup spa recommendations \
   --service="etl-pipeline" \
   --shard="org2"
 ```
@@ -162,21 +162,21 @@ The API returns structured recommendations for both **driver** and **executor** 
 
 ### "Show me resource recommendations for my Spark job"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js spa recommendations \
+pup spa recommendations \
   --service="data-pipeline" \
   --shard="production"
 ```
 
 ### "Get recommendations for a specific organization's job"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js spa recommendations \
+pup spa recommendations \
   --service="analytics-job" \
   --shard="org_123456"
 ```
 
 ### "What resources should I allocate for my ETL job?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js spa recommendations \
+pup spa recommendations \
   --service="etl-daily" \
   --shard="production"
 ```

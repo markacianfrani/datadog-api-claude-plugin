@@ -28,7 +28,7 @@ You are a specialized agent for interacting with Datadog's Network Performance M
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -44,7 +44,7 @@ You are a specialized agent for interacting with Datadog's Network Performance M
 ##### Basic Connection Query
 ```bash
 # Get connections in the last 15 minutes
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="15m" \
   --to="now"
 ```
@@ -52,7 +52,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Group by Dimensions
 ```bash
 # Group by client and server service
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="1h" \
   --to="now" \
   --group-by="client_service,server_service"
@@ -76,7 +76,7 @@ Common group by fields:
 ##### Filter by Tags
 ```bash
 # Filter connections for production environment
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="30m" \
   --to="now" \
   --tags="env:production"
@@ -84,7 +84,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Filter by multiple tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="1h" \
   --to="now" \
   --tags="env:production,service:api-gateway"
@@ -93,7 +93,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Limit Results
 ```bash
 # Get top 50 connections
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="1h" \
   --to="now" \
   --group-by="client_service,server_service" \
@@ -103,7 +103,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Advanced Queries
 ```bash
 # Analyze connections between specific services
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="2h" \
   --to="now" \
   --group-by="client_service,server_service,server_port" \
@@ -114,7 +114,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 Investigate high-latency connections:
 ```bash
 # Query to identify slow connections
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="1h" \
   --to="now" \
   --group-by="client_service,server_service" \
@@ -127,7 +127,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Basic DNS Query
 ```bash
 # Get DNS queries in the last 15 minutes
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network dns \
+pup network dns \
   --from="15m" \
   --to="now"
 ```
@@ -135,7 +135,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Group DNS Queries
 ```bash
 # Group by DNS query name (domain)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network dns \
+pup network dns \
   --from="1h" \
   --to="now" \
   --group-by="network.dns_query"
@@ -151,7 +151,7 @@ Common DNS group by fields:
 ##### Filter DNS by Tags
 ```bash
 # DNS queries from specific service
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network dns \
+pup network dns \
   --from="30m" \
   --to="now" \
   --tags="client_service:api-gateway"
@@ -160,7 +160,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Analyze DNS Patterns
 ```bash
 # Top DNS queries by volume
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network dns \
+pup network dns \
   --from="6h" \
   --to="now" \
   --group-by="network.dns_query" \
@@ -170,7 +170,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 Investigate DNS failures:
 ```bash
 # Group by query and record type to find issues
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network dns \
+pup network dns \
   --from="1h" \
   --to="now" \
   --group-by="network.dns_query,network.dns_record_type" \
@@ -183,13 +183,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ##### Basic Device List
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list
+pup network devices list
 ```
 
 ##### Paginated Device List
 ```bash
 # Get first page (50 devices per page)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --page-size=50 \
   --page-number=1
 ```
@@ -197,7 +197,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ##### Sort Devices
 ```bash
 # Sort by status
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --sort="status"
 ```
 
@@ -211,19 +211,19 @@ Common sort fields:
 ##### Filter Devices by Tag
 ```bash
 # Filter by status tag
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --filter-tag="status:ok"
 ```
 
 Filter by location:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --filter-tag="datacenter:us-east-1"
 ```
 
 Filter by device type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --filter-tag="device_type:router"
 ```
 
@@ -231,12 +231,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ```bash
 # Get details for a specific device
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices get <device-id>
+pup network devices get <device-id>
 ```
 
 Example:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices get "example:192.168.1.1"
+pup network devices get "example:192.168.1.1"
 ```
 
 Device details include:
@@ -252,12 +252,12 @@ Device details include:
 
 ```bash
 # Get interfaces for a device
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices interfaces <device-id>
+pup network devices interfaces <device-id>
 ```
 
 Include IP addresses:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices interfaces <device-id> \
+pup network devices interfaces <device-id> \
   --get-ip-addresses
 ```
 
@@ -273,19 +273,19 @@ Interface information includes:
 
 ##### List Device Tags
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices tags list <device-id>
+pup network devices tags list <device-id>
 ```
 
 ##### Update Device Tags
 ```bash
 # Add tags to a device
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices tags update <device-id> \
+pup network devices tags update <device-id> \
   --tags="datacenter:us-west-2,device_type:switch,critical:true"
 ```
 
 Replace all tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices tags update <device-id> \
+pup network devices tags update <device-id> \
   --tags="env:production,team:networking" \
   --replace
 ```
@@ -383,7 +383,7 @@ Present network performance data in clear, user-friendly formats:
 
 ### "Show me network connections in production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="1h" \
   --to="now" \
   --group-by="client_service,server_service" \
@@ -393,7 +393,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "What are the top DNS queries?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network dns \
+pup network dns \
   --from="6h" \
   --to="now" \
   --group-by="network.dns_query" \
@@ -402,20 +402,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "List all network devices"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --page-size=100
 ```
 
 ### "Show me devices that are down"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices list \
+pup network devices list \
   --filter-tag="status:down"
 ```
 
 ### "What connections have high latency?"
 ```bash
 # Query connections and analyze RTT
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="1h" \
   --to="now" \
   --group-by="client_service,server_service" \
@@ -426,7 +426,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Show me TCP errors"
 ```bash
 # Query connections to see TCP retransmits, timeouts, resets
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network connections \
+pup network connections \
   --from="2h" \
   --to="now" \
   --group-by="client_service,server_service"
@@ -435,18 +435,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Get details for a specific device"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices get "example:192.168.1.1"
+pup network devices get "example:192.168.1.1"
 ```
 
 ### "Show device interfaces"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices interfaces "example:192.168.1.1" \
+pup network devices interfaces "example:192.168.1.1" \
   --get-ip-addresses
 ```
 
 ### "Tag a network device"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js network devices tags update "example:192.168.1.1" \
+pup network devices tags update "example:192.168.1.1" \
   --tags="datacenter:us-west-2,critical:true,team:networking"
 ```
 

@@ -61,7 +61,7 @@ You are a specialized agent for managing Datadog's AWS integration. Your role is
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -74,24 +74,24 @@ You are a specialized agent for managing Datadog's AWS integration. Your role is
 
 #### List All AWS Integrations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts list
+pup aws accounts list
 ```
 
 Filter by AWS Account ID:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts list \
+pup aws accounts list \
   --aws-account-id="123456789012"
 ```
 
 #### Get AWS Integration by Config ID
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts get \
+pup aws accounts get \
   <aws-account-config-id>
 ```
 
 #### Create AWS Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogIntegrationRole" \
@@ -101,7 +101,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With full configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogIntegrationRole" \
@@ -115,7 +115,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update AWS Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts update \
+pup aws accounts update \
   <aws-account-config-id> \
   --regions='["us-east-1", "us-west-2", "eu-west-1"]' \
   --account-tags='["env:prod", "team:platform", "cost-center:engineering"]'
@@ -123,7 +123,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update metrics configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts update \
+pup aws accounts update \
   <aws-account-config-id> \
   --namespace-filters='["AWS/EC2", "AWS/RDS", "AWS/Lambda", "AWS/DynamoDB"]' \
   --collect-cloudwatch-alarms=true
@@ -131,7 +131,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete AWS Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts delete \
+pup aws accounts delete \
   <aws-account-config-id>
 ```
 
@@ -139,25 +139,25 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Generate New External ID
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws external-id generate
+pup aws external-id generate
 ```
 
 #### List Available CloudWatch Namespaces
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws namespaces list
+pup aws namespaces list
 ```
 
 #### Get Required IAM Permissions
 ```bash
 # Get all required permissions
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws iam-permissions get
+pup aws iam-permissions get
 
 # Get standard permissions only
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws iam-permissions get \
+pup aws iam-permissions get \
   --type=standard
 
 # Get resource collection permissions
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws iam-permissions get \
+pup aws iam-permissions get \
   --type=resource-collection
 ```
 
@@ -165,31 +165,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List AWS Log Integrations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs integrations list
+pup aws-logs integrations list
 ```
 
 #### Add Lambda Forwarder ARN
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs lambda add \
+pup aws-logs lambda add \
   --account-id="123456789012" \
   --lambda-arn="arn:aws:lambda:us-east-1:123456789012:function:DatadogForwarder"
 ```
 
 #### Delete Lambda Forwarder ARN
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs lambda delete \
+pup aws-logs lambda delete \
   --account-id="123456789012" \
   --lambda-arn="arn:aws:lambda:us-east-1:123456789012:function:DatadogForwarder"
 ```
 
 #### List AWS Log Services
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs services list
+pup aws-logs services list
 ```
 
 #### Enable AWS Log Services
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs services enable \
+pup aws-logs services enable \
   --account-id="123456789012" \
   --services='["s3", "elb", "elbv2", "cloudfront", "redshift"]'
 ```
@@ -197,11 +197,11 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Check Log Configuration Status
 ```bash
 # Check services configuration
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs services check \
+pup aws-logs services check \
   --account-id="123456789012"
 
 # Check Lambda forwarder
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs lambda check \
+pup aws-logs lambda check \
   --account-id="123456789012" \
   --lambda-arn="arn:aws:lambda:us-east-1:123456789012:function:DatadogForwarder"
 ```
@@ -210,12 +210,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List EventBridge Sources
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws eventbridge list
+pup aws eventbridge list
 ```
 
 #### Create EventBridge Source
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws eventbridge create \
+pup aws eventbridge create \
   --account-id="123456789012" \
   --region="us-east-1" \
   --event-source-name="datadog-event-bridge-prod"
@@ -223,7 +223,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete EventBridge Source
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws eventbridge delete \
+pup aws eventbridge delete \
   --account-id="123456789012" \
   --region="us-east-1" \
   --event-source-name="datadog-event-bridge-prod"
@@ -233,13 +233,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Tag Filters
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws tag-filters list \
+pup aws tag-filters list \
   --account-id="123456789012"
 ```
 
 #### Create Tag Filter
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws tag-filters create \
+pup aws tag-filters create \
   --account-id="123456789012" \
   --namespace="AWS/EC2" \
   --tag-filter="env:production"
@@ -247,7 +247,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Tag Filter
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws tag-filters delete \
+pup aws tag-filters delete \
   --account-id="123456789012" \
   --namespace="AWS/EC2" \
   --tag-filter="env:production"
@@ -298,16 +298,16 @@ Present AWS integration data in clear, user-friendly formats:
 
 ### "Show me all AWS integrations"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts list
+pup aws accounts list
 ```
 
 ### "Set up AWS integration for account 123456789012"
 ```bash
 # First, generate an external ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws external-id generate
+pup aws external-id generate
 
 # Then create the integration with the external ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogIntegrationRole" \
@@ -318,24 +318,24 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Add log collection from S3, ELB, and CloudFront"
 ```bash
 # First add Lambda forwarder ARN
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs lambda add \
+pup aws-logs lambda add \
   --account-id="123456789012" \
   --lambda-arn="arn:aws:lambda:us-east-1:123456789012:function:DatadogForwarder"
 
 # Then enable specific log services
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs services enable \
+pup aws-logs services enable \
   --account-id="123456789012" \
   --services='["s3", "elb", "cloudfront"]'
 ```
 
 ### "What IAM permissions do I need?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws iam-permissions get
+pup aws iam-permissions get
 ```
 
 ### "Enable CSPM for my AWS account"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts update \
+pup aws accounts update \
   <aws-account-config-id> \
   --enable-cspm=true \
   --enable-extended-collection=true
@@ -343,7 +343,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Collect metrics only from production EC2 instances"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws tag-filters create \
+pup aws tag-filters create \
   --account-id="123456789012" \
   --namespace="AWS/EC2" \
   --tag-filter="env:production"
@@ -351,7 +351,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Set up EventBridge for AWS events"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws eventbridge create \
+pup aws eventbridge create \
   --account-id="123456789012" \
   --region="us-east-1" \
   --event-source-name="datadog-events-prod"
@@ -473,7 +473,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 **1. Generate External ID**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws external-id generate
+pup aws external-id generate
 ```
 
 **2. Create IAM Role in AWS** (Manual step in AWS Console/CLI):
@@ -483,7 +483,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 **3. Create AWS Integration**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogIntegrationRole" \
@@ -497,19 +497,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ```bash
 # Deploy Lambda forwarder in AWS (CloudFormation or Serverless Application Repository)
 # Then register it:
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs lambda add \
+pup aws-logs lambda add \
   --account-id="123456789012" \
   --lambda-arn="arn:aws:lambda:us-east-1:123456789012:function:DatadogForwarder"
 
 # Enable log services
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws-logs services enable \
+pup aws-logs services enable \
   --account-id="123456789012" \
   --services='["s3", "elb", "elbv2", "cloudfront"]'
 ```
 
 **5. Set Up EventBridge** (Optional):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws eventbridge create \
+pup aws eventbridge create \
   --account-id="123456789012" \
   --region="us-east-1" \
   --event-source-name="datadog-events"
@@ -519,12 +519,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 **1. List Available Namespaces**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws namespaces list
+pup aws namespaces list
 ```
 
 **2. Update Integration to Include Only Needed Services**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts update \
+pup aws accounts update \
   <aws-account-config-id> \
   --namespace-filters='["AWS/EC2", "AWS/RDS"]' \
   --collect-custom-metrics=false
@@ -533,7 +533,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 **3. Add Tag Filters for Cost Optimization**:
 ```bash
 # Only collect production metrics
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws tag-filters create \
+pup aws tag-filters create \
   --account-id="123456789012" \
   --namespace="AWS/EC2" \
   --tag-filter="env:production"
@@ -551,14 +551,14 @@ For organizations with multiple AWS accounts:
 **2. Example Multi-Account Setup**:
 ```bash
 # Production account
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="111111111111" \
   --role-name="DatadogIntegrationRole" \
   --account-tags='["env:prod", "team:platform"]' \
   --enable-cspm=true
 
 # Staging account
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="222222222222" \
   --role-name="DatadogIntegrationRole" \
   --account-tags='["env:staging", "team:platform"]' \
@@ -680,10 +680,10 @@ Error: EventBridge source already exists
 ### Minimal Production Setup
 ```bash
 # Generate external ID
-EXTERNAL_ID=$(node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws external-id generate)
+EXTERNAL_ID=$(pup aws external-id generate)
 
 # Create basic integration (after IAM role setup in AWS)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogIntegrationRole" \
@@ -694,7 +694,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Full-Featured Setup
 ```bash
 # Create comprehensive integration
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogIntegrationRole" \
@@ -713,7 +713,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Security-Focused Setup (CSPM)
 ```bash
 # Create integration with focus on security monitoring
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js aws accounts create \
+pup aws accounts create \
   --aws-account-id="123456789012" \
   --aws-partition="aws" \
   --role-name="DatadogSecurityRole" \

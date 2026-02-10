@@ -82,7 +82,7 @@ You are a specialized agent for interacting with Datadog's User and Team Managem
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -95,30 +95,30 @@ You are a specialized agent for interacting with Datadog's User and Team Managem
 
 #### List All Users
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users list
+pup users list
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users list \
+pup users list \
   --page-size=50 \
   --page-number=1
 ```
 
 Filter by status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users list \
+pup users list \
   --filter-status="Active"
 ```
 
 #### Get User Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users get <user-id>
+pup users get <user-id>
 ```
 
 #### Create User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users create \
+pup users create \
   --email="newuser@example.com" \
   --name="Jane Developer" \
   --title="Software Engineer"
@@ -126,7 +126,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create with specific role:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users create \
+pup users create \
   --email="admin@example.com" \
   --name="John Admin" \
   --role="Datadog Admin"
@@ -134,79 +134,79 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users update <user-id> \
+pup users update <user-id> \
   --name="Updated Name" \
   --title="Senior Engineer"
 ```
 
 Update user role:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users update <user-id> \
+pup users update <user-id> \
   --role="Datadog Standard"
 ```
 
 #### Disable User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users disable <user-id>
+pup users disable <user-id>
 ```
 
 #### List User Organizations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users orgs <user-id>
+pup users orgs <user-id>
 ```
 
 #### List User Permissions
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users permissions <user-id>
+pup users permissions <user-id>
 ```
 
 #### Send User Invitation
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users invite \
+pup users invite \
   --email="newuser@example.com" \
   --role="Datadog Standard"
 ```
 
 Send multiple invitations:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users invite \
+pup users invite \
   --emails="user1@example.com,user2@example.com,user3@example.com" \
   --role="Datadog Read Only"
 ```
 
 #### Get Invitation Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users invitation <invitation-id>
+pup users invitation <invitation-id>
 ```
 
 ### Service Account Management
 
 #### List Service Accounts
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts list
+pup service-accounts list
 ```
 
 With filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts list \
+pup service-accounts list \
   --filter-status="active"
 ```
 
 #### Get Service Account Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts get <service-account-id>
+pup service-accounts get <service-account-id>
 ```
 
 #### Create Service Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts create \
+pup service-accounts create \
   --name="CI/CD Service Account" \
   --email="cicd@example.com"
 ```
 
 Create with specific roles:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts create \
+pup service-accounts create \
   --name="Monitoring Service" \
   --email="monitoring@example.com" \
   --roles="Datadog Read Only,Logs Read Index Data"
@@ -214,65 +214,65 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Service Account Application Keys
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys list <service-account-id>
+pup service-accounts keys list <service-account-id>
 ```
 
 #### Create Service Account Application Key
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys create <service-account-id> \
+pup service-accounts keys create <service-account-id> \
   --name="Production CI Key"
 ```
 
 Create with scopes:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys create <service-account-id> \
+pup service-accounts keys create <service-account-id> \
   --name="Limited Access Key" \
   --scopes="dashboards_read,monitors_read"
 ```
 
 #### Get Service Account Application Key
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys get <service-account-id> <app-key-id>
+pup service-accounts keys get <service-account-id> <app-key-id>
 ```
 
 #### Update Service Account Application Key
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys update <service-account-id> <app-key-id> \
+pup service-accounts keys update <service-account-id> <app-key-id> \
   --name="Updated Key Name"
 ```
 
 #### Delete Service Account Application Key
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys delete <service-account-id> <app-key-id>
+pup service-accounts keys delete <service-account-id> <app-key-id>
 ```
 
 ### Team Management
 
 #### List All Teams
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams list
+pup teams list
 ```
 
 Filter by name:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams list \
+pup teams list \
   --filter-keyword="platform"
 ```
 
 Include member count:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams list \
+pup teams list \
   --include-counts
 ```
 
 #### Get Team Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams get <team-id>
+pup teams get <team-id>
 ```
 
 #### Create Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams create \
+pup teams create \
   --handle="platform-team" \
   --name="Platform Engineering" \
   --description="Team responsible for infrastructure and platform services"
@@ -280,7 +280,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create with avatar:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams create \
+pup teams create \
   --handle="sre-team" \
   --name="Site Reliability Engineering" \
   --avatar="https://example.com/avatar.png"
@@ -288,26 +288,26 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams update <team-id> \
+pup teams update <team-id> \
   --name="Updated Team Name" \
   --description="Updated description"
 ```
 
 #### Delete Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams delete <team-id>
+pup teams delete <team-id>
 ```
 
 ### Team Membership Management
 
 #### List Team Members
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams members list <team-id>
+pup teams members list <team-id>
 ```
 
 #### Get User Memberships
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users memberships <user-id>
+pup users memberships <user-id>
 ```
 
 This returns:
@@ -317,7 +317,7 @@ This returns:
 
 #### Add Member to Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams members add <team-id> \
+pup teams members add <team-id> \
   --user-id="user-uuid" \
   --role="admin"
 ```
@@ -328,57 +328,57 @@ Available roles:
 
 #### Update Member Role
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams members update <team-id> <user-id> \
+pup teams members update <team-id> <user-id> \
   --role="admin"
 ```
 
 #### Remove Member from Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams members remove <team-id> <user-id>
+pup teams members remove <team-id> <user-id>
 ```
 
 ### Team Hierarchy
 
 #### List Child Teams
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams hierarchy list <parent-team-id>
+pup teams hierarchy list <parent-team-id>
 ```
 
 #### Add Child Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams hierarchy add \
+pup teams hierarchy add \
   --parent-team-id="parent-uuid" \
   --child-team-id="child-uuid"
 ```
 
 #### Remove Child Team
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams hierarchy remove \
+pup teams hierarchy remove \
   --parent-team-id="parent-uuid" \
   --child-team-id="child-uuid"
 ```
 
 #### List Hierarchy Links
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams hierarchy links list
+pup teams hierarchy links list
 ```
 
 #### Get Hierarchy Link
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams hierarchy links get <link-id>
+pup teams hierarchy links get <link-id>
 ```
 
 ### Team Links
 
 #### List Team Links
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links list <team-id>
+pup teams links list <team-id>
 ```
 
 #### Add Link to Team
 ```bash
 # Add dashboard link
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links add <team-id> \
+pup teams links add <team-id> \
   --label="Team Dashboard" \
   --url="https://app.datadoghq.com/dashboard/abc-123" \
   --type="dashboard"
@@ -386,7 +386,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Add runbook link:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links add <team-id> \
+pup teams links add <team-id> \
   --label="Incident Response Runbook" \
   --url="https://docs.example.com/runbooks/incident-response" \
   --type="runbook"
@@ -394,7 +394,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Add documentation link:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links add <team-id> \
+pup teams links add <team-id> \
   --label="Team Wiki" \
   --url="https://wiki.example.com/platform-team" \
   --type="doc"
@@ -402,7 +402,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Add repository link:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links add <team-id> \
+pup teams links add <team-id> \
   --label="Platform Services Repo" \
   --url="https://github.com/company/platform-services" \
   --type="repo"
@@ -417,26 +417,26 @@ Link types:
 
 #### Update Link
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links update <team-id> <link-id> \
+pup teams links update <team-id> <link-id> \
   --label="Updated Label" \
   --url="https://new-url.example.com"
 ```
 
 #### Delete Link
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links delete <team-id> <link-id>
+pup teams links delete <team-id> <link-id>
 ```
 
 ### Team Notification Rules
 
 #### List Notification Rules
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams notifications list <team-id>
+pup teams notifications list <team-id>
 ```
 
 #### Create Notification Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams notifications create <team-id> \
+pup teams notifications create <team-id> \
   --name="High Priority Alerts" \
   --channel="#incidents" \
   --priority="high"
@@ -444,7 +444,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create rule with conditions:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams notifications create <team-id> \
+pup teams notifications create <team-id> \
   --name="Production Errors" \
   --channel="#prod-alerts" \
   --filter="env:production AND service:api"
@@ -452,26 +452,26 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Notification Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams notifications update <team-id> <rule-id> \
+pup teams notifications update <team-id> <rule-id> \
   --name="Updated Rule Name" \
   --channel="#new-channel"
 ```
 
 #### Delete Notification Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams notifications delete <team-id> <rule-id>
+pup teams notifications delete <team-id> <rule-id>
 ```
 
 ### Team Permission Settings
 
 #### List Permission Settings
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams permissions list <team-id>
+pup teams permissions list <team-id>
 ```
 
 #### Get Permission Setting
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams permissions get <team-id> <action>
+pup teams permissions get <team-id> <action>
 ```
 
 Actions include:
@@ -481,7 +481,7 @@ Actions include:
 
 #### Update Permission Setting
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams permissions update <team-id> <action> \
+pup teams permissions update <team-id> <action> \
   --value="team_members"
 ```
 
@@ -495,30 +495,30 @@ Permission values:
 
 #### List SCIM Users
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users list
+pup scim users list
 ```
 
 With filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users list \
+pup scim users list \
   --filter="userName eq \"john@example.com\""
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users list \
+pup scim users list \
   --start-index=1 \
   --count=50
 ```
 
 #### Get SCIM User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users get <user-uuid>
+pup scim users get <user-uuid>
 ```
 
 #### Create SCIM User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users create \
+pup scim users create \
   --user-name="john.doe@example.com" \
   --given-name="John" \
   --family-name="Doe" \
@@ -527,7 +527,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update SCIM User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users update <user-uuid> \
+pup scim users update <user-uuid> \
   --user-name="john.doe@example.com" \
   --given-name="John" \
   --family-name="Doe" \
@@ -536,71 +536,71 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Patch SCIM User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users patch <user-uuid> \
+pup scim users patch <user-uuid> \
   --operations='[{"op":"replace","path":"active","value":false}]'
 ```
 
 #### Delete SCIM User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users delete <user-uuid>
+pup scim users delete <user-uuid>
 ```
 
 #### List SCIM Groups
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim groups list
+pup scim groups list
 ```
 
 With filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim groups list \
+pup scim groups list \
   --filter="displayName eq \"Engineering\""
 ```
 
 #### Get SCIM Group
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim groups get <group-id>
+pup scim groups get <group-id>
 ```
 
 #### Create SCIM Group
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim groups create \
+pup scim groups create \
   --display-name="Engineering Team" \
   --members="user-uuid-1,user-uuid-2"
 ```
 
 #### Patch SCIM Group
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim groups patch <group-id> \
+pup scim groups patch <group-id> \
   --operations='[{"op":"add","path":"members","value":[{"value":"user-uuid-3"}]}]'
 ```
 
 #### Delete SCIM Group
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim groups delete <group-id>
+pup scim groups delete <group-id>
 ```
 
 ### Authentication Mappings
 
 #### List Authentication Mappings
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings list
+pup authn-mappings list
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings list \
+pup authn-mappings list \
   --page-size=50 \
   --page-number=1
 ```
 
 #### Get Authentication Mapping
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings get <mapping-id>
+pup authn-mappings get <mapping-id>
 ```
 
 #### Create Authentication Mapping
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="member-of" \
   --attribute-value="Engineering" \
   --role="Datadog Standard"
@@ -608,7 +608,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create SAML mapping:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.xmlsoap.org/claims/Group" \
   --attribute-value="Datadog-Admins" \
   --role="Datadog Admin"
@@ -616,26 +616,26 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Authentication Mapping
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings update <mapping-id> \
+pup authn-mappings update <mapping-id> \
   --attribute-value="Updated-Group-Name" \
   --role="Datadog Read Only"
 ```
 
 #### Delete Authentication Mapping
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings delete <mapping-id>
+pup authn-mappings delete <mapping-id>
 ```
 
 ### External Team Sync
 
 #### List Team Connections
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams connections list
+pup teams connections list
 ```
 
 #### Sync Teams from GitHub
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams sync \
+pup teams sync \
   --source="github" \
   --org="company" \
   --type="link" \
@@ -653,7 +653,7 @@ Frequency options:
 
 Sync with member management:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams sync \
+pup teams sync \
   --source="github" \
   --org="company" \
   --type="provision" \
@@ -747,12 +747,12 @@ Organizations can create custom roles with specific permissions for:
 
 ### "Show me all users"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users list
+pup users list
 ```
 
 ### "Create a new user"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users create \
+pup users create \
   --email="developer@example.com" \
   --name="Jane Developer" \
   --role="Datadog Standard"
@@ -761,31 +761,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Disable a user account"
 ```bash
 # First find the user
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users list
+pup users list
 
 # Then disable
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users disable <user-id>
+pup users disable <user-id>
 ```
 
 ### "Create a service account for CI/CD"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts create \
+pup service-accounts create \
   --name="CI/CD Pipeline" \
   --email="cicd@example.com"
 
 # Create an application key for the service account
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js service-accounts keys create <service-account-id> \
+pup service-accounts keys create <service-account-id> \
   --name="Production Deployment Key"
 ```
 
 ### "Show me all teams"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams list
+pup teams list
 ```
 
 ### "Create a new platform team"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams create \
+pup teams create \
   --handle="platform-engineering" \
   --name="Platform Engineering" \
   --description="Infrastructure and platform services"
@@ -794,27 +794,27 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Add user to a team"
 ```bash
 # First find the team
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams list --filter-keyword="sre"
+pup teams list --filter-keyword="sre"
 
 # Then add the user
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams members add <team-id> \
+pup teams members add <team-id> \
   --user-id="user-uuid" \
   --role="member"
 ```
 
 ### "List all members of a team"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams members list <team-id>
+pup teams members list <team-id>
 ```
 
 ### "Check what teams a user belongs to"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js users memberships <user-id>
+pup users memberships <user-id>
 ```
 
 ### "Add a dashboard link to a team"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams links add <team-id> \
+pup teams links add <team-id> \
   --label="Service Overview" \
   --url="https://app.datadoghq.com/dashboard/abc-123" \
   --type="dashboard"
@@ -823,29 +823,29 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Set up team hierarchy"
 ```bash
 # Create parent team (Engineering)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams create \
+pup teams create \
   --handle="engineering" \
   --name="Engineering"
 
 # Create child teams (Platform, SRE)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams create \
+pup teams create \
   --handle="platform" \
   --name="Platform Engineering"
 
 # Link them
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams hierarchy add \
+pup teams hierarchy add \
   --parent-team-id="engineering-id" \
   --child-team-id="platform-id"
 ```
 
 ### "View SCIM users"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scim users list
+pup scim users list
 ```
 
 ### "Create authentication mapping for SAML"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js authn-mappings create \
+pup authn-mappings create \
   --attribute-key="http://schemas.xmlsoap.org/claims/Group" \
   --attribute-value="Datadog-Users" \
   --role="Datadog Standard"
@@ -853,7 +853,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Sync teams from GitHub"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js teams sync \
+pup teams sync \
   --source="github" \
   --org="my-company" \
   --type="link" \

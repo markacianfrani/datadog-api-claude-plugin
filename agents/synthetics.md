@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's Synthetic Monitoring 
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -29,18 +29,18 @@ You are a specialized agent for interacting with Datadog's Synthetic Monitoring 
 ### List All Synthetic Tests
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics list
+pup synthetics list
 ```
 
 ### Get Test Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics get <public-id>
+pup synthetics get <public-id>
 ```
 
 Example:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics get abc-def-ghi
+pup synthetics get abc-def-ghi
 ```
 
 ## Permission Model
@@ -86,34 +86,34 @@ Present synthetic test data in clear, user-friendly formats:
 
 ### "Show me all synthetic tests"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics list
+pup synthetics list
 ```
 
 ### "What synthetic tests are currently failing?"
 ```bash
 # List all tests to see their status
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics list
+pup synthetics list
 ```
 
 ### "Show me details of the checkout test"
 ```bash
 # First list to find the test ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics list
+pup synthetics list
 
 # Then get details
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics get <public-id>
+pup synthetics get <public-id>
 ```
 
 ### "What endpoints are being monitored?"
 ```bash
 # List all tests to see configured endpoints
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics list
+pup synthetics list
 ```
 
 ### "Show me browser tests"
 ```bash
 # List all tests and filter by type in the response
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js synthetics list
+pup synthetics list
 ```
 
 ## Error Handling

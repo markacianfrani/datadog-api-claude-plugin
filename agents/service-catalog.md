@@ -40,7 +40,7 @@ You are a specialized agent for interacting with Datadog's Service Catalog and S
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -53,29 +53,29 @@ You are a specialized agent for interacting with Datadog's Service Catalog and S
 
 #### List All Services
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services list
+pup services list
 ```
 
 Filter by schema version:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services list \
+pup services list \
   --schema-version="v2.2"
 ```
 
 #### Get Service Definition
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services get <service-name>
+pup services get <service-name>
 ```
 
 Get specific schema version:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services get <service-name> \
+pup services get <service-name> \
   --schema-version="v2.2"
 ```
 
 #### Create Service Definition
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services create \
+pup services create \
   --service-name="api-gateway" \
   --team="platform-team" \
   --definition=@service-definition.yaml
@@ -121,48 +121,48 @@ integrations:
 
 Create from JSON:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services create \
+pup services create \
   --definition=@service-definition.json
 ```
 
 #### Update Service Definition
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services update <service-name> \
+pup services update <service-name> \
   --definition=@updated-definition.yaml
 ```
 
 #### Delete Service Definition
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services delete <service-name>
+pup services delete <service-name>
 ```
 
 ### Software Catalog - Entity Management
 
 #### List Catalog Entities
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities list
+pup catalog entities list
 ```
 
 Filter by kind:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities list \
+pup catalog entities list \
   --kind="service"
 ```
 
 Filter by owner:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities list \
+pup catalog entities list \
   --owner="platform-team"
 ```
 
 #### Get Entity
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities get <entity-id>
+pup catalog entities get <entity-id>
 ```
 
 #### Create Entity
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities create \
+pup catalog entities create \
   --kind="service" \
   --name="payment-service" \
   --definition=@entity-definition.yaml
@@ -195,19 +195,19 @@ spec:
 
 #### Update Entity
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities update <entity-id> \
+pup catalog entities update <entity-id> \
   --definition=@updated-entity.yaml
 ```
 
 #### Delete Entity
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities delete <entity-id>
+pup catalog entities delete <entity-id>
 ```
 
 #### Preview Entity
 ```bash
 # Validate entity definition before creating
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities preview \
+pup catalog entities preview \
   --definition=@entity-definition.yaml
 ```
 
@@ -215,7 +215,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Entity Kinds
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog kinds list
+pup catalog kinds list
 ```
 
 Built-in kinds:
@@ -228,12 +228,12 @@ Built-in kinds:
 
 #### Get Kind Definition
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog kinds get <kind-id>
+pup catalog kinds get <kind-id>
 ```
 
 #### Create Custom Kind
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog kinds create \
+pup catalog kinds create \
   --name="ml-model" \
   --definition=@kind-definition.yaml
 ```
@@ -255,32 +255,32 @@ schema:
 
 #### Update Kind
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog kinds update <kind-id> \
+pup catalog kinds update <kind-id> \
   --definition=@updated-kind.yaml
 ```
 
 #### Delete Kind
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog kinds delete <kind-id>
+pup catalog kinds delete <kind-id>
 ```
 
 ### Catalog Relations
 
 #### List Relations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations list
+pup catalog relations list
 ```
 
 Filter by source:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations list \
+pup catalog relations list \
   --source="service:api-gateway"
 ```
 
 #### Create Relation
 ```bash
 # Create dependency relation
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations create \
+pup catalog relations create \
   --source="service:api-gateway" \
   --target="service:auth-service" \
   --type="dependsOn"
@@ -288,7 +288,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create ownership relation:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations create \
+pup catalog relations create \
   --source="service:payment-service" \
   --target="team:payments-team" \
   --type="ownedBy"
@@ -304,7 +304,7 @@ Relation types:
 
 #### Delete Relation
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations delete <relation-id>
+pup catalog relations delete <relation-id>
 ```
 
 ## Permission Model
@@ -347,12 +347,12 @@ Present service catalog data in clear, user-friendly formats:
 
 ### "Show me all services"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services list
+pup services list
 ```
 
 ### "Register a new service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services create \
+pup services create \
   --service-name="user-service" \
   --team="backend-team" \
   --definition=@user-service.yaml
@@ -361,30 +361,30 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Show me service dependencies"
 ```bash
 # Get service definition with dependencies
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services get api-gateway
+pup services get api-gateway
 
 # Or list relations
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations list \
+pup catalog relations list \
   --source="service:api-gateway"
 ```
 
 ### "Update service ownership"
 ```bash
 # Update service definition with new team
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js services update api-gateway \
+pup services update api-gateway \
   --definition=@updated-definition.yaml
 ```
 
 ### "List all datastores"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog entities list \
+pup catalog entities list \
   --kind="datastore"
 ```
 
 ### "Map service dependencies"
 ```bash
 # Create dependency relations
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js catalog relations create \
+pup catalog relations create \
   --source="service:api" \
   --target="datastore:postgres" \
   --type="dependsOn"

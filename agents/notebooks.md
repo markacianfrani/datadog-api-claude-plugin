@@ -33,7 +33,7 @@ You are a specialized agent for interacting with Datadog's Notebooks API. Your r
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -46,26 +46,26 @@ You are a specialized agent for interacting with Datadog's Notebooks API. Your r
 
 #### Basic List
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks list
+pup notebooks list
 ```
 
 #### Filter by Author
 ```bash
 # Get notebooks by specific author
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks list \
+pup notebooks list \
   --author="user@example.com"
 ```
 
 Exclude author:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks list \
+pup notebooks list \
   --exclude-author="user@example.com"
 ```
 
 #### Pagination
 ```bash
 # Get notebooks with pagination
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks list \
+pup notebooks list \
   --start=0 \
   --count=50
 ```
@@ -74,19 +74,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ```bash
 # Get complete notebook by ID
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks get <notebook-id>
+pup notebooks get <notebook-id>
 ```
 
 Example:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks get 123456
+pup notebooks get 123456
 ```
 
 ### Create Notebook
 
 #### Simple Markdown Notebook
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks create \
+pup notebooks create \
   --name="Investigation: API Latency" \
   --cells='[
     {
@@ -103,7 +103,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Notebook with Timeseries
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks create \
+pup notebooks create \
   --name="Production Metrics Dashboard" \
   --time='{"live_span": "1h"}' \
   --cells='[
@@ -138,7 +138,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Notebook with Multiple Cell Types
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks create \
+pup notebooks create \
   --name="Weekly Incident Report" \
   --time='{"live_span": "1w"}' \
   --cells='[
@@ -188,7 +188,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ```bash
 # Update notebook name and cells
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks update <notebook-id> \
+pup notebooks update <notebook-id> \
   --name="Updated Notebook Name" \
   --cells='[
     {
@@ -205,7 +205,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update with new time range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks update <notebook-id> \
+pup notebooks update <notebook-id> \
   --name="Production Dashboard" \
   --time='{"live_span": "4h"}' \
   --cells='[...]'
@@ -214,7 +214,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Delete Notebook
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks delete <notebook-id>
+pup notebooks delete <notebook-id>
 ```
 
 ## Cell Types Reference
@@ -469,7 +469,7 @@ Present notebook data in clear, user-friendly formats:
 
 ### "Create a notebook for investigating an incident"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks create \
+pup notebooks create \
   --name="Incident Investigation: API Timeout" \
   --time='{"live_span": "4h"}' \
   --cells='[
@@ -507,18 +507,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "List my notebooks"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks list \
+pup notebooks list \
   --author="user@example.com"
 ```
 
 ### "Show notebook details"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks get <notebook-id>
+pup notebooks get <notebook-id>
 ```
 
 ### "Create a weekly report notebook"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks create \
+pup notebooks create \
   --name="Weekly Performance Report" \
   --time='{"live_span": "1w"}' \
   --cells='[
@@ -560,7 +560,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Update notebook content"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks update <notebook-id> \
+pup notebooks update <notebook-id> \
   --name="Updated: API Investigation" \
   --cells='[
     {
@@ -577,7 +577,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Delete a notebook"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notebooks delete <notebook-id>
+pup notebooks delete <notebook-id>
 ```
 
 ## Error Handling

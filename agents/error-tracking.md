@@ -36,7 +36,7 @@ You are a specialized agent for interacting with Datadog's Error Tracking API. Y
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -50,7 +50,7 @@ You are a specialized agent for interacting with Datadog's Error Tracking API. Y
 #### Search All Errors
 ```bash
 # Search errors in the last hour
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --from="1h" \
   --to="now"
@@ -58,7 +58,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search by service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="service:api-gateway" \
   --from="24h" \
   --to="now"
@@ -66,7 +66,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search by error type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="error.type:TimeoutError" \
   --from="7d" \
   --to="now"
@@ -74,7 +74,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search by status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="status:open" \
   --from="30d" \
   --to="now"
@@ -82,7 +82,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search by environment:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="env:production AND service:payment-service" \
   --from="24h" \
   --to="now"
@@ -91,7 +91,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Filter by Track
 ```bash
 # Search errors from APM traces
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="service:api" \
   --track="trace" \
   --from="1h"
@@ -99,7 +99,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search errors from logs:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --track="logs" \
   --from="1h"
@@ -107,7 +107,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search errors from RUM:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --track="rum" \
   --from="1h"
@@ -116,7 +116,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Advanced Search Options
 ```bash
 # Include related data in search results
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="service:api" \
   --from="24h" \
   --include="issue,issue.assignee,issue.team_owners,issue.case"
@@ -125,7 +125,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 Search with ordering:
 ```bash
 # Order by occurrence count (most frequent first)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --from="7d" \
   --order-by="occurrence_count" \
@@ -134,7 +134,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Order by first seen:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --from="7d" \
   --order-by="first_seen" \
@@ -143,7 +143,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Order by last seen:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --from="7d" \
   --order-by="last_seen" \
@@ -154,7 +154,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Issue Information
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors get <issue-id>
+pup errors get <issue-id>
 ```
 
 ### Issue State Management
@@ -162,19 +162,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Update Issue State
 ```bash
 # Mark issue as resolved
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors update-state <issue-id> \
+pup errors update-state <issue-id> \
   --state="resolved"
 ```
 
 Mark issue as ignored:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors update-state <issue-id> \
+pup errors update-state <issue-id> \
   --state="ignored"
 ```
 
 Reopen issue:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors update-state <issue-id> \
+pup errors update-state <issue-id> \
   --state="open"
 ```
 
@@ -187,19 +187,19 @@ State options:
 
 #### Assign Issue to User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors assign <issue-id> \
+pup errors assign <issue-id> \
   --user-id="user-uuid"
 ```
 
 Assign to team:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors assign <issue-id> \
+pup errors assign <issue-id> \
   --team-id="team-uuid"
 ```
 
 Unassign issue:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors unassign <issue-id>
+pup errors unassign <issue-id>
 ```
 
 ## Query Syntax
@@ -277,7 +277,7 @@ Present error tracking data in clear, user-friendly formats:
 
 ### "Show me all open errors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="status:open" \
   --from="7d" \
   --order-by="occurrence_count" \
@@ -286,14 +286,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Find errors in production API service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="env:production AND service:api-gateway" \
   --from="24h"
 ```
 
 ### "What's the most frequent error?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --from="7d" \
   --order-by="occurrence_count" \
@@ -303,7 +303,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show me new errors in the last hour"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="*" \
   --from="1h" \
   --order-by="first_seen" \
@@ -312,20 +312,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Find timeout errors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors search \
+pup errors search \
   --query="error.type:TimeoutError OR error.message:*timeout*" \
   --from="24h"
 ```
 
 ### "Mark issue as resolved"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors update-state <issue-id> \
+pup errors update-state <issue-id> \
   --state="resolved"
 ```
 
 ### "Assign error to platform team"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js errors assign <issue-id> \
+pup errors assign <issue-id> \
   --team-id="platform-team-uuid"
 ```
 

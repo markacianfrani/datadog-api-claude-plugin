@@ -30,7 +30,7 @@ You are a specialized agent for managing Datadog APM (Application Performance Mo
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -54,19 +54,19 @@ You are a specialized agent for managing Datadog APM (Application Performance Mo
 
 #### List All Retention Filters
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters list
+pup apm retention-filters list
 ```
 
 #### Get Specific Retention Filter
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters get \
+pup apm retention-filters get \
   --filter-id="7RBOb7dLSYWI01yc3pIH8w"
 ```
 
 #### Create Retention Filter
 Basic filter to retain all spans from a service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Production API Service" \
   --query="service:api env:production" \
   --rate=1.0 \
@@ -75,7 +75,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With sampling:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Sample Staging Logs" \
   --query="env:staging" \
   --rate=0.1 \
@@ -84,7 +84,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Retain only top-level spans (traces):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Production Top Level Spans" \
   --query="@_top_level:1 env:production" \
   --rate=1.0 \
@@ -93,7 +93,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With trace rate:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="High Value Traces" \
   --query="service:checkout" \
   --rate=0.5 \
@@ -103,7 +103,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Retain spans with errors:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Error Spans" \
   --query="status:error" \
   --rate=1.0 \
@@ -112,7 +112,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Retain slow spans:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Slow Operations" \
   --query="@duration:>2s" \
   --rate=1.0 \
@@ -121,7 +121,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Retention Filter
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters update \
+pup apm retention-filters update \
   --filter-id="7RBOb7dLSYWI01yc3pIH8w" \
   --name="Updated Filter Name" \
   --query="service:api env:production" \
@@ -131,20 +131,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Disable filter:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters update \
+pup apm retention-filters update \
   --filter-id="7RBOb7dLSYWI01yc3pIH8w" \
   --enabled=false
 ```
 
 #### Delete Retention Filter
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters delete \
+pup apm retention-filters delete \
   --filter-id="7RBOb7dLSYWI01yc3pIH8w"
 ```
 
 #### Reorder Retention Filters
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters reorder \
+pup apm retention-filters reorder \
   --filter-ids='[
     "filter-id-1",
     "filter-id-2",
@@ -156,19 +156,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Span Metrics
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics list
+pup apm span-metrics list
 ```
 
 #### Get Specific Span Metric
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics get \
+pup apm span-metrics get \
   --metric-id="trace.api.request.duration"
 ```
 
 #### Create Span Metric (Count)
 Count spans by service and status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.request.count" \
   --aggregation-type="count" \
   --filter-query="*" \
@@ -180,7 +180,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Count errors by service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.errors.count" \
   --aggregation-type="count" \
   --filter-query="status:error" \
@@ -192,7 +192,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Create Span Metric (Distribution)
 Request duration distribution:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.request.duration" \
   --aggregation-type="distribution" \
   --path="@duration" \
@@ -205,7 +205,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Database query duration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.db.query.duration" \
   --aggregation-type="distribution" \
   --path="@duration" \
@@ -219,7 +219,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 HTTP response size distribution:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.http.response.size" \
   --aggregation-type="distribution" \
   --path="@http.response.content_length" \
@@ -233,7 +233,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Span Metric
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics update \
+pup apm span-metrics update \
   --metric-id="trace.request.duration" \
   --filter-query="service:api env:production" \
   --include-percentiles=true
@@ -241,7 +241,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Change grouping:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics update \
+pup apm span-metrics update \
   --metric-id="trace.request.count" \
   --group-by='[
     {"path": "service", "tag_name": "service"},
@@ -252,7 +252,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Span Metric
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics delete \
+pup apm span-metrics delete \
   --metric-id="trace.request.duration"
 ```
 
@@ -508,7 +508,7 @@ span.kind:client AND db.system:*
 
 #### 1. Retain Production Traces
 ```bash
-node .../dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Production Traces" \
   --query="@_top_level:1 env:production" \
   --rate=1.0 \
@@ -518,7 +518,7 @@ node .../dist/index.js apm retention-filters create \
 
 #### 2. Sample High-Volume Service
 ```bash
-node .../dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Sample High Volume Service" \
   --query="service:high-volume-service" \
   --rate=0.01 \
@@ -527,7 +527,7 @@ node .../dist/index.js apm retention-filters create \
 
 #### 3. Retain All Errors
 ```bash
-node .../dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="All Errors" \
   --query="status:error" \
   --rate=1.0 \
@@ -537,7 +537,7 @@ node .../dist/index.js apm retention-filters create \
 
 #### 4. Retain Slow Endpoints
 ```bash
-node .../dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Slow Endpoints" \
   --query="@duration:>2s" \
   --rate=1.0 \
@@ -546,7 +546,7 @@ node .../dist/index.js apm retention-filters create \
 
 #### 5. Retain Specific Customer
 ```bash
-node .../dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="VIP Customer Traces" \
   --query="@customer.tier:premium" \
   --rate=1.0 \
@@ -558,7 +558,7 @@ node .../dist/index.js apm retention-filters create \
 
 #### 1. Request Rate by Service and Status
 ```bash
-node .../dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.request.hits" \
   --aggregation-type="count" \
   --filter-query="span.kind:server" \
@@ -570,7 +570,7 @@ node .../dist/index.js apm span-metrics create \
 
 #### 2. P95 Latency by Endpoint
 ```bash
-node .../dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.request.latency" \
   --aggregation-type="distribution" \
   --path="@duration" \
@@ -583,7 +583,7 @@ node .../dist/index.js apm span-metrics create \
 
 #### 3. Database Query Performance
 ```bash
-node .../dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.db.duration" \
   --aggregation-type="distribution" \
   --path="@duration" \
@@ -598,7 +598,7 @@ node .../dist/index.js apm span-metrics create \
 
 #### 4. Error Rate
 ```bash
-node .../dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.errors" \
   --aggregation-type="count" \
   --filter-query="status:error" \
@@ -610,7 +610,7 @@ node .../dist/index.js apm span-metrics create \
 
 #### 5. Cache Hit Rate
 ```bash
-node .../dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.cache.requests" \
   --aggregation-type="count" \
   --filter-query="@cache.key:*" \
@@ -660,12 +660,12 @@ Present APM configuration data in clear, user-friendly formats:
 
 ### "Show me all retention filters"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters list
+pup apm retention-filters list
 ```
 
 ### "Create a filter to retain production errors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Production Errors" \
   --query="env:production AND status:error" \
   --rate=1.0 \
@@ -675,7 +675,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Create a metric for request duration by endpoint"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics create \
+pup apm span-metrics create \
   --metric-id="trace.endpoint.duration" \
   --aggregation-type="distribution" \
   --path="@duration" \
@@ -688,12 +688,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show all span-based metrics"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm span-metrics list
+pup apm span-metrics list
 ```
 
 ### "Sample staging traces at 10%"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js apm retention-filters create \
+pup apm retention-filters create \
   --name="Sample Staging" \
   --query="env:staging" \
   --rate=0.1 \

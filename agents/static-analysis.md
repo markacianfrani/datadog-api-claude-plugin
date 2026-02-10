@@ -19,7 +19,7 @@ You are a specialized agent for interacting with Datadog's Code Security feature
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -38,7 +38,7 @@ You are a specialized agent for interacting with Datadog's Code Security feature
 
 Search for code security vulnerabilities:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security" \
   --from="24h" \
   --to="now"
@@ -46,28 +46,28 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search for SAST findings:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @vulnerability.type:sast" \
   --from="24h"
 ```
 
 Search for SCA vulnerabilities:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @vulnerability.type:sca" \
   --from="24h"
 ```
 
 Search by severity:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND status:critical" \
   --from="7d"
 ```
 
 Search by repository:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @git.repository:myorg/myrepo" \
   --from="7d"
 ```
@@ -228,7 +228,7 @@ Present code security data in clear, user-friendly formats:
 
 ### "Show me code security vulnerabilities"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security" \
   --from="7d" \
   --to="now"
@@ -236,42 +236,42 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "What are my critical security issues?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND status:critical" \
   --from="7d"
 ```
 
 ### "Show SAST findings in my code"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @vulnerability.type:sast" \
   --from="7d"
 ```
 
 ### "What dependencies have vulnerabilities?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @vulnerability.type:sca" \
   --from="7d"
 ```
 
 ### "Show vulnerabilities in production services"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND env:production" \
   --from="7d"
 ```
 
 ### "Find SQL injection vulnerabilities"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @vulnerability.rule_name:*sql*injection*" \
   --from="7d"
 ```
 
 ### "Show vulnerabilities in specific repository"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js security signals \
+pup security signals \
   --query="source:code_security AND @git.repository:myorg/api-service" \
   --from="7d"
 ```

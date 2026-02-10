@@ -19,7 +19,7 @@ You are a specialized agent for interacting with Datadog's Cloud Security Manage
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -44,19 +44,19 @@ The CLI automatically uses the appropriate endpoints based on your DD_SITE confi
 
 List all agent rules (detection rules):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules list
+pup cws rules list
 ```
 
 List rules for a specific policy:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules list \
+pup cws rules list \
   --policy-id="6517fcc1-cec7-4394-a655-8d6e9d085255"
 ```
 
 ### Get Specific Agent Rule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules get \
+pup cws rules get \
   --rule-id="3dd-0uc-h1s"
 ```
 
@@ -64,7 +64,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create a new Workload Protection detection rule:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules create \
+pup cws rules create \
   --name="Detect Shell Execution" \
   --description="Alert on shell execution" \
   --expression='exec.file.name == "sh"' \
@@ -73,7 +73,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With advanced options:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules create \
+pup cws rules create \
   --name="Detect Sensitive File Access" \
   --description="Monitor access to sensitive files" \
   --expression='open.file.path == "/etc/shadow"' \
@@ -85,7 +85,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Update Agent Rule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules update \
+pup cws rules update \
   --rule-id="3dd-0uc-h1s" \
   --enabled=false \
   --description="Updated description"
@@ -94,7 +94,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Delete Agent Rule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules delete \
+pup cws rules delete \
   --rule-id="3dd-0uc-h1s"
 ```
 
@@ -102,13 +102,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 List all agent policies:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies list
+pup cws policies list
 ```
 
 ### Get Specific Policy
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies get \
+pup cws policies get \
   --policy-id="6517fcc1-cec7-4394-a655-8d6e9d085255"
 ```
 
@@ -116,7 +116,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create a new agent policy:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies create \
+pup cws policies create \
   --name="Production Policy" \
   --description="Workload protection for production hosts" \
   --host-tags='["env:production"]' \
@@ -125,7 +125,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With AND/OR host tag logic:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies create \
+pup cws policies create \
   --name="Kubernetes Production Policy" \
   --description="K8s production workload protection" \
   --host-tags-lists='[["env:production", "platform:kubernetes"], ["env:prod", "platform:k8s"]]' \
@@ -135,7 +135,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Update Policy
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies update \
+pup cws policies update \
   --policy-id="6517fcc1-cec7-4394-a655-8d6e9d085255" \
   --enabled=false
 ```
@@ -143,7 +143,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Delete Policy
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies delete \
+pup cws policies delete \
   --policy-id="6517fcc1-cec7-4394-a655-8d6e9d085255"
 ```
 
@@ -151,7 +151,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Export policy as a file for manual deployment:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies download \
+pup cws policies download \
   --output="workload-protection.policy"
 ```
 
@@ -159,12 +159,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 View all CSM agents and their configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws agents list
+pup cws agents list
 ```
 
 With filtering and pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws agents list \
+pup cws agents list \
   --query="hostname:prod-*" \
   --page=0 \
   --size=50 \
@@ -173,7 +173,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search for agents with specific configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws agents list \
+pup cws agents list \
   --query="is_cws_enabled:true AND env:production"
 ```
 
@@ -181,12 +181,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 View all CSM serverless agents (AWS Fargate, Lambda):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws serverless-agents list
+pup cws serverless-agents list
 ```
 
 With filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws serverless-agents list \
+pup cws serverless-agents list \
   --query="ecs_fargate_task_arn:*production*" \
   --page=0 \
   --size=50
@@ -448,12 +448,12 @@ Present Cloud Workload Security data in clear, user-friendly formats:
 
 ### "Show me all Workload Protection rules"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules list
+pup cws rules list
 ```
 
 ### "Create a rule to detect privilege escalation"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules create \
+pup cws rules create \
   --name="Detect Privilege Escalation" \
   --description="Alert on suspicious privilege escalation attempts" \
   --expression='exec.file.name in ["sudo", "su"] && process.parent.file.name not in ["sshd", "systemd", "login"]' \
@@ -462,18 +462,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "List all policies deployed to production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies list
+pup cws policies list
 ```
 
 ### "Which hosts have CWS enabled?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws agents list \
+pup cws agents list \
   --query="is_cws_enabled:true"
 ```
 
 ### "Create a policy for Kubernetes production hosts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies create \
+pup cws policies create \
   --name="K8s Production Policy" \
   --description="Workload protection for Kubernetes production clusters" \
   --host-tags-lists='[["env:production", "platform:kubernetes"]]' \
@@ -482,13 +482,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show me agents that don't have CWS enabled"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws agents list \
+pup cws agents list \
   --query="is_cws_enabled:false"
 ```
 
 ### "Create a rule to detect container escape"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws rules create \
+pup cws rules create \
   --name="Container Escape Detection" \
   --description="Detect container escape attempts via proc filesystem" \
   --expression='exec.file.path =~ "/proc/*/root/*" && container.id != ""' \
@@ -497,7 +497,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Download the current Workload Protection policy"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cws policies download \
+pup cws policies download \
   --output="current-policy.zip"
 ```
 

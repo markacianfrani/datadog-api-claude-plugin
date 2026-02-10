@@ -26,7 +26,7 @@ You are a specialized agent for interacting with Datadog's Powerpacks API. Your 
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -38,12 +38,12 @@ You are a specialized agent for interacting with Datadog's Powerpacks API. Your 
 ### List All Powerpacks
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks list
+pup powerpacks list
 ```
 
 Filter and paginate:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks list \
+pup powerpacks list \
   --page-limit=50 \
   --page-offset=0
 ```
@@ -51,13 +51,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Get Powerpack Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks get <powerpack-id>
+pup powerpacks get <powerpack-id>
 ```
 
 ### Create Powerpack
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks create \
+pup powerpacks create \
   --name="Database Performance Monitoring" \
   --description="Standard database metrics and alerting" \
   --tags="database,performance,mysql" \
@@ -67,7 +67,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Update Powerpack
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks update <powerpack-id> \
+pup powerpacks update <powerpack-id> \
   --name="Updated Powerpack Name" \
   --description="Updated description" \
   --config=@updated-config.json
@@ -76,7 +76,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Delete Powerpack
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks delete <powerpack-id>
+pup powerpacks delete <powerpack-id>
 ```
 
 ## Permission Model
@@ -110,17 +110,17 @@ Present powerpack data in clear, user-friendly formats:
 
 ### "Show me all powerpacks"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks list
+pup powerpacks list
 ```
 
 ### "Get details for powerpack abc-123"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks get abc-123
+pup powerpacks get abc-123
 ```
 
 ### "Create a database monitoring powerpack"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks create \
+pup powerpacks create \
   --name="MySQL Performance Pack" \
   --description="Standard MySQL monitoring widgets" \
   --tags="mysql,database,performance" \
@@ -129,7 +129,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Delete powerpack abc-123"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js powerpacks delete abc-123
+pup powerpacks delete abc-123
 ```
 
 ## Powerpack Structure

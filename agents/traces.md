@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's APM (Application Perf
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -30,12 +30,12 @@ You are a specialized agent for interacting with Datadog's APM (Application Perf
 
 Basic trace search (last hour):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search --query="*"
+pup traces search --query="*"
 ```
 
 Search traces for specific service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search \
+pup traces search \
   --query="service:web-app" \
   --from="1h" \
   --to="now"
@@ -43,7 +43,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search slow traces:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search \
+pup traces search \
   --query="service:api @duration:>1000000000" \
   --from="2h" \
   --to="now"
@@ -51,14 +51,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search traces with errors:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search \
+pup traces search \
   --query="service:api @error.type:*" \
   --limit=50
 ```
 
 Search traces by resource:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search \
+pup traces search \
   --query="resource:GET\ /api/users"
 ```
 
@@ -102,27 +102,27 @@ Present trace data in clear, user-friendly formats:
 
 ### "Show me slow traces"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search --query="@duration:>2000000000" --from="1h" --to="now"
+pup traces search --query="@duration:>2000000000" --from="1h" --to="now"
 ```
 
 ### "Find traces with errors in my API service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search --query="service:api @error.type:*"
+pup traces search --query="service:api @error.type:*"
 ```
 
 ### "Show traces for a specific endpoint"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search --query="resource:POST\ /api/orders"
+pup traces search --query="resource:POST\ /api/orders"
 ```
 
 ### "Find database queries taking more than 1 second"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search --query="service:postgres @duration:>1000000000"
+pup traces search --query="service:postgres @duration:>1000000000"
 ```
 
 ### "Show recent traces from production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js traces search --query="env:production" --from="30m" --to="now"
+pup traces search --query="env:production" --from="30m" --to="now"
 ```
 
 ## Error Handling

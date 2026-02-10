@@ -35,7 +35,7 @@ You are a specialized agent for interacting with Datadog's Cloud Cost Management
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -48,12 +48,12 @@ You are a specialized agent for interacting with Datadog's Cloud Cost Management
 
 #### List AWS CUR Configs
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws list
+pup cloud-cost aws list
 ```
 
 #### Create AWS CUR Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws create \
+pup cloud-cost aws create \
   --account-id="123456789012" \
   --bucket="my-cur-bucket" \
   --report-name="my-cur-report" \
@@ -62,7 +62,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With account filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws create \
+pup cloud-cost aws create \
   --account-id="123456789012" \
   --bucket="my-cur-bucket" \
   --report-name="my-cur-report" \
@@ -72,37 +72,37 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get AWS CUR Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws get <cloud-account-id>
+pup cloud-cost aws get <cloud-account-id>
 ```
 
 #### Update AWS CUR Config
 ```bash
 # Update status to archived
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws update <cloud-account-id> \
+pup cloud-cost aws update <cloud-account-id> \
   --status="archived"
 ```
 
 Update account filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws update <cloud-account-id> \
+pup cloud-cost aws update <cloud-account-id> \
   --include-accounts="111111111111,333333333333"
 ```
 
 #### Delete AWS CUR Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws delete <cloud-account-id>
+pup cloud-cost aws delete <cloud-account-id>
 ```
 
 ### Azure UC Configuration
 
 #### List Azure UC Configs
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost azure list
+pup cloud-cost azure list
 ```
 
 #### Create Azure UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost azure create \
+pup cloud-cost azure create \
   --tenant-id="aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" \
   --client-id="ffffffff-gggg-hhhh-iiii-jjjjjjjjjjjj" \
   --scope="/subscriptions/12345678-1234-1234-1234-123456789012"
@@ -110,30 +110,30 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Azure UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost azure get <cloud-account-id>
+pup cloud-cost azure get <cloud-account-id>
 ```
 
 #### Update Azure UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost azure update <cloud-account-id> \
+pup cloud-cost azure update <cloud-account-id> \
   --status="archived"
 ```
 
 #### Delete Azure UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost azure delete <cloud-account-id>
+pup cloud-cost azure delete <cloud-account-id>
 ```
 
 ### GCP UC Configuration
 
 #### List GCP UC Configs
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost gcp list
+pup cloud-cost gcp list
 ```
 
 #### Create GCP UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost gcp create \
+pup cloud-cost gcp create \
   --project-id="my-gcp-project" \
   --dataset-id="billing_export" \
   --table-id="gcp_billing_export_v1"
@@ -141,31 +141,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get GCP UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost gcp get <cloud-account-id>
+pup cloud-cost gcp get <cloud-account-id>
 ```
 
 #### Update GCP UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost gcp update <cloud-account-id> \
+pup cloud-cost gcp update <cloud-account-id> \
   --status="archived"
 ```
 
 #### Delete GCP UC Config
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost gcp delete <cloud-account-id>
+pup cloud-cost gcp delete <cloud-account-id>
 ```
 
 ### Cost Allocation Rules
 
 #### List Allocation Rules
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules list
+pup cloud-cost rules list
 ```
 
 #### Create Allocation Rule
 ```bash
 # Split costs by team tag
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules create \
+pup cloud-cost rules create \
   --name="Split by Team" \
   --query="resource_name:*database*" \
   --split-by="team"
@@ -173,7 +173,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Allocate fixed percentage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules create \
+pup cloud-cost rules create \
   --name="Shared Infrastructure Allocation" \
   --query="service:shared-vpc" \
   --allocate="team:platform:40,team:api:30,team:data:30"
@@ -181,31 +181,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Allocation Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules get <rule-id>
+pup cloud-cost rules get <rule-id>
 ```
 
 #### Update Allocation Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules update <rule-id> \
+pup cloud-cost rules update <rule-id> \
   --name="Updated Rule Name" \
   --query="resource_name:*updated*"
 ```
 
 #### Delete Allocation Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules delete <rule-id>
+pup cloud-cost rules delete <rule-id>
 ```
 
 #### Reorder Allocation Rules
 ```bash
 # Rules are applied in order - first match wins
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules reorder \
+pup cloud-cost rules reorder \
   --rule-ids="rule-123,rule-456,rule-789"
 ```
 
 #### Validate Rule Query
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules validate \
+pup cloud-cost rules validate \
   --query="resource_name:*database* AND env:production"
 ```
 
@@ -213,37 +213,37 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Tag Pipeline Rulesets
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost tags list
+pup cloud-cost tags list
 ```
 
 #### Create Tag Pipeline Ruleset
 ```bash
 # Transform tags for cost attribution
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost tags create \
+pup cloud-cost tags create \
   --name="Normalize Team Tags" \
   --rules='[{"source":"team","target":"cost_center","pattern":"^([a-z]+)-.*","replacement":"$1"}]'
 ```
 
 #### Get Tag Pipeline Ruleset
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost tags get <ruleset-id>
+pup cloud-cost tags get <ruleset-id>
 ```
 
 #### Update Tag Pipeline Ruleset
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost tags update <ruleset-id> \
+pup cloud-cost tags update <ruleset-id> \
   --name="Updated Pipeline" \
   --rules='[...]'
 ```
 
 #### Delete Tag Pipeline Ruleset
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost tags delete <ruleset-id>
+pup cloud-cost tags delete <ruleset-id>
 ```
 
 #### Reorder Tag Pipeline Rulesets
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost tags reorder \
+pup cloud-cost tags reorder \
   --ruleset-ids="ruleset-123,ruleset-456"
 ```
 
@@ -252,7 +252,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Upload Custom Cost File
 ```bash
 # Upload CSV with custom cost data
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost custom upload \
+pup cloud-cost custom upload \
   --file="custom-costs.csv" \
   --provider="third-party-vendor"
 ```
@@ -266,30 +266,30 @@ date,cost,description,tags
 
 #### List Custom Cost Files
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost custom list
+pup cloud-cost custom list
 ```
 
 #### Get Custom Cost File
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost custom get <file-id>
+pup cloud-cost custom get <file-id>
 ```
 
 #### Delete Custom Cost File
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost custom delete <file-id>
+pup cloud-cost custom delete <file-id>
 ```
 
 ### Budget Management
 
 #### List Budgets
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost budgets list
+pup cloud-cost budgets list
 ```
 
 #### Create or Update Budget
 ```bash
 # Create monthly budget
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost budgets upsert \
+pup cloud-cost budgets upsert \
   --name="Production AWS Budget" \
   --amount=10000 \
   --period="monthly" \
@@ -298,7 +298,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With thresholds and alerts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost budgets upsert \
+pup cloud-cost budgets upsert \
   --name="Production AWS Budget" \
   --amount=10000 \
   --period="monthly" \
@@ -309,12 +309,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Budget
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost budgets get <budget-id>
+pup cloud-cost budgets get <budget-id>
 ```
 
 #### Delete Budget
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost budgets delete <budget-id>
+pup cloud-cost budgets delete <budget-id>
 ```
 
 ## Query Syntax
@@ -428,7 +428,7 @@ Present cloud cost data in clear, user-friendly formats:
 
 ### "Set up AWS cost tracking"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws create \
+pup cloud-cost aws create \
   --account-id="123456789012" \
   --bucket="my-cur-bucket" \
   --report-name="my-cur-report" \
@@ -438,18 +438,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Show all cloud cost configurations"
 ```bash
 # List AWS configs
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost aws list
+pup cloud-cost aws list
 
 # List Azure configs
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost azure list
+pup cloud-cost azure list
 
 # List GCP configs
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost gcp list
+pup cloud-cost gcp list
 ```
 
 ### "Create allocation rule for shared database"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules create \
+pup cloud-cost rules create \
   --name="Split RDS Costs by Application" \
   --query="service:rds AND resource_name:shared-postgres" \
   --split-by="application"
@@ -457,7 +457,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Set up monthly budget"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost budgets upsert \
+pup cloud-cost budgets upsert \
   --name="Engineering Team Budget" \
   --amount=25000 \
   --period="monthly" \
@@ -468,14 +468,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Upload SaaS tool costs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost custom upload \
+pup cloud-cost custom upload \
   --file="saas-costs.csv" \
   --provider="software-licenses"
 ```
 
 ### "Validate cost allocation query"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloud-cost rules validate \
+pup cloud-cost rules validate \
   --query="cloud_provider:aws AND service:ec2 AND tag:env:production"
 ```
 

@@ -18,7 +18,7 @@ You are a specialized agent for interacting with Datadog's Database Monitoring (
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -36,15 +36,15 @@ You are a specialized agent for interacting with Datadog's Database Monitoring (
 
 List all database-related metrics:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="postgresql.*"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="mysql.*"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="oracle.*"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="sqlserver.*"
+pup metrics list --filter="postgresql.*"
+pup metrics list --filter="mysql.*"
+pup metrics list --filter="oracle.*"
+pup metrics list --filter="sqlserver.*"
 ```
 
 Query database connection metrics:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:postgresql.connections.count{*}" \
   --from="1h" \
   --to="now"
@@ -52,7 +52,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Query database query performance:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:postgresql.queries.count{*} by {host}" \
   --from="4h" \
   --to="now"
@@ -60,7 +60,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Query database lock wait time:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:postgresql.locks.waiting{*}" \
   --from="1h" \
   --to="now"
@@ -70,24 +70,24 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 List all DBM monitors:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors list --tags="source:dbm"
+pup monitors list --tags="source:dbm"
 ```
 
 Get details of a specific monitor:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors get <monitor-id>
+pup monitors get <monitor-id>
 ```
 
 Search for database monitors:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "database"
+pup monitors search "database"
 ```
 
 ### List Database Hosts
 
 View infrastructure hosts running databases:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="dbm:true"
+pup infrastructure hosts --filter="dbm:true"
 ```
 
 ## Common Database Metrics by Technology
@@ -160,20 +160,20 @@ Present DBM data in clear, user-friendly formats:
 ### "Show me my database metrics"
 ```bash
 # First, identify which database technology
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="postgresql.*"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="mysql.*"
+pup metrics list --filter="postgresql.*"
+pup metrics list --filter="mysql.*"
 ```
 
 ### "What's my database connection count?"
 ```bash
 # PostgreSQL
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:postgresql.connections.count{*} by {host}" \
   --from="1h" \
   --to="now"
 
 # MySQL
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:mysql.connections.current{*} by {host}" \
   --from="1h" \
   --to="now"
@@ -182,7 +182,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Are there any slow queries?"
 ```bash
 # MySQL slow queries
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:mysql.performance.slow_queries{*}" \
   --from="1h" \
   --to="now"
@@ -191,13 +191,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Show database replication lag"
 ```bash
 # PostgreSQL
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:postgresql.replication.delay{*} by {host}" \
   --from="1h" \
   --to="now"
 
 # MySQL
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:mysql.replication.seconds_behind_master{*} by {host}" \
   --from="1h" \
   --to="now"
@@ -205,12 +205,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "List all database monitoring alerts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "database"
+pup monitors search "database"
 ```
 
 ### "Show hosts with DBM enabled"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="dbm:true"
+pup infrastructure hosts --filter="dbm:true"
 ```
 
 ## Database Monitoring Setup

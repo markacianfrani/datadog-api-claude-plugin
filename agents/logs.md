@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's Logs API. Your role i
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -30,12 +30,12 @@ You are a specialized agent for interacting with Datadog's Logs API. Your role i
 
 Basic log search (last hour):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search --query="*"
+pup logs search --query="*"
 ```
 
 Search with specific query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search \
+pup logs search \
   --query="service:web-app status:error" \
   --from="1h" \
   --to="now"
@@ -43,7 +43,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search with custom time range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search \
+pup logs search \
   --query="env:production" \
   --from="2h" \
   --to="now" \
@@ -52,7 +52,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search with complex query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search \
+pup logs search \
   --query="service:api status:error @http.status_code:>=500"
 ```
 
@@ -94,27 +94,27 @@ Present log data in clear, user-friendly formats:
 
 ### "Show me recent error logs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search --query="status:error" --from="1h" --to="now"
+pup logs search --query="status:error" --from="1h" --to="now"
 ```
 
 ### "Search logs from production service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search --query="service:api env:production"
+pup logs search --query="service:api env:production"
 ```
 
 ### "Find 500 errors in the last hour"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search --query="@http.status_code:500" --from="1h" --to="now"
+pup logs search --query="@http.status_code:500" --from="1h" --to="now"
 ```
 
 ### "Show logs for specific user"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search --query="@user.id:12345"
+pup logs search --query="@user.id:12345"
 ```
 
 ### "Search logs containing specific text"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js logs search --query="connection timeout"
+pup logs search --query="connection timeout"
 ```
 
 ## Error Handling

@@ -17,7 +17,7 @@ You are a specialized agent for interacting with Datadog's Metrics API. Your rol
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -29,29 +29,29 @@ You are a specialized agent for interacting with Datadog's Metrics API. Your rol
 ### List Available Metrics
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list
+pup metrics list
 ```
 
 With filtering:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="system.*"
+pup metrics list --filter="system.*"
 ```
 
 With limit:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="app.*" --limit=50
+pup metrics list --filter="app.*" --limit=50
 ```
 
 ### Query Metric Time-Series Data
 
 Query with default time range (last hour):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query --query="avg:system.cpu.user{*}"
+pup metrics query --query="avg:system.cpu.user{*}"
 ```
 
 Query with specific time range:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:system.cpu.user{*}" \
   --from="1h" \
   --to="now"
@@ -59,7 +59,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Query with custom aggregations:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="sum:app.requests{env:prod} by {service}" \
   --from="4h" \
   --to="now"
@@ -99,27 +99,27 @@ Present metric data in clear, user-friendly formats:
 
 ### "Show me available metrics"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list
+pup metrics list
 ```
 
 ### "What are my system metrics?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="system.*"
+pup metrics list --filter="system.*"
 ```
 
 ### "Show CPU usage for the last hour"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query --query="avg:system.cpu.user{*}" --from="1h" --to="now"
+pup metrics query --query="avg:system.cpu.user{*}" --from="1h" --to="now"
 ```
 
 ### "Query custom application metrics"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query --query="avg:app.response_time{env:prod}"
+pup metrics query --query="avg:app.response_time{env:prod}"
 ```
 
 ### "Show memory usage by host"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query --query="avg:system.mem.used{*} by {host}"
+pup metrics query --query="avg:system.mem.used{*} by {host}"
 ```
 
 ## Error Handling

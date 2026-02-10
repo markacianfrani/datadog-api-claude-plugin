@@ -32,7 +32,7 @@ You are a specialized agent for interacting with Datadog's Fleet Automation API.
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -48,25 +48,25 @@ You are a specialized agent for interacting with Datadog's Fleet Automation API.
 #### List Available Agent Versions
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agent-versions
+pup fleet agent-versions
 ```
 
 #### List All Agents
 
 List with default pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents list
+pup fleet agents list
 ```
 
 Filter by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents list \
+pup fleet agents list \
   --tags="env:prod,service:web"
 ```
 
 Filter with query and pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents list \
+pup fleet agents list \
   --filter="hostname:my-hostname OR env:dev" \
   --page-number=1 \
   --page-size=50
@@ -74,7 +74,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Sort agents:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents list \
+pup fleet agents list \
   --sort-attribute="agent_version" \
   --sort-descending
 ```
@@ -82,7 +82,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Get Agent Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents get <agent-key>
+pup fleet agents get <agent-key>
 ```
 
 ### Deployment Management
@@ -90,12 +90,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List Deployments
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments list
+pup fleet deployments list
 ```
 
 With pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments list \
+pup fleet deployments list \
   --page-size=20 \
   --page-offset=0
 ```
@@ -103,12 +103,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Get Deployment Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments get <deployment-id>
+pup fleet deployments get <deployment-id>
 ```
 
 With host pagination:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments get <deployment-id> \
+pup fleet deployments get <deployment-id> \
   --limit=100 \
   --page=0
 ```
@@ -117,7 +117,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Simple log level change:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-config \
+pup fleet deployments create-config \
   --filter-query="env:prod" \
   --file-path="/datadog.yaml" \
   --file-op="merge-patch" \
@@ -126,7 +126,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Enable multiple features:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-config \
+pup fleet deployments create-config \
   --filter-query="env:prod AND service:web" \
   --file-path="/datadog.yaml" \
   --file-op="merge-patch" \
@@ -135,7 +135,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Delete a configuration file:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-config \
+pup fleet deployments create-config \
   --filter-query="env:dev" \
   --file-path="/conf.d/old-integration.yaml" \
   --file-op="delete"
@@ -153,7 +153,7 @@ Multiple operations (requires JSON file):
 #   ]
 # }
 
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-config \
+pup fleet deployments create-config \
   --config-file=operations.json
 ```
 
@@ -161,7 +161,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Upgrade to specific version:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-upgrade \
+pup fleet deployments create-upgrade \
   --filter-query="env:prod AND service:web" \
   --package-name="datadog-agent" \
   --package-version="7.52.0"
@@ -169,7 +169,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Upgrade multiple packages:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-upgrade \
+pup fleet deployments create-upgrade \
   --filter-query="env:staging" \
   --packages='[{"name":"datadog-agent","version":"7.52.0"},{"name":"datadog-apm-inject","version":"0.10.0"}]'
 ```
@@ -177,7 +177,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Cancel a Deployment
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments cancel <deployment-id>
+pup fleet deployments cancel <deployment-id>
 ```
 
 ### Schedule Management
@@ -185,20 +185,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List All Schedules
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules list
+pup fleet schedules list
 ```
 
 #### Get Schedule Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules get <schedule-id>
+pup fleet schedules get <schedule-id>
 ```
 
 #### Create a Schedule
 
 Weekly updates on specific days:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules create \
+pup fleet schedules create \
   --name="Weekly Production Updates" \
   --query="env:prod" \
   --status="active" \
@@ -211,7 +211,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Conservative staging updates (N-1 version):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules create \
+pup fleet schedules create \
   --name="Staging - Conservative Updates" \
   --query="env:staging" \
   --status="active" \
@@ -226,13 +226,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Pause a schedule:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules update <schedule-id> \
+pup fleet schedules update <schedule-id> \
   --status="inactive"
 ```
 
 Change maintenance window:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules update <schedule-id> \
+pup fleet schedules update <schedule-id> \
   --days-of-week="Mon,Wed,Fri" \
   --start-time="03:00" \
   --duration=240
@@ -240,20 +240,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update target query:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules update <schedule-id> \
+pup fleet schedules update <schedule-id> \
   --query="env:prod AND service:api"
 ```
 
 #### Delete a Schedule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules delete <schedule-id>
+pup fleet schedules delete <schedule-id>
 ```
 
 #### Manually Trigger a Schedule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules trigger <schedule-id>
+pup fleet schedules trigger <schedule-id>
 ```
 
 ## Fleet Automation Concepts
@@ -365,13 +365,13 @@ Present data in clear, user-friendly formats:
 
 ### "Show me all production agents"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents list \
+pup fleet agents list \
   --filter="env:prod"
 ```
 
 ### "Upgrade all production web servers to Agent 7.52.0"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-upgrade \
+pup fleet deployments create-upgrade \
   --filter-query="env:prod AND service:web" \
   --package-name="datadog-agent" \
   --package-version="7.52.0"
@@ -379,7 +379,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Enable APM and logs on all staging hosts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments create-config \
+pup fleet deployments create-config \
   --filter-query="env:staging" \
   --file-path="/datadog.yaml" \
   --file-op="merge-patch" \
@@ -388,7 +388,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Set up weekly automated updates for production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet schedules create \
+pup fleet schedules create \
   --name="Weekly Production Agent Updates" \
   --query="env:prod" \
   --status="active" \
@@ -401,12 +401,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Check the status of a deployment"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet deployments get <deployment-id>
+pup fleet deployments get <deployment-id>
 ```
 
 ### "Get detailed information about an agent"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fleet agents get <agent-key>
+pup fleet agents get <agent-key>
 ```
 
 ## Error Handling

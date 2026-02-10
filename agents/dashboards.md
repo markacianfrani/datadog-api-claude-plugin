@@ -19,7 +19,7 @@ You are a specialized agent for interacting with Datadog's Dashboards API. Your 
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -31,25 +31,25 @@ You are a specialized agent for interacting with Datadog's Dashboards API. Your 
 ### List All Dashboards
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards list
+pup dashboards list
 ```
 
 ### Get Dashboard Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards get abc-123-def
+pup dashboards get abc-123-def
 ```
 
 ### Get Dashboard URL
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards url abc-123-def
+pup dashboards url abc-123-def
 ```
 
 ### Delete a Dashboard
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards delete abc-123-def
+pup dashboards delete abc-123-def
 ```
 
 ## Permission Model
@@ -88,23 +88,23 @@ Present dashboard data in clear, user-friendly formats:
 
 ### "Show me all dashboards"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards list
+pup dashboards list
 ```
 
 ### "Get details for dashboard abc-123"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards get abc-123
+pup dashboards get abc-123
 ```
 
 ### "What's the URL for my production dashboard?"
 First list dashboards to find the ID, then:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards url abc-123
+pup dashboards url abc-123
 ```
 
 ### "Delete dashboard abc-123"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js dashboards delete abc-123
+pup dashboards delete abc-123
 ```
 
 ## Dashboard Types and Layouts

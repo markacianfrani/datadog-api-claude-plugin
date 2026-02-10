@@ -30,7 +30,7 @@ You are a specialized agent for managing Datadog's Microsoft Azure integration. 
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -43,12 +43,12 @@ You are a specialized agent for managing Datadog's Microsoft Azure integration. 
 
 #### List All Azure Integrations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts list
+pup azure accounts list
 ```
 
 #### Create Azure Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test" \
   --client-secret="your-client-secret-here"
@@ -56,7 +56,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With full configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test" \
   --client-secret="your-client-secret-here" \
@@ -74,7 +74,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With resource provider configurations:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test" \
   --client-secret="your-client-secret-here" \
@@ -83,7 +83,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Azure Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test" \
   --cspm-enabled=true \
@@ -92,7 +92,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update tenant name or client ID:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="old-tenant-id" \
   --client-id="old-client-id" \
   --new-tenant-name="new-tenant-id" \
@@ -101,7 +101,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update resource filters:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test" \
   --host-filters="env:production,region:eastus" \
@@ -110,14 +110,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Azure Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts delete \
+pup azure accounts delete \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test"
 ```
 
 #### Update Host Filters Only
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure host-filters update \
+pup azure host-filters update \
   --tenant-name="testc44-1234-5678-9101-cc00736ftest" \
   --client-id="testc7f6-1234-5678-9101-3fcbf464test" \
   --host-filters="env:production,critical:true"
@@ -155,12 +155,12 @@ Present Azure integration data in clear, user-friendly formats:
 
 ### "Show me all Azure integrations"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts list
+pup azure accounts list
 ```
 
 ### "Set up Azure integration for my subscription"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -171,7 +171,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Enable CSPM for my Azure subscription"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --cspm-enabled=true \
@@ -180,7 +180,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Monitor only production VMs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --host-filters="env:production"
@@ -188,7 +188,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Disable metrics for Azure Storage to reduce costs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --resource-provider-configs='[{"namespace":"Microsoft.Storage","metrics_enabled":false}]'
@@ -196,7 +196,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Enable custom metrics collection"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --custom-metrics-enabled=true
@@ -204,7 +204,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Filter App Service Plans by tags"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --app-service-plan-filters="tier:premium,env:production"
@@ -408,7 +408,7 @@ az role assignment create \
 
 **4. Create Azure Integration in Datadog**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -424,12 +424,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 **1. List Current Integration**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts list
+pup azure accounts list
 ```
 
 **2. Disable Unused Resource Providers**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --metrics-enabled-default=false \
@@ -445,7 +445,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 **3. Add Resource Filters for Cost Optimization**:
 ```bash
 # Only monitor production resources
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --host-filters="env:production" \
@@ -456,7 +456,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 **4. Fine-tune Metrics**:
 ```bash
 # Disable custom and usage metrics if not needed
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --custom-metrics-enabled=false \
@@ -482,7 +482,7 @@ For organizations with multiple Azure subscriptions:
 # In Azure: Grant Reader + Monitoring Reader on all subscriptions
 
 # In Datadog: Create single integration
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -494,7 +494,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 **Example Multi-Subscription Setup (Multiple Apps)**:
 ```bash
 # Production subscription
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="PROD_CLIENT_ID" \
   --client-secret="PROD_CLIENT_SECRET" \
@@ -502,7 +502,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
   --cspm-enabled=true
 
 # Staging subscription
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="STAGING_CLIENT_ID" \
   --client-secret="STAGING_CLIENT_SECRET" \
@@ -636,7 +636,7 @@ Error: Client secret has expired
 ```
 → Generate new client secret in Azure Portal and update integration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="NEW_CLIENT_SECRET"
@@ -693,7 +693,7 @@ Error: Unable to access Azure subscription
 ### Minimal Production Setup
 ```bash
 # Create basic integration (after app registration setup in Azure)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -705,7 +705,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Full-Featured Setup
 ```bash
 # Create comprehensive integration
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -732,7 +732,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Security-Focused Setup (CSPM)
 ```bash
 # Create integration with focus on security monitoring
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -744,7 +744,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Cost-Optimized Setup
 ```bash
 # Create integration with minimal metric collection
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts create \
+pup azure accounts create \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="YOUR_CLIENT_SECRET" \
@@ -762,20 +762,20 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Update Existing Integration
 ```bash
 # Enable CSPM on existing integration
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --cspm-enabled=true \
   --resource-collection-enabled=true
 
 # Update filters
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --host-filters="env:production,region:eastus"
 
 # Rotate client secret
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --client-secret="NEW_CLIENT_SECRET"
@@ -912,7 +912,7 @@ Current integration: <Show current config>
 **Recommended changes**:
 ```bash
 # Set metrics-enabled-default to false, then explicitly enable only needed providers
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js azure accounts update \
+pup azure accounts update \
   --tenant-name="YOUR_TENANT_ID" \
   --client-id="YOUR_CLIENT_ID" \
   --metrics-enabled-default=false \

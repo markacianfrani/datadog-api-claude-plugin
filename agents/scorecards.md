@@ -29,7 +29,7 @@ You are a specialized agent for interacting with Datadog's Service Scorecards AP
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -46,24 +46,24 @@ You are a specialized agent for interacting with Datadog's Service Scorecards AP
 
 View all scorecard rules (both built-in and custom):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list
+pup scorecards rules list
 ```
 
 Filter by enabled status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list \
+pup scorecards rules list \
   --enabled=true
 ```
 
 Filter custom rules only:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list \
+pup scorecards rules list \
   --custom=true
 ```
 
 Filter by name pattern:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list \
+pup scorecards rules list \
   --name="production*"
 ```
 
@@ -71,7 +71,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create a new custom scorecard rule:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules create \
+pup scorecards rules create \
   --name="Has Deployment Automation" \
   --description="Service must have automated deployment pipeline" \
   --scorecard="Production Readiness" \
@@ -80,7 +80,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create rule with detailed configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules create \
+pup scorecards rules create \
   --name="Security Compliance Check" \
   --description="Service meets security scanning requirements" \
   --scorecard="Security Standards" \
@@ -92,7 +92,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update an existing rule:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules update <rule-id> \
+pup scorecards rules update <rule-id> \
   --name="Updated Rule Name" \
   --description="Updated description" \
   --enabled=false
@@ -100,7 +100,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Example:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules update abc-123-def \
+pup scorecards rules update abc-123-def \
   --enabled=true
 ```
 
@@ -108,7 +108,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Remove a custom rule:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules delete <rule-id>
+pup scorecards rules delete <rule-id>
 ```
 
 **Warning**: This is a destructive operation that requires confirmation. Only custom rules can be deleted.
@@ -119,30 +119,30 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 View all service scorecard outcomes:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list
+pup scorecards outcomes list
 ```
 
 Filter by service name:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list \
+pup scorecards outcomes list \
   --service-name="api-gateway"
 ```
 
 Filter by outcome state:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list \
+pup scorecards outcomes list \
   --state="fail"
 ```
 
 Filter by rule:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list \
+pup scorecards outcomes list \
   --rule-id="abc-123-def"
 ```
 
 Include rule details:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list \
+pup scorecards outcomes list \
   --include-rule
 ```
 
@@ -150,7 +150,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Set multiple service outcomes synchronously:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes create-batch \
+pup scorecards outcomes create-batch \
   --outcomes=@outcomes.json
 ```
 
@@ -182,7 +182,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Process multiple outcomes asynchronously:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes update-async \
+pup scorecards outcomes update-async \
   --outcomes=@async-outcomes.json
 ```
 
@@ -238,23 +238,23 @@ Present scorecard data in clear, user-friendly formats:
 
 ### "Show me all scorecard rules"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list
+pup scorecards rules list
 ```
 
 ### "Which services are failing Production Readiness checks?"
 ```bash
 # First, list Production Readiness rules
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list \
+pup scorecards rules list \
   --scorecard="Production Readiness"
 
 # Then list failing outcomes
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list \
+pup scorecards outcomes list \
   --state="fail"
 ```
 
 ### "Create a custom rule for deployment automation"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules create \
+pup scorecards rules create \
   --name="Has Automated Deployments" \
   --description="Service must use automated deployment pipeline" \
   --scorecard="Production Readiness" \
@@ -263,7 +263,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show the scorecard status for our API gateway service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes list \
+pup scorecards outcomes list \
   --service-name="api-gateway" \
   --include-rule
 ```
@@ -283,13 +283,13 @@ cat > outcome.json << EOF
 EOF
 
 # Submit outcomes
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes create-batch \
+pup scorecards outcomes create-batch \
   --outcomes=@outcome.json
 ```
 
 ### "Disable a rule temporarily"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules update <rule-id> \
+pup scorecards rules update <rule-id> \
   --enabled=false
 ```
 
@@ -408,11 +408,11 @@ Generate TypeScript or Python code for scorecard operations:
 
 ```bash
 # Generate TypeScript code to list rules
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards rules list \
+pup scorecards rules list \
   --generate > list_rules.ts
 
 # Generate Python code to create outcomes
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js scorecards outcomes create-batch \
+pup scorecards outcomes create-batch \
   --outcomes=@outcomes.json \
   --generate=python > create_outcomes.py
 ```

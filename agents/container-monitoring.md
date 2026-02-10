@@ -31,7 +31,7 @@ Use the Container Monitoring agent when you need to:
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -50,14 +50,14 @@ Use the Container Monitoring agent when you need to:
 
 List container-related metrics:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="container.*"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="kubernetes.*"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics list --filter="docker.*"
+pup metrics list --filter="container.*"
+pup metrics list --filter="kubernetes.*"
+pup metrics list --filter="docker.*"
 ```
 
 Query container CPU usage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:container.cpu.usage{*} by {container_name}" \
   --from="1h" \
   --to="now"
@@ -65,7 +65,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Query container memory usage:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:container.memory.usage{*} by {container_name}" \
   --from="1h" \
   --to="now"
@@ -73,7 +73,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Query pod restarts:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="sum:kubernetes.containers.restarts{*} by {kube_namespace,pod_name}" \
   --from="4h" \
   --to="now"
@@ -83,7 +83,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Kubernetes pod status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:kubernetes.pods.running{*} by {kube_namespace}" \
   --from="1h" \
   --to="now"
@@ -91,7 +91,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Kubernetes node capacity:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:kubernetes.cpu.capacity{*} by {host}" \
   --from="1h" \
   --to="now"
@@ -99,7 +99,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Deployment replicas:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:kubernetes.deployment.replicas_available{*} by {kube_deployment}" \
   --from="1h" \
   --to="now"
@@ -109,27 +109,27 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 List container and Kubernetes monitors:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "kubernetes"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "container"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "pod"
+pup monitors search "kubernetes"
+pup monitors search "container"
+pup monitors search "pod"
 ```
 
 Get monitor details:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors get <monitor-id>
+pup monitors get <monitor-id>
 ```
 
 ### List Container Hosts
 
 View infrastructure running containers:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="container_runtime:docker"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="container_runtime:containerd"
+pup infrastructure hosts --filter="container_runtime:docker"
+pup infrastructure hosts --filter="container_runtime:containerd"
 ```
 
 View Kubernetes nodes:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="kube_cluster:*"
+pup infrastructure hosts --filter="kube_cluster:*"
 ```
 
 ## Key Container Metrics
@@ -224,7 +224,7 @@ Present container data in clear, user-friendly formats:
 
 ### "Show me container CPU usage"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:container.cpu.usage{*} by {container_name}" \
   --from="1h" \
   --to="now"
@@ -232,7 +232,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Which pods are restarting?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="sum:kubernetes.containers.restarts{*} by {kube_namespace,pod_name}" \
   --from="4h" \
   --to="now"
@@ -241,13 +241,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Show Kubernetes cluster status"
 ```bash
 # Check running pods
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:kubernetes.pods.running{*} by {kube_cluster}" \
   --from="1h" \
   --to="now"
 
 # Check node status
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:kubernetes.node.ready{*} by {host}" \
   --from="1h" \
   --to="now"
@@ -255,7 +255,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "What's my container memory usage?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:container.memory.usage{*} by {container_name}" \
   --from="1h" \
   --to="now"
@@ -263,7 +263,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show deployment health"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:kubernetes.deployment.replicas_available{*} by {kube_deployment,kube_namespace}" \
   --from="1h" \
   --to="now"
@@ -271,12 +271,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "List my Kubernetes nodes"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js infrastructure hosts --filter="kube_cluster:*"
+pup infrastructure hosts --filter="kube_cluster:*"
 ```
 
 ### "Show container network traffic"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="avg:container.net.sent{*} by {container_name}" \
   --from="1h" \
   --to="now"
@@ -284,7 +284,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Are any pods pending?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js metrics query \
+pup metrics query \
   --query="sum:kubernetes.pods.pending{*} by {kube_namespace}" \
   --from="1h" \
   --to="now"

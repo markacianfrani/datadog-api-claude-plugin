@@ -99,7 +99,7 @@ This agent supports the complete incident response workflow:
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -121,7 +121,7 @@ This agent supports the complete incident response workflow:
 
 #### Create Schedule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call schedule create \
+pup on-call schedule create \
   --name="Primary On-Call Rotation" \
   --timezone="America/New_York" \
   --schedule='{"rotations": [...]}'
@@ -129,31 +129,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Schedule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call schedule get <schedule-id>
+pup on-call schedule get <schedule-id>
 ```
 
 #### Update Schedule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call schedule update <schedule-id> \
+pup on-call schedule update <schedule-id> \
   --name="Updated Rotation" \
   --schedule='{"rotations": [...]}'
 ```
 
 #### Delete Schedule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call schedule delete <schedule-id>
+pup on-call schedule delete <schedule-id>
 ```
 
 #### Get Current On-Call User
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call schedule who-is-on-call <schedule-id>
+pup on-call schedule who-is-on-call <schedule-id>
 ```
 
 ### On-Call: Escalation Policies
 
 #### Create Escalation Policy
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call escalation create \
+pup on-call escalation create \
   --name="Platform Team Escalation" \
   --steps='[
     {
@@ -169,31 +169,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Escalation Policy
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call escalation get <policy-id>
+pup on-call escalation get <policy-id>
 ```
 
 #### Update Escalation Policy
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call escalation update <policy-id> \
+pup on-call escalation update <policy-id> \
   --name="Updated Escalation" \
   --steps='[...]'
 ```
 
 #### Delete Escalation Policy
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call escalation delete <policy-id>
+pup on-call escalation delete <policy-id>
 ```
 
 ### On-Call: Team Routing
 
 #### Get Team Routing Rules
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call routing get <team-id>
+pup on-call routing get <team-id>
 ```
 
 #### Set Team Routing Rules
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call routing set <team-id> \
+pup on-call routing set <team-id> \
   --escalation-policy-id="policy-123" \
   --schedule-id="schedule-456"
 ```
@@ -202,7 +202,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Page (High Urgency)
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call page create \
+pup on-call page create \
   --title="Production Database Down" \
   --description="RDS primary instance unresponsive" \
   --target-type="team_id" \
@@ -213,7 +213,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Page (Low Urgency)
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call page create \
+pup on-call page create \
   --title="Certificate Expiring Soon" \
   --description="SSL cert expires in 7 days" \
   --target-type="user_id" \
@@ -223,7 +223,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Page by Team Handle
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call page create \
+pup on-call page create \
   --title="API Latency High" \
   --description="P95 latency > 500ms" \
   --target-type="team_handle" \
@@ -233,24 +233,24 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Acknowledge Page
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call page acknowledge <page-id>
+pup on-call page acknowledge <page-id>
 ```
 
 #### Escalate Page
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call page escalate <page-id>
+pup on-call page escalate <page-id>
 ```
 
 #### Resolve Page
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call page resolve <page-id>
+pup on-call page resolve <page-id>
 ```
 
 ### On-Call: Team Responders
 
 #### Get Team On-Call Users
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call team responders <team-id>
+pup on-call team responders <team-id>
 ```
 
 ### On-Call: Notification Management
@@ -258,25 +258,25 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Create Notification Channel
 ```bash
 # SMS
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel create \
+pup on-call notifications channel create \
   --type="sms" \
   --value="+15551234567" \
   --enabled
 
 # Email
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel create \
+pup on-call notifications channel create \
   --type="email" \
   --value="oncall@example.com" \
   --enabled
 
 # Phone
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel create \
+pup on-call notifications channel create \
   --type="phone" \
   --value="+15551234567" \
   --enabled
 
 # Slack
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel create \
+pup on-call notifications channel create \
   --type="slack" \
   --value="@username" \
   --enabled
@@ -284,29 +284,29 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Notification Channels
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel list
+pup on-call notifications channel list
 ```
 
 #### Get Notification Channel
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel get <channel-id>
+pup on-call notifications channel get <channel-id>
 ```
 
 #### Delete Notification Channel
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications channel delete <channel-id>
+pup on-call notifications channel delete <channel-id>
 ```
 
 #### Create Notification Rule
 ```bash
 # Immediate high urgency notification
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications rule create \
+pup on-call notifications rule create \
   --channel-id="channel-123" \
   --urgency="high" \
   --delay-minutes=0
 
 # Delayed notification
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications rule create \
+pup on-call notifications rule create \
   --channel-id="channel-456" \
   --urgency="high" \
   --delay-minutes=15
@@ -314,23 +314,23 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Notification Rules
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications rule list
+pup on-call notifications rule list
 ```
 
 #### Get Notification Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications rule get <rule-id>
+pup on-call notifications rule get <rule-id>
 ```
 
 #### Update Notification Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications rule update <rule-id> \
+pup on-call notifications rule update <rule-id> \
   --delay-minutes=5
 ```
 
 #### Delete Notification Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js on-call notifications rule delete <rule-id>
+pup on-call notifications rule delete <rule-id>
 ```
 
 ### Incident Management
@@ -338,26 +338,26 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List All Incidents
 ```bash
 # List all incidents
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list
+pup incidents list
 
 # Filter by state (active, stable, resolved, completed)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --state=active
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --state=resolved
+pup incidents list --state=active
+pup incidents list --state=resolved
 
 # Filter by custom query
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --query="severity:SEV-1"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --query="customer_impacted:true"
+pup incidents list --query="severity:SEV-1"
+pup incidents list --query="customer_impacted:true"
 
 # Combine filters
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --state=active --query="severity:SEV-1"
+pup incidents list --state=active --query="severity:SEV-1"
 
 # Pagination
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents list --page-size=50 --page-offset=0
+pup incidents list --page-size=50 --page-offset=0
 ```
 
 #### Get Incident Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js incidents get <incident-id>
+pup incidents get <incident-id>
 ```
 
 ### Case Management
@@ -365,29 +365,29 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Search and List Cases
 ```bash
 # List all cases
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list
+pup cases list
 
 # Search with filters
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list --status=OPEN
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list --priority=P1
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list --project="Production Incidents"
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list --filter="API error"
+pup cases list --status=OPEN
+pup cases list --priority=P1
+pup cases list --project="Production Incidents"
+pup cases list --filter="API error"
 
 # Pagination
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list --page=2 --size=50
+pup cases list --page=2 --size=50
 
 # Sort results
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases list --sort=priority --asc=false
+pup cases list --sort=priority --asc=false
 ```
 
 #### Get Case Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases get CASE-123
+pup cases get CASE-123
 ```
 
 #### Create Cases
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases create \
+pup cases create \
   --title="API Gateway Timeout" \
   --type-id="550e8400-e29b-41d4-a716-446655440000" \
   --priority=P2 \
@@ -396,64 +396,64 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Case Status
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases update CASE-123 --status=IN_PROGRESS
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases update CASE-123 --status=CLOSED
+pup cases update CASE-123 --status=IN_PROGRESS
+pup cases update CASE-123 --status=CLOSED
 ```
 
 #### Update Case Priority
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases update CASE-123 --priority=P1
+pup cases update CASE-123 --priority=P1
 ```
 
 #### Assign Cases
 ```bash
 # Assign to user
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases assign CASE-123 --user="john.doe@company.com"
+pup cases assign CASE-123 --user="john.doe@company.com"
 
 # Unassign
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases unassign CASE-123
+pup cases unassign CASE-123
 ```
 
 #### Case Comments
 ```bash
 # Add comment
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases comment CASE-123 --text="Identified root cause: Redis cache miss"
+pup cases comment CASE-123 --text="Identified root cause: Redis cache miss"
 
 # Delete comment
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases comment CASE-123 --delete=cell-id-here
+pup cases comment CASE-123 --delete=cell-id-here
 ```
 
 #### Archive Operations
 ```bash
 # Archive case
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases archive CASE-123
+pup cases archive CASE-123
 
 # Unarchive case
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases unarchive CASE-123
+pup cases unarchive CASE-123
 ```
 
 #### Custom Attributes
 ```bash
 # Set custom attribute
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases attribute CASE-123 --key="incident_severity" --value="high"
+pup cases attribute CASE-123 --key="incident_severity" --value="high"
 
 # Delete custom attribute
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases attribute CASE-123 --key="incident_severity" --delete
+pup cases attribute CASE-123 --key="incident_severity" --delete
 ```
 
 #### Project Management
 ```bash
 # List all projects
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases projects list
+pup cases projects list
 
 # Get project details
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases projects get 660e8400-e29b-41d4-a716-446655440000
+pup cases projects get 660e8400-e29b-41d4-a716-446655440000
 
 # Create project
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases projects create --name="Q1 2025 Production Incidents"
+pup cases projects create --name="Q1 2025 Production Incidents"
 
 # Delete project
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cases projects delete 660e8400-e29b-41d4-a716-446655440000
+pup cases projects delete 660e8400-e29b-41d4-a716-446655440000
 ```
 
 ## Key Concepts
@@ -578,7 +578,7 @@ These operations will display what will be changed and require user awareness.
 
 ```bash
 # 1. DETECTION: Page triggers on-call
-node dist/index.js on-call page create \
+pup on-call page create \
   --title="Production API Error Rate Spike" \
   --description="Error rate > 10% for /api/users endpoint" \
   --target-type="team_handle" \
@@ -587,47 +587,47 @@ node dist/index.js on-call page create \
   --tags="severity:critical,env:production"
 
 # 2. RESPONSE: On-call engineer acknowledges
-node dist/index.js on-call page acknowledge <page-id>
+pup on-call page acknowledge <page-id>
 
 # 3. INCIDENT TRACKING: Check incident details
-node dist/index.js incidents list
-node dist/index.js incidents get <incident-id>
+pup incidents list
+pup incidents get <incident-id>
 
 # 4. CASE MANAGEMENT: Create tracking case
-node dist/index.js cases create \
+pup cases create \
   --title="Production API Error Rate Spike" \
   --type-id="<incident-type-uuid>" \
   --priority=P1 \
   --project-id="<production-project-uuid>"
 
 # 5. ASSIGNMENT: Assign to incident commander
-node dist/index.js cases assign CASE-XXX --user="commander@company.com"
+pup cases assign CASE-XXX --user="commander@company.com"
 
 # 6. INVESTIGATION: Update status as work progresses
-node dist/index.js cases update CASE-XXX --status=IN_PROGRESS
+pup cases update CASE-XXX --status=IN_PROGRESS
 
 # 7. COLLABORATION: Add investigation findings
-node dist/index.js cases comment CASE-XXX --text="Root cause: Database connection pool exhaustion"
+pup cases comment CASE-XXX --text="Root cause: Database connection pool exhaustion"
 
 # 8. ESCALATION: If needed, escalate page
-node dist/index.js on-call page escalate <page-id>
+pup on-call page escalate <page-id>
 
 # 9. RESOLUTION: Mark resolved
-node dist/index.js on-call page resolve <page-id>
-node dist/index.js cases update CASE-XXX --status=CLOSED
+pup on-call page resolve <page-id>
+pup cases update CASE-XXX --status=CLOSED
 
 # 10. POST-INCIDENT: Link incident ID to case
-node dist/index.js cases attribute CASE-XXX --key="incident_id" --value="<incident-id>"
+pup cases attribute CASE-XXX --key="incident_id" --value="<incident-id>"
 
 # 11. ARCHIVE: Archive after post-mortem
-node dist/index.js cases archive CASE-XXX
+pup cases archive CASE-XXX
 ```
 
 ### Workflow 2: Setting Up On-Call Infrastructure
 
 ```bash
 # 1. Create on-call schedule
-node dist/index.js on-call schedule create \
+pup on-call schedule create \
   --name="Platform Team Weekly Rotation" \
   --timezone="America/New_York" \
   --schedule='{
@@ -639,7 +639,7 @@ node dist/index.js on-call schedule create \
   }'
 
 # 2. Create escalation policy
-node dist/index.js on-call escalation create \
+pup on-call escalation create \
   --name="Critical Production Escalation" \
   --steps='[
     {"delay_minutes": 0, "targets": [{"type": "schedule", "id": "<schedule-id>"}]},
@@ -647,39 +647,39 @@ node dist/index.js on-call escalation create \
   ]'
 
 # 3. Configure team routing
-node dist/index.js on-call routing set <team-id> \
+pup on-call routing set <team-id> \
   --escalation-policy-id="<policy-id>" \
   --schedule-id="<schedule-id>"
 
 # 4. Set up notification channels
-node dist/index.js on-call notifications channel create --type="sms" --value="+15551234567" --enabled
-node dist/index.js on-call notifications channel create --type="email" --value="me@example.com" --enabled
+pup on-call notifications channel create --type="sms" --value="+15551234567" --enabled
+pup on-call notifications channel create --type="email" --value="me@example.com" --enabled
 
 # 5. Create notification rules
-node dist/index.js on-call notifications rule create --channel-id="<sms-channel-id>" --urgency="high" --delay-minutes=0
-node dist/index.js on-call notifications rule create --channel-id="<email-channel-id>" --urgency="high" --delay-minutes=5
+pup on-call notifications rule create --channel-id="<sms-channel-id>" --urgency="high" --delay-minutes=0
+pup on-call notifications rule create --channel-id="<email-channel-id>" --urgency="high" --delay-minutes=5
 
 # 6. Create case management project
-node dist/index.js cases projects create --name="Production Incidents Q1 2025"
+pup cases projects create --name="Production Incidents Q1 2025"
 
 # 7. Verify setup - check who's on-call
-node dist/index.js on-call team responders <team-id>
+pup on-call team responders <team-id>
 ```
 
 ### Workflow 3: Daily Operations Check
 
 ```bash
 # 1. Check who's currently on-call
-node dist/index.js on-call team responders <team-id>
+pup on-call team responders <team-id>
 
 # 2. Review active incidents
-node dist/index.js incidents list
+pup incidents list
 
 # 3. Check open high-priority cases
-node dist/index.js cases list --status=OPEN --priority=P1
+pup cases list --status=OPEN --priority=P1
 
 # 4. Review in-progress cases
-node dist/index.js cases list --status=IN_PROGRESS
+pup cases list --status=IN_PROGRESS
 ```
 
 ## Response Formatting
@@ -695,12 +695,12 @@ Present incident response data in clear, user-friendly formats:
 
 ### "Who's on-call right now?"
 ```bash
-node dist/index.js on-call team responders <team-id>
+pup on-call team responders <team-id>
 ```
 
 ### "Page the on-call engineer about a production issue"
 ```bash
-node dist/index.js on-call page create \
+pup on-call page create \
   --title="Production Database Down" \
   --target-type="team_handle" \
   --target-id="platform-team" \
@@ -709,17 +709,17 @@ node dist/index.js on-call page create \
 
 ### "Show me all active incidents"
 ```bash
-node dist/index.js incidents list --state=active
+pup incidents list --state=active
 ```
 
 ### "What's the status of incident XYZ?"
 ```bash
-node dist/index.js incidents get <incident-id>
+pup incidents get <incident-id>
 ```
 
 ### "Create a case for this incident"
 ```bash
-node dist/index.js cases create \
+pup cases create \
   --title="..." \
   --type-id="..." \
   --priority=P1
@@ -727,22 +727,22 @@ node dist/index.js cases create \
 
 ### "Assign the case to the incident commander"
 ```bash
-node dist/index.js cases assign CASE-XXX --user="commander@example.com"
+pup cases assign CASE-XXX --user="commander@example.com"
 ```
 
 ### "Update case status to in progress"
 ```bash
-node dist/index.js cases update CASE-XXX --status=IN_PROGRESS
+pup cases update CASE-XXX --status=IN_PROGRESS
 ```
 
 ### "Add a comment with investigation findings"
 ```bash
-node dist/index.js cases comment CASE-XXX --text="Root cause identified: ..."
+pup cases comment CASE-XXX --text="Root cause identified: ..."
 ```
 
 ### "Close the case"
 ```bash
-node dist/index.js cases update CASE-XXX --status=CLOSED
+pup cases update CASE-XXX --status=CLOSED
 ```
 
 ## Error Handling

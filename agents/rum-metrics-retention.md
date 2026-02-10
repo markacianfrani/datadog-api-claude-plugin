@@ -27,7 +27,7 @@ You are a specialized agent for interacting with Datadog's RUM Metrics and RUM R
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -41,20 +41,20 @@ You are a specialized agent for interacting with Datadog's RUM Metrics and RUM R
 #### List All RUM Metrics
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics list
+pup rum metrics list
 ```
 
 #### Get RUM Metric Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics get <metric-id>
+pup rum metrics get <metric-id>
 ```
 
 #### Create a RUM Metric
 
 Create a count metric:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics create \
+pup rum metrics create \
   --id="rum.sessions.web.count" \
   --event-type="session" \
   --aggregation="count" \
@@ -64,7 +64,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create a distribution metric:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics create \
+pup rum metrics create \
   --id="rum.views.loading_time.distribution" \
   --event-type="view" \
   --aggregation="distribution" \
@@ -77,7 +77,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Update a RUM Metric
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics update <metric-id> \
+pup rum metrics update <metric-id> \
   --filter="@application.name:web-app AND @geo.country:US" \
   --include-percentiles=false
 ```
@@ -85,7 +85,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Delete a RUM Metric
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics delete <metric-id>
+pup rum metrics delete <metric-id>
 ```
 
 ### RUM Retention Filters Management
@@ -93,14 +93,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List Retention Filters for an Application
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters list \
+pup rum retention-filters list \
   --app-id=<application-id>
 ```
 
 #### Get Retention Filter Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters get \
+pup rum retention-filters get \
   --app-id=<application-id> \
   --filter-id=<filter-id>
 ```
@@ -108,7 +108,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Create a Retention Filter
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters create \
+pup rum retention-filters create \
   --app-id=<application-id> \
   --name="Retain sessions with errors" \
   --event-type="session" \
@@ -119,7 +119,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create filter for sessions with replays:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters create \
+pup rum retention-filters create \
   --app-id=<application-id> \
   --name="Retain sessions with replay" \
   --event-type="session" \
@@ -131,7 +131,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Update a Retention Filter
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters update \
+pup rum retention-filters update \
   --app-id=<application-id> \
   --filter-id=<filter-id> \
   --sample-rate=50 \
@@ -141,7 +141,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Delete a Retention Filter
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters delete \
+pup rum retention-filters delete \
   --app-id=<application-id> \
   --filter-id=<filter-id>
 ```
@@ -149,7 +149,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Order Retention Filters
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters order \
+pup rum retention-filters order \
   --app-id=<application-id> \
   --filter-ids=<filter-id-1>,<filter-id-2>,<filter-id-3>
 ```
@@ -271,12 +271,12 @@ Present data in clear, user-friendly formats:
 
 ### "Show me all RUM metrics"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics list
+pup rum metrics list
 ```
 
 ### "Create a metric to count error views"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics create \
+pup rum metrics create \
   --id="rum.views.errors.count" \
   --event-type="view" \
   --aggregation="count" \
@@ -286,7 +286,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Create a metric to measure page load times"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum metrics create \
+pup rum metrics create \
   --id="rum.views.loading_time.dist" \
   --event-type="view" \
   --aggregation="distribution" \
@@ -297,13 +297,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show retention filters for my application"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters list \
+pup rum retention-filters list \
   --app-id=abc123
 ```
 
 ### "Create a retention filter for sessions with errors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters create \
+pup rum retention-filters create \
   --app-id=abc123 \
   --name="Sessions with errors" \
   --event-type="session" \
@@ -314,7 +314,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Retain 25% of sessions with replay"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js rum retention-filters create \
+pup rum retention-filters create \
   --app-id=abc123 \
   --name="Sample sessions with replay" \
   --event-type="session" \

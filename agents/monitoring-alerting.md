@@ -59,7 +59,7 @@ This agent covers the entire monitoring and alerting ecosystem in Datadog.
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -88,35 +88,35 @@ Datadog supports several monitor types:
 ### List All Monitors
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors list
+pup monitors list
 ```
 
 Filter by name:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors list --name="CPU"
+pup monitors list --name="CPU"
 ```
 
 Filter by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors list --tags="env:prod,team:platform"
+pup monitors list --tags="env:prod,team:platform"
 ```
 
 ### Get Monitor Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors get 12345
+pup monitors get 12345
 ```
 
 ### Search Monitors
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "production"
+pup monitors search "production"
 ```
 
 ### Delete a Monitor
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors delete 12345
+pup monitors delete 12345
 ```
 
 ## Monitor States
@@ -130,7 +130,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Show me all monitors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors list
+pup monitors list
 ```
 
 ### "What monitors are alerting?"
@@ -138,21 +138,21 @@ First list all monitors, then explain which ones are in alerting state based on 
 
 ### "Show me production monitors"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors search "production"
+pup monitors search "production"
 ```
 or
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors list --tags="env:prod"
+pup monitors list --tags="env:prod"
 ```
 
 ### "Get details for monitor 12345"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors get 12345
+pup monitors get 12345
 ```
 
 ### "Delete monitor 12345"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitors delete 12345
+pup monitors delete 12345
 ```
 
 ## Creating Monitors Interactively
@@ -275,44 +275,44 @@ monitor:
 ### List All Templates
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates list
+pup monitor-templates list
 ```
 
 Filter by category:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates list --category=infrastructure
+pup monitor-templates list --category=infrastructure
 ```
 
 Filter by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates list --tags="standard,cpu"
+pup monitor-templates list --tags="standard,cpu"
 ```
 
 ### View Template Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates show high-cpu-usage
+pup monitor-templates show high-cpu-usage
 ```
 
 ### Create Template from Monitor
 
 Extract template from an existing monitor:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates create-from-monitor 12345 --name="high-cpu-usage"
+pup monitor-templates create-from-monitor 12345 --name="high-cpu-usage"
 ```
 
 ### Create Template from Scratch
 
 Create a new template interactively or from a YAML file:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates create --file=template.yaml
+pup monitor-templates create --file=template.yaml
 ```
 
 ### Apply Template
 
 Create a monitor from a template with parameter values:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates apply high-cpu-usage \
+pup monitor-templates apply high-cpu-usage \
   --param service_name=api \
   --param environment=prod \
   --param cpu_threshold=85 \
@@ -323,33 +323,33 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Check template syntax and parameter definitions:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates validate high-cpu-usage
+pup monitor-templates validate high-cpu-usage
 ```
 
 ### Update Template
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates update high-cpu-usage --file=updated-template.yaml
+pup monitor-templates update high-cpu-usage --file=updated-template.yaml
 ```
 
 ### Delete Template
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates delete high-cpu-usage
+pup monitor-templates delete high-cpu-usage
 ```
 
 ### Export Template
 
 Export template to share with others:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates export high-cpu-usage --output=template.yaml
+pup monitor-templates export high-cpu-usage --output=template.yaml
 ```
 
 ### Import Template
 
 Import template from file:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js monitor-templates import --file=template.yaml
+pup monitor-templates import --file=template.yaml
 ```
 
 ## Template Categories
@@ -511,34 +511,34 @@ overrides:
 ### List All Notification Rules
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules list
+pup notification-rules list
 ```
 
 Filter by enabled status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules list --enabled=true
+pup notification-rules list --enabled=true
 ```
 
 Filter by tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules list --tags="env:production"
+pup notification-rules list --tags="env:production"
 ```
 
 Sort by priority:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules list --sort=priority
+pup notification-rules list --sort=priority
 ```
 
 ### Get Rule Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules get rule-abc-123
+pup notification-rules get rule-abc-123
 ```
 
 ### Create Notification Rule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules create \
+pup notification-rules create \
   --name="Production Critical" \
   --tags="env:production,priority:P0" \
   --target-slack="#prod-critical" \
@@ -548,21 +548,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Update Rule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules update rule-abc-123 \
+pup notification-rules update rule-abc-123 \
   --enabled=false
 ```
 
 ### Delete Rule
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules delete rule-abc-123
+pup notification-rules delete rule-abc-123
 ```
 
 ### Test Rule
 
 Test if a rule would match a monitor:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js notification-rules test rule-abc-123 \
+pup notification-rules test rule-abc-123 \
   --monitor-id=12345
 ```
 
@@ -697,49 +697,49 @@ Downtimes can be scoped in several ways:
 ### List All Downtimes
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes list
+pup downtimes list
 ```
 
 Filter by status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes list --status=active
+pup downtimes list --status=active
 ```
 
 Filter by current state:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes list --current=true
+pup downtimes list --current=true
 ```
 
 ### Get Downtime Details
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes get <downtime-id>
+pup downtimes get <downtime-id>
 ```
 
 ### List Monitor Downtimes
 
 Get all active downtimes affecting a specific monitor:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes monitor <monitor-id>
+pup downtimes monitor <monitor-id>
 ```
 
 ### Create a Downtime
 
 Schedule a new downtime:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes create --data='{"scope":"env:prod","monitor_tags":["service:api"],"start":"2024-01-01T00:00:00Z","end":"2024-01-01T06:00:00Z","message":"Scheduled maintenance"}'
+pup downtimes create --data='{"scope":"env:prod","monitor_tags":["service:api"],"start":"2024-01-01T00:00:00Z","end":"2024-01-01T06:00:00Z","message":"Scheduled maintenance"}'
 ```
 
 ### Update a Downtime
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes update <downtime-id> --data='{"message":"Updated maintenance window"}'
+pup downtimes update <downtime-id> --data='{"message":"Updated maintenance window"}'
 ```
 
 ### Cancel a Downtime
 
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js downtimes cancel <downtime-id>
+pup downtimes cancel <downtime-id>
 ```
 
 ## Downtime Lifecycle

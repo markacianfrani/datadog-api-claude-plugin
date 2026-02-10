@@ -76,7 +76,7 @@ You are a specialized agent for managing Datadog's third-party integration confi
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -89,27 +89,27 @@ You are a specialized agent for managing Datadog's third-party integration confi
 
 #### Create PagerDuty Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js pagerduty create \
+pup pagerduty create \
   --service-name="Production Alerts" \
   --service-key="your-pagerduty-service-key"
 ```
 
 #### Get PagerDuty Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js pagerduty get \
+pup pagerduty get \
   "Production Alerts"
 ```
 
 #### Update PagerDuty Service Key
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js pagerduty update \
+pup pagerduty update \
   "Production Alerts" \
   --service-key="new-service-key"
 ```
 
 #### Delete PagerDuty Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js pagerduty delete \
+pup pagerduty delete \
   "Production Alerts"
 ```
 
@@ -117,13 +117,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Slack Channels
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slack list \
+pup slack list \
   --account-name="your-slack-account"
 ```
 
 #### Create Slack Channel
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slack create \
+pup slack create \
   --account-name="your-slack-account" \
   --channel-name="#alerts" \
   --display-message=true \
@@ -135,14 +135,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Slack Channel
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slack get \
+pup slack get \
   --account-name="your-slack-account" \
   --channel-name="#alerts"
 ```
 
 #### Update Slack Channel Display Settings
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slack update \
+pup slack update \
   --account-name="your-slack-account" \
   --channel-name="#alerts" \
   --mute-buttons=true
@@ -150,7 +150,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Remove Slack Channel
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slack delete \
+pup slack delete \
   --account-name="your-slack-account" \
   --channel-name="#alerts"
 ```
@@ -159,12 +159,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All OpsGenie Services
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie list
+pup opsgenie list
 ```
 
 #### Create OpsGenie Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie create \
+pup opsgenie create \
   --name="Production Alerts" \
   --api-key="your-opsgenie-api-key" \
   --region="us"
@@ -172,7 +172,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With custom URL (for custom regions):
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie create \
+pup opsgenie create \
   --name="Production Alerts" \
   --api-key="your-opsgenie-api-key" \
   --region="custom" \
@@ -181,13 +181,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get OpsGenie Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie get \
+pup opsgenie get \
   <service-id>
 ```
 
 #### Update OpsGenie Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie update \
+pup opsgenie update \
   <service-id> \
   --name="Updated Service Name" \
   --api-key="new-api-key"
@@ -195,7 +195,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete OpsGenie Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie delete \
+pup opsgenie delete \
   <service-id>
 ```
 
@@ -203,7 +203,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Channel Information by Name
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams get-channel \
+pup ms-teams get-channel \
   --tenant-name="your-tenant" \
   --team-name="Engineering" \
   --channel-name="Alerts"
@@ -211,18 +211,18 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Tenant-Based Handles
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams handles list
+pup ms-teams handles list
 ```
 
 Filter by tenant:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams handles list \
+pup ms-teams handles list \
   --tenant-id="00000000-0000-0000-0000-000000000001"
 ```
 
 #### Create Tenant-Based Handle
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams handles create \
+pup ms-teams handles create \
   --name="production-alerts" \
   --tenant-id="00000000-0000-0000-0000-000000000001" \
   --team-id="00000000-0000-0000-0000-000000000000" \
@@ -231,25 +231,25 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Tenant-Based Handle
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams handles update \
+pup ms-teams handles update \
   <handle-id> \
   --name="updated-handle-name"
 ```
 
 #### Delete Tenant-Based Handle
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams handles delete \
+pup ms-teams handles delete \
   <handle-id>
 ```
 
 #### List Workflows Webhook Handles
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams webhooks list
+pup ms-teams webhooks list
 ```
 
 #### Create Workflows Webhook Handle
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams webhooks create \
+pup ms-teams webhooks create \
   --name="incident-webhook" \
   --url="https://prod-100.westus.logic.azure.com:443/workflows/abcd1234"
 ```
@@ -258,19 +258,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Fastly Accounts
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly accounts list
+pup fastly accounts list
 ```
 
 #### Create Fastly Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly accounts create \
+pup fastly accounts create \
   --name="Production Fastly" \
   --api-key="your-fastly-api-key"
 ```
 
 With services:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly accounts create \
+pup fastly accounts create \
   --name="Production Fastly" \
   --api-key="your-fastly-api-key" \
   --services='[{"id": "service-id-1", "tags": ["env:prod"]}, {"id": "service-id-2", "tags": ["env:staging"]}]'
@@ -278,13 +278,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Fastly Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly accounts get \
+pup fastly accounts get \
   <account-id>
 ```
 
 #### Update Fastly Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly accounts update \
+pup fastly accounts update \
   <account-id> \
   --name="Updated Account Name" \
   --api-key="new-api-key"
@@ -292,13 +292,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Fastly Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly accounts delete \
+pup fastly accounts delete \
   <account-id>
 ```
 
 #### Update Fastly Service
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js fastly services update \
+pup fastly services update \
   <account-id> \
   <service-id> \
   --tags='["env:prod", "team:platform"]'
@@ -308,12 +308,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Confluent Accounts
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts list
+pup confluent accounts list
 ```
 
 #### Create Confluent Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts create \
+pup confluent accounts create \
   --api-key="your-confluent-api-key" \
   --api-secret="your-confluent-api-secret" \
   --tags='["env:prod", "team:data"]'
@@ -321,7 +321,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With resources:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts create \
+pup confluent accounts create \
   --api-key="your-confluent-api-key" \
   --api-secret="your-confluent-api-secret" \
   --resources='[
@@ -336,13 +336,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Confluent Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts get \
+pup confluent accounts get \
   <account-id>
 ```
 
 #### Update Confluent Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts update \
+pup confluent accounts update \
   <account-id> \
   --api-key="new-api-key" \
   --api-secret="new-api-secret"
@@ -350,19 +350,19 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Confluent Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts delete \
+pup confluent accounts delete \
   <account-id>
 ```
 
 #### List Confluent Resources
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent resources list \
+pup confluent resources list \
   <account-id>
 ```
 
 #### Update Confluent Resource
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent resources update \
+pup confluent resources update \
   <account-id> \
   <resource-id> \
   --enable-custom-metrics=true \
@@ -373,12 +373,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Cloudflare Accounts
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts list
+pup cloudflare accounts list
 ```
 
 #### Create Cloudflare Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts create \
+pup cloudflare accounts create \
   --name="Production Cloudflare" \
   --api-key="your-cloudflare-api-key-or-token" \
   --email="your-email@example.com"
@@ -386,7 +386,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With zone and resource restrictions:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts create \
+pup cloudflare accounts create \
   --name="Production Cloudflare" \
   --api-key="your-cloudflare-api-key-or-token" \
   --email="your-email@example.com" \
@@ -396,13 +396,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Cloudflare Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts get \
+pup cloudflare accounts get \
   <account-id>
 ```
 
 #### Update Cloudflare Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts update \
+pup cloudflare accounts update \
   <account-id> \
   --api-key="new-api-key" \
   --zones='["zone_id_1"]'
@@ -410,7 +410,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Cloudflare Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts delete \
+pup cloudflare accounts delete \
   <account-id>
 ```
 
@@ -418,12 +418,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List All Okta Accounts
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts list
+pup okta accounts list
 ```
 
 #### Create Okta Account (OAuth)
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts create \
+pup okta accounts create \
   --name="Production Okta" \
   --domain="https://example.okta.com/" \
   --auth-method="oauth" \
@@ -433,7 +433,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create with API token:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts create \
+pup okta accounts create \
   --name="Production Okta" \
   --domain="https://example.okta.com/" \
   --auth-method="token" \
@@ -442,13 +442,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Get Okta Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts get \
+pup okta accounts get \
   <account-id>
 ```
 
 #### Update Okta Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts update \
+pup okta accounts update \
   <account-id> \
   --domain="https://new-domain.okta.com/" \
   --client-secret="new-client-secret"
@@ -456,7 +456,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete Okta Account
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts delete \
+pup okta accounts delete \
   <account-id>
 ```
 
@@ -500,13 +500,13 @@ Present integration data in clear, user-friendly formats:
 ```bash
 # Note: PagerDuty doesn't have a list endpoint in v1 API
 # You'll need to get specific services by name
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js pagerduty get \
+pup pagerduty get \
   "service-name"
 ```
 
 ### "Add a Slack channel for alerts"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js slack create \
+pup slack create \
   --account-name="your-workspace" \
   --channel-name="#production-alerts" \
   --display-message=true \
@@ -516,7 +516,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Set up OpsGenie for EU region"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js opsgenie create \
+pup opsgenie create \
   --name="EU Production" \
   --api-key="your-api-key" \
   --region="eu"
@@ -525,13 +525,13 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### "Configure Microsoft Teams for incidents"
 ```bash
 # First get channel info
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams get-channel \
+pup ms-teams get-channel \
   --tenant-name="company" \
   --team-name="Operations" \
   --channel-name="Incidents"
 
 # Then create handle using the retrieved IDs
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js ms-teams handles create \
+pup ms-teams handles create \
   --name="ops-incidents" \
   --tenant-id="<tenant-id>" \
   --team-id="<team-id>" \
@@ -540,7 +540,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Add Confluent Kafka cluster monitoring"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js confluent accounts create \
+pup confluent accounts create \
   --api-key="confluent-api-key" \
   --api-secret="confluent-api-secret" \
   --resources='[
@@ -555,7 +555,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Configure Cloudflare monitoring for specific zones"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cloudflare accounts create \
+pup cloudflare accounts create \
   --name="Production CDN" \
   --api-key="cloudflare-token" \
   --zones='["zone-id-1", "zone-id-2"]' \
@@ -564,7 +564,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Set up Okta integration with OAuth"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js okta accounts create \
+pup okta accounts create \
   --name="Corporate Okta" \
   --domain="https://company.okta.com/" \
   --auth-method="oauth" \

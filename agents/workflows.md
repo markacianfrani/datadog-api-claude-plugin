@@ -37,7 +37,7 @@ You are a specialized agent for interacting with Datadog's Workflow Automation A
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -50,23 +50,23 @@ You are a specialized agent for interacting with Datadog's Workflow Automation A
 
 #### List All Workflows
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows list
+pup workflows list
 ```
 
 Filter by name:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows list \
+pup workflows list \
   --query="incident"
 ```
 
 #### Get Workflow Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows get <workflow-id>
+pup workflows get <workflow-id>
 ```
 
 #### Create Workflow
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows create \
+pup workflows create \
   --name="Auto-remediate high CPU" \
   --description="Automatically restart services when CPU exceeds threshold" \
   --config=@workflow-config.json
@@ -74,14 +74,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Workflow
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows update <workflow-id> \
+pup workflows update <workflow-id> \
   --name="Updated workflow name" \
   --config=@updated-config.json
 ```
 
 #### Delete Workflow
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows delete <workflow-id>
+pup workflows delete <workflow-id>
 ```
 
 ### Workflow Execution
@@ -89,59 +89,59 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Execute Workflow
 ```bash
 # Execute with no input parameters
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows execute <workflow-id>
+pup workflows execute <workflow-id>
 ```
 
 Execute with input parameters:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows execute <workflow-id> \
+pup workflows execute <workflow-id> \
   --input='{"host": "web-server-01", "action": "restart"}'
 ```
 
 #### List Workflow Instances
 ```bash
 # List all executions for a workflow
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows instances list <workflow-id>
+pup workflows instances list <workflow-id>
 ```
 
 Filter by status:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows instances list <workflow-id> \
+pup workflows instances list <workflow-id> \
   --status="success"
 ```
 
 #### Get Instance Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows instances get <workflow-id> <instance-id>
+pup workflows instances get <workflow-id> <instance-id>
 ```
 
 #### Cancel Workflow Execution
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows instances cancel <workflow-id> <instance-id>
+pup workflows instances cancel <workflow-id> <instance-id>
 ```
 
 ### Connection Management
 
 #### List Connections
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections list
+pup workflows connections list
 ```
 
 Filter by type:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections list \
+pup workflows connections list \
   --type="slack"
 ```
 
 #### Get Connection Details
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections get <connection-id>
+pup workflows connections get <connection-id>
 ```
 
 #### Create Connection
 ```bash
 # Create Slack connection
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections create \
+pup workflows connections create \
   --name="Slack Production" \
   --type="slack" \
   --config='{"webhook_url": "https://hooks.slack.com/..."}'
@@ -149,7 +149,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create PagerDuty connection:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections create \
+pup workflows connections create \
   --name="PagerDuty Incidents" \
   --type="pagerduty" \
   --config='{"api_token": "TOKEN", "service_id": "SERVICE_ID"}'
@@ -157,7 +157,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Create Jira connection:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections create \
+pup workflows connections create \
   --name="Jira Issues" \
   --type="jira" \
   --config='{"url": "https://company.atlassian.net", "username": "user@example.com", "api_token": "TOKEN"}'
@@ -165,31 +165,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Connection
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections update <connection-id> \
+pup workflows connections update <connection-id> \
   --name="Updated connection name" \
   --config='{"updated": "config"}'
 ```
 
 #### Delete Connection
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections delete <connection-id>
+pup workflows connections delete <connection-id>
 ```
 
 #### Test Connection
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections test <connection-id>
+pup workflows connections test <connection-id>
 ```
 
 ### App Key Registration
 
 #### List App Key Registrations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows app-keys list
+pup workflows app-keys list
 ```
 
 #### Register App Key
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows app-keys register \
+pup workflows app-keys register \
   --name="GitHub Integration" \
   --app-key="ghp_..." \
   --type="github"
@@ -197,7 +197,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Delete App Key Registration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows app-keys delete <app-key-id>
+pup workflows app-keys delete <app-key-id>
 ```
 
 ## Permission Model
@@ -240,38 +240,38 @@ Present workflow data in clear, user-friendly formats:
 
 ### "Show me all workflows"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows list
+pup workflows list
 ```
 
 ### "Execute the incident response workflow"
 ```bash
 # First find the workflow
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows list --query="incident"
+pup workflows list --query="incident"
 
 # Then execute it
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows execute <workflow-id>
+pup workflows execute <workflow-id>
 ```
 
 ### "Show me recent workflow executions"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows instances list <workflow-id>
+pup workflows instances list <workflow-id>
 ```
 
 ### "Create a workflow to restart services"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows create \
+pup workflows create \
   --name="Auto-restart service" \
   --config=@restart-workflow.json
 ```
 
 ### "List all Slack connections"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows connections list --type="slack"
+pup workflows connections list --type="slack"
 ```
 
 ### "Cancel a running workflow"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js workflows instances cancel <workflow-id> <instance-id>
+pup workflows instances cancel <workflow-id> <instance-id>
 ```
 
 ## Workflow Structure

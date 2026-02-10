@@ -41,7 +41,7 @@ You are a specialized agent for managing Datadog's Google Cloud Platform (GCP) i
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -54,18 +54,18 @@ You are a specialized agent for managing Datadog's Google Cloud Platform (GCP) i
 
 #### List All GCP Integrations
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts list
+pup gcp accounts list
 ```
 
 #### Create GCP Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-service-account@my-gcp-project.iam.gserviceaccount.com"
 ```
 
 With full configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-service-account@my-gcp-project.iam.gserviceaccount.com" \
   --automute=true \
   --is-cspm-enabled=true \
@@ -77,21 +77,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 With monitored resource filters:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-service-account@my-gcp-project.iam.gserviceaccount.com" \
   --monitored-resource-configs='[{"type":"gce_instance","filters":["env:production"]},{"type":"cloud_run_revision","filters":["team:backend"]}]'
 ```
 
 With metric namespace configuration:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-service-account@my-gcp-project.iam.gserviceaccount.com" \
   --metric-namespace-configs='[{"id":"compute","disabled":false},{"id":"aiplatform","disabled":true},{"id":"pubsub","filters":["snapshot.*","!*_by_region"]}]'
 ```
 
 #### Update GCP Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --is-cspm-enabled=true \
   --resource-collection-enabled=true
@@ -99,21 +99,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Update monitored resource filters:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --monitored-resource-configs='[{"type":"gce_instance","filters":["env:production","region:us-central1"]}]'
 ```
 
 Update account tags:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --account-tags='["env:prod", "team:platform", "cost-center:engineering"]'
 ```
 
 #### Delete GCP Integration
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts delete \
+pup gcp accounts delete \
   <account-id>
 ```
 
@@ -121,12 +121,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Datadog GCP Principal (Delegate Account)
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp delegate create
+pup gcp delegate create
 ```
 
 #### Get Datadog GCP Principal
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp delegate get
+pup gcp delegate get
 ```
 
 ## Permission Model
@@ -163,16 +163,16 @@ Present GCP integration data in clear, user-friendly formats:
 
 ### "Show me all GCP integrations"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts list
+pup gcp accounts list
 ```
 
 ### "Set up GCP integration for my project"
 ```bash
 # First, create or get the Datadog delegate account
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp delegate create
+pup gcp delegate create
 
 # Then create the integration with your service account
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-service-account@my-gcp-project.iam.gserviceaccount.com" \
   --automute=true \
   --resource-collection-enabled=true
@@ -180,7 +180,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Enable CSPM for my GCP project"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --is-cspm-enabled=true \
   --resource-collection-enabled=true
@@ -188,28 +188,28 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 ### "Monitor only production GCE instances"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --monitored-resource-configs='[{"type":"gce_instance","filters":["env:production"]}]'
 ```
 
 ### "Enable Security Command Center integration"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --is-security-command-center-enabled=true
 ```
 
 ### "Disable AI Platform metrics to reduce costs"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --metric-namespace-configs='[{"id":"aiplatform","disabled":true}]'
 ```
 
 ### "Configure quota attribution to monitored project"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --is-per-project-quota-enabled=true
 ```
@@ -330,7 +330,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 **1. Create Datadog GCP Delegate Account**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp delegate create
+pup gcp delegate create
 ```
 
 This returns a Datadog delegate service account email (e.g., `ddgci-xxxxx@datadog-gci-sts-us5-prod.iam.gserviceaccount.com`)
@@ -362,7 +362,7 @@ gcloud iam service-accounts add-iam-policy-binding \
 
 **4. Create GCP Integration in Datadog**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-integration@my-gcp-project.iam.gserviceaccount.com" \
   --automute=true \
   --resource-collection-enabled=true \
@@ -375,12 +375,12 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 **1. List Current Integration**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts list
+pup gcp accounts list
 ```
 
 **2. Disable Unused Metric Namespaces**:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --metric-namespace-configs='[
     {"id":"compute","disabled":false},
@@ -394,7 +394,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 **3. Add Resource Filters for Cost Optimization**:
 ```bash
 # Only monitor production resources
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --monitored-resource-configs='[
     {"type":"gce_instance","filters":["env:production"]},
@@ -406,7 +406,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 **4. Apply Metric-Level Filters**:
 ```bash
 # Exclude noisy regional metrics
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts update \
+pup gcp accounts update \
   <account-id> \
   --metric-namespace-configs='[
     {"id":"pubsub","filters":["!*_by_region","snapshot.*"]}
@@ -425,14 +425,14 @@ For organizations with multiple GCP projects:
 **2. Example Multi-Project Setup**:
 ```bash
 # Production project
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-integration@prod-project.iam.gserviceaccount.com" \
   --account-tags='["env:prod", "team:platform"]' \
   --is-cspm-enabled=true \
   --resource-collection-enabled=true
 
 # Staging project
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-integration@staging-project.iam.gserviceaccount.com" \
   --account-tags='["env:staging", "team:platform"]' \
   --is-cspm-enabled=false \
@@ -622,10 +622,10 @@ Error: Unable to access GCP project
 ### Minimal Production Setup
 ```bash
 # Create delegate
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp delegate create
+pup gcp delegate create
 
 # Create basic integration (after service account setup in GCP)
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-integration@my-project.iam.gserviceaccount.com" \
   --automute=true \
   --resource-collection-enabled=true
@@ -634,7 +634,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Full-Featured Setup
 ```bash
 # Create comprehensive integration
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-integration@my-project.iam.gserviceaccount.com" \
   --automute=true \
   --resource-collection-enabled=true \
@@ -661,7 +661,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Security-Focused Setup (CSPM)
 ```bash
 # Create integration with focus on security monitoring
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-security@my-project.iam.gserviceaccount.com" \
   --resource-collection-enabled=true \
   --is-cspm-enabled=true \
@@ -672,7 +672,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 ### Cost-Optimized Setup
 ```bash
 # Create integration with minimal metric collection
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js gcp accounts create \
+pup gcp accounts create \
   --client-email="datadog-integration@my-project.iam.gserviceaccount.com" \
   --monitored-resource-configs='[
     {"type":"gce_instance","filters":["env:production","criticality:high"]}

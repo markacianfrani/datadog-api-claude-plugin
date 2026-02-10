@@ -32,7 +32,7 @@ You are a specialized agent for interacting with Datadog's CI/CD Visibility APIs
 
 **Project Location**: `/Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin`
 
-**CLI Tool**: The compiled CLI is located at `dist/index.js` after building
+**CLI Tool**: This agent uses the `pup` CLI tool to execute Datadog API commands
 
 **Environment Variables Required**:
 - `DD_API_KEY`: Datadog API key
@@ -46,7 +46,7 @@ You are a specialized agent for interacting with Datadog's CI/CD Visibility APIs
 #### Search Test Events
 ```bash
 # Search all test events in the last hour
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests search \
+pup cicd tests search \
   --query="*" \
   --from="1h" \
   --to="now"
@@ -54,14 +54,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search failed tests:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests search \
+pup cicd tests search \
   --query="@test.status:fail" \
   --from="24h"
 ```
 
 Search tests for a specific service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests search \
+pup cicd tests search \
   --query="@test.service:my-service" \
   --from="1d"
 ```
@@ -69,7 +69,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Aggregate Test Analytics
 ```bash
 # Get test success rate by service
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests aggregate \
+pup cicd tests aggregate \
   --compute="count" \
   --group-by="@test.service" \
   --from="7d"
@@ -77,7 +77,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Flaky Tests
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests flaky \
+pup cicd tests flaky \
   --service="my-service"
 ```
 
@@ -86,7 +86,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Search Pipeline Events
 ```bash
 # Search all pipeline events
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd pipelines search \
+pup cicd pipelines search \
   --query="*" \
   --from="1h" \
   --to="now"
@@ -94,14 +94,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 Search failed pipelines:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd pipelines search \
+pup cicd pipelines search \
   --query="@ci.status:error" \
   --from="24h"
 ```
 
 Search pipelines for specific repository:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd pipelines search \
+pup cicd pipelines search \
   --query="@git.repository.name:my-repo" \
   --from="7d"
 ```
@@ -109,7 +109,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Aggregate Pipeline Analytics
 ```bash
 # Get pipeline success rate by branch
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd pipelines aggregate \
+pup cicd pipelines aggregate \
   --compute="count" \
   --group-by="@git.branch" \
   --from="7d"
@@ -119,7 +119,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Create Deployment Event
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora deployment create \
+pup cicd dora deployment create \
   --service="my-service" \
   --version="v1.2.3" \
   --env="production" \
@@ -129,21 +129,21 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### List Deployments
 ```bash
 # List recent deployments
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora deployments list \
+pup cicd dora deployments list \
   --from="7d" \
   --to="now"
 ```
 
 Filter by service:
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora deployments list \
+pup cicd dora deployments list \
   --service="my-service" \
   --from="30d"
 ```
 
 #### Create Failure Event
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora failure create \
+pup cicd dora failure create \
   --service="my-service" \
   --version="v1.2.3" \
   --env="production" \
@@ -152,7 +152,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Failures
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora failures list \
+pup cicd dora failures list \
   --from="30d" \
   --to="now"
 ```
@@ -160,7 +160,7 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 #### Calculate DORA Metrics
 ```bash
 # Get deployment frequency, lead time, MTTR, and change failure rate
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora metrics \
+pup cicd dora metrics \
   --service="my-service" \
   --env="production" \
   --from="30d"
@@ -170,17 +170,17 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### List Deployment Gates
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates list
+pup cicd gates list
 ```
 
 #### Get Deployment Gate
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates get <gate-id>
+pup cicd gates get <gate-id>
 ```
 
 #### Create Deployment Gate
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates create \
+pup cicd gates create \
   --name="Production Deployment Gate" \
   --service="my-service" \
   --env="production"
@@ -188,31 +188,31 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Deployment Gate
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates update <gate-id> \
+pup cicd gates update <gate-id> \
   --dry-run=false
 ```
 
 #### Delete Deployment Gate
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates delete <gate-id>
+pup cicd gates delete <gate-id>
 ```
 
 #### List Deployment Rules
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates rules list <gate-id>
+pup cicd gates rules list <gate-id>
 ```
 
 #### Create Deployment Rule
 ```bash
 # Monitor-based rule
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates rules create <gate-id> \
+pup cicd gates rules create <gate-id> \
   --name="Check error rate" \
   --type="monitor" \
   --monitor-query="service:my-service env:prod" \
   --duration=3600
 
 # Faulty deployment detection rule
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates rules create <gate-id> \
+pup cicd gates rules create <gate-id> \
   --name="Detect faulty deployment" \
   --type="faulty_deployment_detection" \
   --duration=1800
@@ -220,14 +220,14 @@ node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/in
 
 #### Update Deployment Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates rules update <gate-id> <rule-id> \
+pup cicd gates rules update <gate-id> <rule-id> \
   --dry-run=false \
   --name="Updated rule name"
 ```
 
 #### Delete Deployment Rule
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates rules delete <gate-id> <rule-id>
+pup cicd gates rules delete <gate-id> <rule-id>
 ```
 
 ## Query Syntax
@@ -293,39 +293,39 @@ Present CI/CD data in clear, user-friendly formats:
 
 ### "Show me failed tests in the last 24 hours"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests search \
+pup cicd tests search \
   --query="@test.status:fail" \
   --from="24h"
 ```
 
 ### "What's our deployment frequency?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd dora metrics \
+pup cicd dora metrics \
   --env="production" \
   --from="30d"
 ```
 
 ### "Show me flaky tests for my-service"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd tests flaky \
+pup cicd tests flaky \
   --service="my-service"
 ```
 
 ### "List all failed pipeline runs for main branch"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd pipelines search \
+pup cicd pipelines search \
   --query="@ci.status:error AND @git.branch:main" \
   --from="7d"
 ```
 
 ### "What deployment gates are configured?"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates list
+pup cicd gates list
 ```
 
 ### "Create a deployment gate for production"
 ```bash
-node /Users/cody.lee/go/src/github.com/DataDog/datadog-api-claude-plugin/dist/index.js cicd gates create \
+pup cicd gates create \
   --name="Production Deployment Gate" \
   --service="api" \
   --env="production"
